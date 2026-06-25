@@ -1,0 +1,926 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Лазерное 3D-сканирование и обмеры в Нижнем Новгороде | Trimble X7</title>
+  <meta name="description" content="Обмеры помещений, зданий, фасадов, объектов культурного наследия и резервуаров методом лазерного 3D-сканирования Trimble X7. Нижний Новгород и выезды до 500 км. Облако точек, DWG, PDF, Revit/BIM по ТЗ.">
+  <link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="Лазерные обмеры">
+  <meta name="theme-color" content="#111412">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #111412;
+      --muted: #68726d;
+      --paper: #f4f1ea;
+      --panel: #fffaf0;
+      --line: #d8d1c3;
+      --green: #25584a;
+      --lime: #c9dd65;
+      --red: #d64027;
+      --blue: #225c8a;
+      --dark: #17211d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Onest, sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(17,20,18,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(17,20,18,.05) 1px, transparent 1px),
+        var(--paper);
+      background-size: 28px 28px;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at 75% 12%, rgba(201,221,101,.34), transparent 28%),
+                  radial-gradient(circle at 18% 20%, rgba(34,92,138,.14), transparent 30%);
+      z-index: -1;
+    }
+    header {
+      padding: 28px clamp(18px, 4vw, 54px) 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: .01em;
+    }
+    .mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: var(--green);
+      border: 2px solid var(--ink);
+      box-shadow: 5px 5px 0 var(--lime);
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 700;
+    }
+    .status {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12px;
+      color: var(--green);
+      border: 1px solid var(--green);
+      background: rgba(255,250,240,.8);
+      padding: 8px 10px;
+    }
+    .header-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .header-links a {
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    main { padding: 0 clamp(18px, 4vw, 54px) 54px; }
+    .hero {
+      min-height: 520px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr);
+      gap: clamp(24px, 5vw, 70px);
+      align-items: end;
+      padding: 46px 0 38px;
+    }
+    h1 {
+      margin: 0;
+      max-width: 880px;
+      font-size: clamp(42px, 7vw, 92px);
+      line-height: .88;
+      letter-spacing: 0;
+    }
+    .hero p {
+      max-width: 680px;
+      color: #343d38;
+      font-size: clamp(17px, 2vw, 22px);
+      line-height: 1.45;
+      margin: 24px 0 0;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      padding: 8px 10px;
+      border: 1px solid var(--green);
+      background: rgba(255,250,240,.85);
+      color: var(--green);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 13px 18px;
+      border: 2px solid var(--ink);
+      background: var(--lime);
+      color: var(--ink);
+      text-decoration: none;
+      font: 800 13px "IBM Plex Mono", monospace;
+      box-shadow: 5px 5px 0 rgba(17,20,18,.18);
+    }
+    .btn.secondary {
+      background: var(--panel);
+      box-shadow: none;
+    }
+    .hero-card {
+      background: var(--dark);
+      color: white;
+      padding: 24px;
+      border: 2px solid var(--ink);
+      box-shadow: 12px 12px 0 var(--red);
+    }
+    .hero-card .mono { color: var(--lime); }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 22px;
+    }
+    .metric {
+      border: 1px solid rgba(255,255,255,.25);
+      padding: 14px;
+      min-height: 92px;
+    }
+    .metric strong {
+      display: block;
+      font-size: 28px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .trust-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 12px 0 34px;
+    }
+    .trust-item {
+      background: rgba(255,250,240,.94);
+      border: 2px solid var(--ink);
+      padding: 16px;
+      min-height: 104px;
+      box-shadow: 4px 4px 0 rgba(17,20,18,.12);
+    }
+    .trust-item strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 18px;
+    }
+    .trust-item span {
+      color: var(--muted);
+      line-height: 1.4;
+      font-size: 14px;
+    }
+    .content-section {
+      padding: clamp(34px, 6vw, 72px) 0;
+      border-top: 2px solid rgba(17,20,18,.12);
+    }
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, .72fr) minmax(260px, .28fr);
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 22px;
+    }
+    .section-head p {
+      margin: 0;
+      color: #343d38;
+      line-height: 1.55;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .info-card {
+      background: rgba(255,250,240,.94);
+      border: 2px solid var(--ink);
+      padding: 18px;
+      min-height: 158px;
+      box-shadow: 5px 5px 0 rgba(17,20,18,.12);
+    }
+    .info-card strong {
+      display: block;
+      margin-bottom: 9px;
+      font-size: 18px;
+    }
+    .info-card p {
+      margin: 0;
+      color: #37413c;
+      line-height: 1.48;
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .feature {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 14px;
+      align-items: start;
+      background: rgba(255,250,240,.94);
+      border: 1px solid var(--line);
+      padding: 16px;
+    }
+    .feature .num {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      background: var(--dark);
+      color: var(--lime);
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 800;
+    }
+    .feature strong { display: block; margin-bottom: 5px; }
+    .feature p { margin: 0; color: var(--muted); line-height: 1.45; }
+    .calculator-intro {
+      margin-bottom: 16px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+      gap: 18px;
+      align-items: end;
+    }
+    .calculator-intro p {
+      color: #343d38;
+      line-height: 1.55;
+      margin: 0;
+    }
+    .contact-band {
+      margin-top: 24px;
+      background: var(--dark);
+      color: white;
+      border: 2px solid var(--ink);
+      padding: clamp(22px, 4vw, 36px);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+      box-shadow: 8px 8px 0 var(--lime);
+    }
+    .contact-band h2 { margin-bottom: 10px; }
+    .contact-band p { margin: 0; color: rgba(255,255,255,.78); line-height: 1.55; }
+    .contact-band .btn { box-shadow: none; }
+    .contact-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+    .contact-note {
+      grid-column: 1 / -1;
+      color: rgba(255,255,255,.78);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12px;
+      line-height: 1.45;
+      text-align: right;
+    }
+    .mono {
+      font-family: "IBM Plex Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      font-size: 12px;
+    }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 18px 0;
+      position: sticky;
+      top: 0;
+      z-index: 3;
+      padding: 10px 0;
+      background: rgba(244,241,234,.86);
+      backdrop-filter: blur(10px);
+    }
+    .tab {
+      border: 2px solid var(--ink);
+      background: var(--panel);
+      padding: 11px 14px;
+      font: 700 13px "IBM Plex Mono", monospace;
+      cursor: pointer;
+      transition: transform .15s ease, background .15s ease;
+    }
+    .tab:hover { transform: translateY(-2px); }
+    .tab.active { background: var(--lime); }
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 390px;
+      gap: 18px;
+      align-items: start;
+    }
+    .panel, .result, .brief {
+      background: rgba(255,250,240,.94);
+      border: 2px solid var(--ink);
+      box-shadow: 6px 6px 0 rgba(17,20,18,.16);
+    }
+    .panel { padding: clamp(18px, 3vw, 30px); }
+    .section { display: none; }
+    .section.active { display: block; }
+    h2 {
+      margin: 0 0 18px;
+      font-size: clamp(26px, 3vw, 40px);
+      line-height: 1;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    label {
+      display: block;
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    input, select {
+      width: 100%;
+      min-height: 46px;
+      border: 2px solid var(--ink);
+      background: white;
+      color: var(--ink);
+      padding: 10px 12px;
+      font: 600 15px Onest, sans-serif;
+      border-radius: 0;
+    }
+    input[type="checkbox"] { width: 18px; min-height: 18px; accent-color: var(--red); }
+    .check {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid var(--line);
+      padding: 12px;
+      background: rgba(255,255,255,.55);
+    }
+    .field-note {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+    .addons {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .result {
+      position: sticky;
+      top: 82px;
+      padding: 22px;
+      background: var(--dark);
+      color: white;
+    }
+    .price {
+      font-size: clamp(38px, 5vw, 58px);
+      font-weight: 800;
+      line-height: .9;
+      margin: 10px 0 8px;
+      color: var(--lime);
+    }
+    .subprice { color: rgba(255,255,255,.7); margin-bottom: 18px; }
+    .lines { display: grid; gap: 9px; margin-top: 18px; }
+    .line {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,.16);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 13px;
+    }
+    .line span:first-child { color: rgba(255,255,255,.72); }
+    .warning {
+      margin-top: 16px;
+      padding: 13px;
+      background: rgba(214,64,39,.16);
+      border: 1px solid rgba(214,64,39,.8);
+      color: #ffd6cd;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .copy-btn {
+      width: 100%;
+      margin-top: 18px;
+      border: 2px solid var(--lime);
+      background: var(--lime);
+      color: var(--ink);
+      padding: 13px 14px;
+      font: 800 13px "IBM Plex Mono", monospace;
+      cursor: pointer;
+    }
+    .brief {
+      margin-top: 18px;
+      padding: 24px;
+    }
+    .brief-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .brief-item {
+      background: white;
+      border: 1px solid var(--line);
+      padding: 14px;
+      min-height: 120px;
+    }
+    .brief-item strong { display: block; margin-bottom: 8px; }
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      background: var(--ink);
+      color: white;
+      padding: 12px 14px;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: .25s ease;
+      z-index: 5;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    @media (max-width: 980px) {
+      .hero, .workspace, .section-head, .calculator-intro, .contact-band { grid-template-columns: 1fr; }
+      .result { position: static; }
+      .brief-grid { grid-template-columns: 1fr; }
+      .trust-strip, .cards, .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .contact-actions { justify-content: flex-start; }
+      .contact-note { text-align: left; }
+    }
+    @media (max-width: 640px) {
+      header { align-items: flex-start; flex-direction: column; }
+      .header-links { justify-content: flex-start; }
+      .form-grid, .hero-grid { grid-template-columns: 1fr; }
+      .trust-strip, .cards, .feature-grid { grid-template-columns: 1fr; }
+      .tab { flex: 1 1 calc(50% - 8px); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand"><div class="mark">3D</div><div>Лазерные обмеры<br><span class="mono">Trimble X7 · Нижний Новгород</span></div></div>
+    <div class="header-links">
+      <a href="#services">Услуги</a>
+      <a href="#deliverables">Результат</a>
+      <a href="#calculator">Калькулятор</a>
+      <a href="#contacts">Контакты</a>
+      <a href="https://t.me/frolovr9">Telegram</a>
+      <a href="tel:+79036060054">+7 903 606-00-54</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">обмеры методом лазерного 3D-сканирования</div>
+        <h1>Лазерное 3D-сканирование и точные обмеры помещений</h1>
+        <p>Работаем на Trimble X7 для дизайнеров, проектировщиков, строителей, обследователей и собственников. Нижний Новгород, область и выезды в соседние регионы до 500 км.</p>
+        <div class="cta-row">
+          <a class="btn" href="#calculator">Рассчитать стоимость</a>
+          <a class="btn secondary" href="#contacts">Обсудить задачу</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="mono">что получите</div>
+        <div class="hero-grid">
+          <div class="metric"><strong>1-2 мм</strong><span>точность измерений</span></div>
+          <div class="metric"><strong>5+ лет</strong><span>практический опыт</span></div>
+          <div class="metric"><strong>DWG</strong><span>чертежи, PDF, планы</span></div>
+          <div class="metric"><strong>500 км</strong><span>выезды от Нижнего</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust-strip" aria-label="Преимущества">
+      <div class="trust-item"><strong>Trimble X7</strong><span>Профессиональное лазерное сканирование помещений, фасадов, производств и сложной геометрии.</span></div>
+      <div class="trust-item"><strong>Договор и акт</strong><span>Работаем официально, по ТЗ, с понятным составом результата и сроками.</span></div>
+      <div class="trust-item"><strong>От 20 000 ₽</strong><span>Минимальная стоимость заказа. Точную цену считаем по площади, сложности и формату выдачи.</span></div>
+      <div class="trust-item"><strong>НН + регионы</strong><span>Выезд по Нижегородской области и в соседние регионы до 500 км от Нижнего Новгорода.</span></div>
+    </section>
+
+    <section class="content-section" id="services">
+      <div class="section-head">
+        <div>
+          <div class="mono">услуги</div>
+          <h2>Что обмеряем</h2>
+        </div>
+        <p>Берём задачи, где обычной рулетки и ручного обмера уже мало: нужна точная геометрия, фиксация фактического состояния и удобные материалы для проектирования.</p>
+      </div>
+      <div class="cards">
+        <div class="info-card"><strong>Квартиры и дома</strong><p>Обмеры для дизайн-проектов, перепланировок, ремонта, реконструкции и точной передачи геометрии помещения.</p></div>
+        <div class="info-card"><strong>Коммерческие объекты</strong><p>Офисы, магазины, склады, помещения сложной формы, фасады и внутренние сканы.</p></div>
+        <div class="info-card"><strong>Промышленные помещения</strong><p>Цеха, производства, инженерные коммуникации, оборудование, контрольные обмеры для строителей.</p></div>
+        <div class="info-card"><strong>Объекты культурного наследия</strong><p>Фиксация сложной архитектуры, фасадов, лепнины, сводов, исторических элементов и фактических отклонений.</p></div>
+        <div class="info-card"><strong>Резервуары</strong><p>Обмеры и градуировка резервуаров, геометрия ёмкостей, подготовка данных для расчётов и документации.</p></div>
+        <div class="info-card"><strong>Обследования</strong><p>Материалы для обследователей, проектировщиков и экспертов: облако точек, чертежи, модели, площади и габариты.</p></div>
+      </div>
+    </section>
+
+    <section class="content-section" id="deliverables">
+      <div class="section-head">
+        <div>
+          <div class="mono">результат</div>
+          <h2>Что передаём после работ</h2>
+        </div>
+        <p>Формат выдачи подбираем под задачу: от простого облака точек до чертежей, 3D-модели или BIM-модели по техническому заданию.</p>
+      </div>
+      <div class="feature-grid">
+        <div class="feature"><div class="num">01</div><div><strong>Облако точек</strong><p>Цветное или ч/б облако точек для проверки геометрии, проектирования и дальнейшей обработки.</p></div></div>
+        <div class="feature"><div class="num">02</div><div><strong>DWG и PDF</strong><p>Обмерные планы, потолки, стены, фасады, разрезы и видимые коммуникации в удобном формате.</p></div></div>
+        <div class="feature"><div class="num">03</div><div><strong>3D / Revit / BIM</strong><p>Модели по договорённости: детализация, LOD, состав элементов и формат согласуются до старта.</p></div></div>
+        <div class="feature"><div class="num">04</div><div><strong>Площади и габариты</strong><p>Фактические размеры, объёмы, площади, отклонения и данные для смет, ремонта или обследования.</p></div></div>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="section-head">
+        <div>
+          <div class="mono">процесс</div>
+          <h2>Как проходит работа</h2>
+        </div>
+        <p>Сначала уточняем задачу и формат результата, затем считаем стоимость. Это защищает от ситуации, когда сканирование сделали, а нужных заказчику файлов в итоге нет.</p>
+      </div>
+      <div class="cards">
+        <div class="info-card"><strong>1. Задача и исходные данные</strong><p>Вы присылаете адрес, площадь, фото или планы, описываете желаемый результат и сроки.</p></div>
+        <div class="info-card"><strong>2. Расчёт и договорённости</strong><p>Подбираем формат: облако точек, DWG/PDF, 3D, Revit/BIM, градуировка или материалы для обследования.</p></div>
+        <div class="info-card"><strong>3. Выезд и сканирование</strong><p>Проводим сканирование Trimble X7 на объекте в Нижнем Новгороде, области или соседнем регионе.</p></div>
+        <div class="info-card"><strong>4. Камеральная обработка</strong><p>Регистрируем сканы, готовим облако точек, чертежи, модели и дополнительные материалы.</p></div>
+        <div class="info-card"><strong>5. Передача результата</strong><p>Отдаём файлы в согласованных форматах, поясняем состав и при необходимости готовим документы.</p></div>
+        <div class="info-card"><strong>6. Поддержка после выдачи</strong><p>Помогаем разобраться с файлами, уточнить состав данных и подготовить дополнительную детализацию.</p></div>
+      </div>
+    </section>
+
+    <section class="content-section" id="calculator">
+      <div class="calculator-intro">
+        <div>
+          <div class="mono">предварительная оценка</div>
+          <h2>Калькулятор стоимости</h2>
+          <p>Расчёт ниже даёт ориентир по бюджету. Точная цена зависит от объекта, доступа, площади, удалённости, срочности, состава выдачи и нужной детализации.</p>
+        </div>
+        <div class="status">минимальный заказ · от 20 000 ₽</div>
+      </div>
+    <nav class="tabs" aria-label="Тип расчёта">
+      <button class="tab active" data-tab="interior">Помещения</button>
+      <button class="tab" data-tab="facade">Фасады</button>
+      <button class="tab" data-tab="topo">Топо / ВЛС</button>
+      <button class="tab" data-tab="tanks">Резервуары</button>
+      <button class="tab" data-tab="reverse">Реверс</button>
+    </nav>
+
+    <section class="workspace">
+      <div class="panel">
+        <div id="interior" class="section active">
+          <h2>Здания и помещения</h2>
+          <div class="form-grid">
+            <div><label>Площадь, м²</label><input id="area" type="number" min="1" value="350"></div>
+            <div><label>Результат</label><select id="interiorService">
+              <option value="scanColor">Только сканирование, цвет</option>
+              <option value="scanBw">Только сканирование, ч/б</option>
+              <option value="plan">Скан + чертёж план</option>
+              <option value="planEng">Скан + план + видимые инженерные сети</option>
+              <option value="model">Скан + план + 3D модель</option>
+              <option value="modelEng">3D модель с видимыми инженерными сетями</option>
+              <option value="archicad">3D модель с инж. сетями, Archicad</option>
+            </select></div>
+            <div><label>Детализация</label><select id="lod"><option value="1">LOD200</option><option value="1.5">LOD300 ×1.5</option></select></div>
+            <div><label>НДС</label><select id="vat"><option value="0">Без НДС</option><option value="0.05">НДС 5%</option><option value="0.25">НДС 25%</option></select></div>
+            <div><label>Км от Нижнего Новгорода</label><input id="distance" type="number" min="0" value="0"><div class="field-note">Для выездов в область и соседние регионы. Ориентир: до 500 км от Нижнего.</div></div>
+            <div><label>Скидка для 1000+ м²</label><select id="discount"><option value="0">Нет</option><option value="0.1">10%</option><option value="0.25">25%</option><option value="0.5">50%</option></select></div>
+          </div>
+          <div class="addons">
+            <label class="check"><input id="heritage" type="checkbox"> Культурное наследие ×1.35</label>
+            <label class="check"><input id="deviations" type="checkbox"> Отклонения на чертеже +5 000 ₽</label>
+            <label class="check"><input id="urgent" type="checkbox"> Сложный/срочный объект +20%</label>
+          </div>
+        </div>
+
+        <div id="facade" class="section">
+          <h2>Фасадные работы</h2>
+          <div class="form-grid">
+            <div><label>Площадь фасада, м²</label><input id="facadeArea" type="number" min="1" value="1200"></div>
+            <div><label>Сканирование</label><select id="facadeScan">
+              <option value="20">До 50 м, ч/б · 20 ₽/м²</option>
+              <option value="25">До 50 м, цвет · 25 ₽/м²</option>
+              <option value="30">50-200 м, ч/б · 30 ₽/м²</option>
+              <option value="35">50-200 м, цвет · 35 ₽/м²</option>
+              <option value="35">Лепнина, цвет · 35 ₽/м²</option>
+            </select></div>
+            <div><label>Чертежи</label><select id="facadeDrawing">
+              <option value="0">Не нужны</option>
+              <option value="15">Простой фасад · 15 ₽/м²</option>
+              <option value="25">Сложная геометрия · 25 ₽/м²</option>
+              <option value="35">Отклонения от плоскости · 35 ₽/м²</option>
+              <option value="100">Детальная лепнина · 100 ₽/м²</option>
+              <option value="150">Лепнина + повреждения · 150 ₽/м²</option>
+            </select></div>
+            <div><label>3D модель</label><select id="facadeModel">
+              <option value="0">Не нужна</option>
+              <option value="15">Простой LOD200 · 15 ₽/м²</option>
+              <option value="25">Простой LOD300 · 25 ₽/м²</option>
+              <option value="50">Простой LOD400 · 50 ₽/м²</option>
+              <option value="40">Сложный LOD300 · 40 ₽/м²</option>
+              <option value="70">Сложный с лепниной · 70 ₽/м²</option>
+            </select></div>
+          </div>
+          <div class="addons">
+            <label class="check"><input id="ortho" type="checkbox"> Ортофото / фотограмметрия +30 ₽/м²</label>
+            <label class="check"><input id="lift" type="checkbox"> Автовышка или мачта +30 000 ₽</label>
+            <label class="check"><input id="facadeHeritage" type="checkbox"> Культурное наследие ×1.35</label>
+          </div>
+        </div>
+
+        <div id="topo" class="section">
+          <h2>Топография и воздушное сканирование</h2>
+          <div class="form-grid">
+            <div><label>Площадь, га</label><input id="hectares" type="number" min="1" value="5"></div>
+            <div><label>Метод</label><select id="topoMethod">
+              <option value="slam">Наземно / SLAM / RTK</option>
+              <option value="vls">ВЛС, воздушное сканирование</option>
+            </select></div>
+            <div><label>Результат</label><select id="topoResult">
+              <option value="20000">ЦММ + облако · от 20 000 ₽/га</option>
+              <option value="25000">Топо без сетей · от 25 000 ₽/га</option>
+              <option value="35000">Топо с сетями и согласованиями · от 35 000 ₽/га</option>
+            </select></div>
+            <div><label>Локация</label><select id="topoLocation">
+              <option value="0">Нижний Новгород / область</option>
+              <option value="1">Соседний регион, командировочные отдельно</option>
+            </select></div>
+          </div>
+          <div class="field-note">Для ВЛС в таблице указан минимум 300 000 ₽ за облако и ЦММ, дальше ставка зависит от объёма.</div>
+        </div>
+
+        <div id="tanks" class="section">
+          <h2>Градуировка резервуаров</h2>
+          <div class="form-grid">
+            <div><label>Количество резервуаров</label><input id="tankCount" type="number" min="1" value="2"></div>
+            <div><label>Объём одного резервуара</label><select id="tankVolume">
+              <option value="50000">До 50 м³ · 50 000 ₽/шт</option>
+              <option value="60000">Более 50 м³ · 60 000 ₽/шт</option>
+              <option value="30000">400-1000 м³ · 30 000 ₽/шт</option>
+              <option value="35000">5000 м³ · 35 000 ₽/шт</option>
+              <option value="40000">10000 м³ · 40 000 ₽/шт</option>
+            </select></div>
+            <div><label>Тип</label><select id="tankType"><option>Наземный</option><option>Подземный</option><option>С секциями / конусное дно</option></select></div>
+            <div><label>Документы</label><select id="tankDocs"><option value="0">Только таблица</option><option value="10000">Документы/сертификаты +10 000 ₽/шт</option><option value="20000">Поверка/калибровка +20 000 ₽/шт</option></select></div>
+          </div>
+        </div>
+
+        <div id="reverse" class="section">
+          <h2>Реверс-инжиниринг</h2>
+          <div class="form-grid">
+            <div><label>Количество деталей</label><input id="partCount" type="number" min="1" value="1"></div>
+            <div><label>Точность</label><select id="accuracy">
+              <option value="1">Более 1 мм</option>
+              <option value="1.4">0.5-1 мм</option>
+              <option value="2">0.1-0.5 мм</option>
+              <option value="3">0.05-0.1 мм</option>
+              <option value="4">Менее 0.05 мм</option>
+            </select></div>
+            <div><label>CAD-модель</label><select id="cad"><option value="0">Не нужна</option><option value="25000">STP / CAD-модель +25 000 ₽</option></select></div>
+            <div><label>Базовая оценка</label><input id="reverseBase" type="number" min="10000" value="30000"></div>
+          </div>
+          <div class="field-note">В файле для реверса есть чек-лист вопросов, но нет жёсткого прайса. Поэтому этот блок даёт вилку для первичной оценки.</div>
+        </div>
+      </div>
+
+      <aside class="result">
+        <div class="mono">предварительная стоимость</div>
+        <div class="price" id="price">0 ₽</div>
+        <div class="subprice" id="subtitle">Расчёт обновляется автоматически</div>
+        <div class="lines" id="lines"></div>
+        <div class="warning" id="warning">Цена предварительная. Для точного КП нужны адрес, фото/планы, требуемый результат, точность, сроки и условия доступа.</div>
+        <button class="copy-btn" id="copyBtn">Скопировать текст для КП</button>
+      </aside>
+    </section>
+    </section>
+
+    <section class="brief">
+      <h2>Что спросить у заказчика</h2>
+      <div class="brief-grid">
+        <div class="brief-item"><strong>Объект и адрес</strong>Город, точный адрес, тип объекта: квартира, офис, фасад, завод, территория, резервуар.</div>
+        <div class="brief-item"><strong>Результат</strong>Облако точек, DWG/PDF, Revit/RVT, Archicad/PLA, 3D модель, топоплан, градуировочная таблица.</div>
+        <div class="brief-item"><strong>Исходники</strong>Планы, фото, границы съёмки, KML/кадастровый номер, доступы, геодезическая система координат.</div>
+        <div class="brief-item"><strong>Инженерка</strong>Нужны ли видимые сети, скрытые сети по проекту, согласования подземных коммуникаций.</div>
+        <div class="brief-item"><strong>Точность и сроки</strong>Стандартно до 10 мм. Точность 1 мм и менее может стоить до ×3 из-за другого оборудования.</div>
+        <div class="brief-item"><strong>Риски</strong>Люди на объекте, закрытые помещения, отопление/освещение, высотность фасада, автовышка, командировка.</div>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="section-head">
+        <div>
+          <div class="mono">faq</div>
+          <h2>Частые вопросы</h2>
+        </div>
+        <p>Короткие ответы на вопросы, которые обычно возникают перед заказом лазерного сканирования и обмерных работ.</p>
+      </div>
+      <div class="cards">
+        <div class="info-card"><strong>Чем лазерное сканирование лучше ручного обмера?</strong><p>Сканер фиксирует миллионы точек и снижает риск пропустить выступы, отклонения, кривизну стен, потолков и сложные узлы.</p></div>
+        <div class="info-card"><strong>Можно ли получить DWG?</strong><p>Да. По результатам сканирования можно подготовить обмерные планы, фасады, разрезы и другие чертежи в DWG/PDF.</p></div>
+        <div class="info-card"><strong>Делаете Revit или BIM?</strong><p>Да, по договорённости. Сначала согласуем LOD, состав модели, формат и уровень детализации.</p></div>
+        <div class="info-card"><strong>Выезжаете за пределы Нижнего?</strong><p>Да. Работаем по Нижнему Новгороду, области и готовы выезжать в соседние регионы до 500 км.</p></div>
+        <div class="info-card"><strong>Работаете с ОКН?</strong><p>Да. Для объектов культурного наследия можно зафиксировать фасады, лепнину, своды, сложную геометрию и фактические отклонения.</p></div>
+        <div class="info-card"><strong>От чего зависит цена?</strong><p>От площади, сложности объекта, удалённости, доступа, срочности, точности и формата результата: облако, DWG, PDF, 3D или BIM.</p></div>
+      </div>
+    </section>
+
+    <section class="contact-band" id="contacts">
+      <div>
+        <h2>Пришлите задачу — подскажем формат и стоимость</h2>
+        <p>Напишите, что нужно обмерить, где находится объект, примерную площадь и какой результат нужен: облако точек, DWG/PDF, 3D, Revit/BIM, данные для обследования или резервуаров.</p>
+      </div>
+      <div class="contact-actions">
+        <a class="btn" href="https://t.me/frolovr9">Написать в Telegram</a>
+        <a class="btn" href="tel:+79036060054">Позвонить</a>
+        <a class="btn secondary" href="mailto:frolovr9@gmail.com?subject=%D0%97%D0%B0%D0%BF%D1%80%D0%BE%D1%81%20%D0%BD%D0%B0%203D-%D1%81%D0%BA%D0%B0%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5">Написать на почту</a>
+        <div class="contact-note">Telegram: @frolovr9 · Телефон и MAX: +7 903 606-00-54 · Email: frolovr9@gmail.com</div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast">Скопировано</div>
+
+  <script>
+    const fmt = new Intl.NumberFormat('ru-RU');
+    const tabs = document.querySelectorAll('.tab');
+    const sections = document.querySelectorAll('.section');
+    let current = 'interior';
+
+    const el = id => document.getElementById(id);
+    const rub = value => fmt.format(Math.round(value)) + ' ₽';
+    const num = id => Number(el(id).value || 0);
+    const checked = id => el(id).checked;
+
+    tabs.forEach(tab => tab.addEventListener('click', () => {
+      current = tab.dataset.tab;
+      tabs.forEach(t => t.classList.toggle('active', t === tab));
+      sections.forEach(s => s.classList.toggle('active', s.id === current));
+      calculate();
+    }));
+
+    document.querySelectorAll('input, select').forEach(input => input.addEventListener('input', calculate));
+
+    function minInterior(area, service) {
+      if (area <= 100) {
+        return {
+          scanColor: 15000,
+          scanBw: 15000,
+          plan: 18000,
+          planEng: 20000,
+          model: 20000,
+          modelEng: 30000,
+          archicad: 35000
+        }[service];
+      }
+      return 0;
+    }
+
+    function interiorRate(service) {
+      return {
+        scanBw: 60,
+        scanColor: 80,
+        plan: 80,
+        planEng: 120,
+        model: 130,
+        modelEng: 180,
+        archicad: 260
+      }[service];
+    }
+
+    function serviceName(service) {
+      return {
+        scanColor: 'только сканирование, цвет',
+        scanBw: 'только сканирование, ч/б',
+        plan: 'сканирование + чертёж план',
+        planEng: 'план + видимые инженерные сети',
+        model: 'план + 3D модель',
+        modelEng: '3D модель с инженерными сетями',
+        archicad: 'Archicad/PLA с инженерными сетями'
+      }[service];
+    }
+
+    function calcInterior() {
+      const area = num('area');
+      const service = el('interiorService').value;
+      const base = Math.max(minInterior(area, service), area * interiorRate(service));
+      let total = base;
+      const lines = [
+        ['Площадь', area + ' м²'],
+        ['Результат', serviceName(service)],
+        ['База', rub(base)]
+      ];
+      if (checked('deviations')) { total += 5000; lines.push(['Отклонения', rub(5000)]); }
+      const distanceCost = num('distance') * 200;
+      if (distanceCost) { total += distanceCost; lines.push(['Удалённость', rub(distanceCost)]); }
+      if (checked('heritage')) { total *= 1.35; lines.push(['Культурное наследие', '×1.35']); }
+      total *= Number(el('lod').value);
+      if (el('lod').value !== '1') lines.push(['Детализация', 'LOD300 ×1.5']);
+      if (area > 1000 && num('discount')) { total *= 1 - num('discount'); lines.push(['Скидка объём', '-' + Math.round(num('discount') * 100) + '%']); }
+      if (checked('urgent')) { total *= 1.2; lines.push(['Сложность/срочность', '+20%']); }
+      const vat = num('vat');
+      if (vat) { lines.push(['НДС', '+' + Math.round(vat * 100) + '%']); total *= 1 + vat; }
+      return { total, lines, subtitle: 'Помещения и гражданские объекты' };
+    }
+
+    function calcFacade() {
+      const area = num('facadeArea');
+      let rate = num('facadeScan') + num('facadeDrawing') + num('facadeModel');
+      if (checked('ortho')) rate += 30;
+      let total = Math.max(area * rate, 50000);
+      const lines = [['Площадь фасада', area + ' м²'], ['Ставка', rate + ' ₽/м²'], ['Минимальный выезд', '50 000 ₽']];
+      if (checked('lift')) { total += 30000; lines.push(['Автовышка/мачта', rub(30000)]); }
+      if (checked('facadeHeritage')) { total *= 1.35; lines.push(['Культурное наследие', '×1.35']); }
+      return { total, lines, subtitle: 'Фасады, чертежи, модели и ортофото' };
+    }
+
+    function calcTopo() {
+      const ha = num('hectares');
+      const method = el('topoMethod').value;
+      let rate = num('topoResult');
+      let total = ha * rate;
+      if (method === 'vls') total = Math.max(total, 300000);
+      const lines = [['Площадь', ha + ' га'], ['Метод', method === 'vls' ? 'ВЛС' : 'Наземно / SLAM / RTK'], ['Ставка', rub(rate) + '/га']];
+      if (method === 'vls') lines.push(['Минимум ВЛС', '300 000 ₽']);
+      if (el('topoLocation').value === '1') lines.push(['Регион', 'командировка отдельно']);
+      return { total, lines, subtitle: 'Территории, ЦММ, топоплан и сети' };
+    }
+
+    function calcTanks() {
+      const count = num('tankCount');
+      const base = num('tankVolume');
+      const docs = num('tankDocs');
+      let total = count * (base + docs);
+      const lines = [['Количество', count + ' шт'], ['База за резервуар', rub(base)], ['Документы', docs ? rub(docs) + '/шт' : 'без доплаты'], ['Тип', el('tankType').value]];
+      if (count >= 10) { total *= .9; lines.push(['Скидка 10+ шт', '-10%']); }
+      return { total, lines, subtitle: 'Градуировка и калибровка резервуаров' };
+    }
+
+    function calcReverse() {
+      const count = num('partCount');
+      const factor = num('accuracy');
+      const base = num('reverseBase');
+      const cad = num('cad');
+      const total = count * base * factor + cad;
+      const lines = [['Деталей', count + ' шт'], ['База', rub(base)], ['Коэффициент точности', '×' + factor], ['CAD', cad ? rub(cad) : 'не требуется']];
+      return { total, lines, subtitle: 'Реверс-инжиниринг: первичная вилка' };
+    }
+
+    function calculate() {
+      const result = { interior: calcInterior, facade: calcFacade, topo: calcTopo, tanks: calcTanks, reverse: calcReverse }[current]();
+      el('price').textContent = rub(result.total);
+      el('subtitle').textContent = result.subtitle;
+      el('lines').innerHTML = result.lines.map(([k, v]) => '<div class="line"><span>' + k + '</span><strong>' + v + '</strong></div>').join('');
+      window.currentQuote = result;
+    }
+
+    el('copyBtn').addEventListener('click', async () => {
+      const quote = window.currentQuote;
+      const lines = quote.lines.map(([k, v]) => k + ': ' + v).join('\n');
+      const text = 'Предварительный расчёт лазерного сканирования\n' + lines + '\nИтого: ' + rub(quote.total) + '\n\nЦена предварительная, для точного КП нужны адрес, фото/планы, результат, точность, сроки и условия доступа.';
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast('Текст КП скопирован');
+      } catch {
+        showToast('Не удалось скопировать');
+      }
+    });
+
+    function showToast(text) {
+      const toast = el('toast');
+      toast.textContent = text;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+    calculate();
+  </script>
+</body>
+</html>

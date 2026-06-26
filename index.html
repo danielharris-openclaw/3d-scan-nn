@@ -1,607 +1,874 @@
-<!doctype html>
-<html lang="ru">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Лазерное 3D-сканирование и обмеры в Нижнем Новгороде | Trimble X7</title>
-  <meta name="description" content="Обмеры помещений, зданий, фасадов, объектов культурного наследия и резервуаров методом лазерного 3D-сканирования Trimble X7. Нижний Новгород и выезды до 500 км. Облако точек, DWG, PDF, Revit/BIM по ТЗ.">
-  <link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  <meta name="apple-mobile-web-app-title" content="Лазерные обмеры">
-  <meta name="theme-color" content="#111412">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --ink: #111412;
-      --muted: #68726d;
-      --paper: #f4f1ea;
-      --panel: #fffaf0;
-      --line: #d8d1c3;
-      --green: #25584a;
-      --lime: #c9dd65;
-      --red: #d64027;
-      --blue: #225c8a;
-      --dark: #17211d;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Onest, sans-serif;
-      color: var(--ink);
-      background:
-        linear-gradient(rgba(17,20,18,.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(17,20,18,.05) 1px, transparent 1px),
-        var(--paper);
-      background-size: 28px 28px;
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background: radial-gradient(circle at 75% 12%, rgba(201,221,101,.34), transparent 28%),
-                  radial-gradient(circle at 18% 20%, rgba(34,92,138,.14), transparent 30%);
-      z-index: -1;
-    }
-    header {
-      padding: 28px clamp(18px, 4vw, 54px) 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 800;
-      letter-spacing: .01em;
-    }
-    .mark {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      color: white;
-      background: var(--green);
-      border: 2px solid var(--ink);
-      box-shadow: 5px 5px 0 var(--lime);
-      font-family: "IBM Plex Mono", monospace;
-      font-weight: 700;
-    }
-    .status {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 12px;
-      color: var(--green);
-      border: 1px solid var(--green);
-      background: rgba(255,250,240,.8);
-      padding: 8px 10px;
-    }
-    .header-links {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-    .header-links a {
-      color: var(--ink);
-      text-decoration: none;
-      font-weight: 800;
-      font-size: 14px;
-    }
-    main { padding: 0 clamp(18px, 4vw, 54px) 54px; }
-    .hero {
-      min-height: 520px;
-      display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr);
-      gap: clamp(24px, 5vw, 70px);
-      align-items: end;
-      padding: 46px 0 38px;
-    }
-    h1 {
-      margin: 0;
-      max-width: 880px;
-      font-size: clamp(42px, 7vw, 92px);
-      line-height: .88;
-      letter-spacing: 0;
-    }
-    .hero p {
-      max-width: 680px;
-      color: #343d38;
-      font-size: clamp(17px, 2vw, 22px);
-      line-height: 1.45;
-      margin: 24px 0 0;
-    }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 18px;
-      padding: 8px 10px;
-      border: 1px solid var(--green);
-      background: rgba(255,250,240,.85);
-      color: var(--green);
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-    .cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 28px;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 48px;
-      padding: 13px 18px;
-      border: 2px solid var(--ink);
-      background: var(--lime);
-      color: var(--ink);
-      text-decoration: none;
-      font: 800 13px "IBM Plex Mono", monospace;
-      box-shadow: 5px 5px 0 rgba(17,20,18,.18);
-    }
-    .btn.secondary {
-      background: var(--panel);
-      box-shadow: none;
-    }
-    .hero-card {
-      background: var(--dark);
-      color: white;
-      padding: 24px;
-      border: 2px solid var(--ink);
-      box-shadow: 12px 12px 0 var(--red);
-    }
-    .hero-card .mono { color: var(--lime); }
-    .hero-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-top: 22px;
-    }
-    .metric {
-      border: 1px solid rgba(255,255,255,.25);
-      padding: 14px;
-      min-height: 92px;
-    }
-    .metric strong {
-      display: block;
-      font-size: 28px;
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-    .trust-strip {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin: 12px 0 34px;
-    }
-    .trust-item {
-      background: rgba(255,250,240,.94);
-      border: 2px solid var(--ink);
-      padding: 16px;
-      min-height: 104px;
-      box-shadow: 4px 4px 0 rgba(17,20,18,.12);
-    }
-    .trust-item strong {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 18px;
-    }
-    .trust-item span {
-      color: var(--muted);
-      line-height: 1.4;
-      font-size: 14px;
-    }
-    .content-section {
-      padding: clamp(34px, 6vw, 72px) 0;
-      border-top: 2px solid rgba(17,20,18,.12);
-    }
-    .section-head {
-      display: grid;
-      grid-template-columns: minmax(0, .72fr) minmax(260px, .28fr);
-      gap: 24px;
-      align-items: end;
-      margin-bottom: 22px;
-    }
-    .section-head p {
-      margin: 0;
-      color: #343d38;
-      line-height: 1.55;
-    }
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-    .info-card {
-      background: rgba(255,250,240,.94);
-      border: 2px solid var(--ink);
-      padding: 18px;
-      min-height: 158px;
-      box-shadow: 5px 5px 0 rgba(17,20,18,.12);
-    }
-    .info-card strong {
-      display: block;
-      margin-bottom: 9px;
-      font-size: 18px;
-    }
-    .info-card p {
-      margin: 0;
-      color: #37413c;
-      line-height: 1.48;
-    }
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-    .feature {
-      display: grid;
-      grid-template-columns: 48px 1fr;
-      gap: 14px;
-      align-items: start;
-      background: rgba(255,250,240,.94);
-      border: 1px solid var(--line);
-      padding: 16px;
-    }
-    .feature .num {
-      display: grid;
-      place-items: center;
-      width: 42px;
-      height: 42px;
-      background: var(--dark);
-      color: var(--lime);
-      font-family: "IBM Plex Mono", monospace;
-      font-weight: 800;
-    }
-    .feature strong { display: block; margin-bottom: 5px; }
-    .feature p { margin: 0; color: var(--muted); line-height: 1.45; }
-    .calculator-intro {
-      margin-bottom: 16px;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
-      gap: 18px;
-      align-items: end;
-    }
-    .calculator-intro p {
-      color: #343d38;
-      line-height: 1.55;
-      margin: 0;
-    }
-    .contact-band {
-      margin-top: 24px;
-      background: var(--dark);
-      color: white;
-      border: 2px solid var(--ink);
-      padding: clamp(22px, 4vw, 36px);
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 18px;
-      align-items: center;
-      box-shadow: 8px 8px 0 var(--lime);
-    }
-    .contact-band h2 { margin-bottom: 10px; }
-    .contact-band p { margin: 0; color: rgba(255,255,255,.78); line-height: 1.55; }
-    .contact-band .btn { box-shadow: none; }
-    .contact-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: flex-end;
-    }
-    .contact-note {
-      grid-column: 1 / -1;
-      color: rgba(255,255,255,.78);
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 12px;
-      line-height: 1.45;
-      text-align: right;
-    }
-    .mono {
-      font-family: "IBM Plex Mono", monospace;
-      text-transform: uppercase;
-      letter-spacing: .04em;
-      font-size: 12px;
-    }
-    .tabs {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin: 18px 0;
-      position: sticky;
-      top: 0;
-      z-index: 3;
-      padding: 10px 0;
-      background: rgba(244,241,234,.86);
-      backdrop-filter: blur(10px);
-    }
-    .tab {
-      border: 2px solid var(--ink);
-      background: var(--panel);
-      padding: 11px 14px;
-      font: 700 13px "IBM Plex Mono", monospace;
-      cursor: pointer;
-      transition: transform .15s ease, background .15s ease;
-    }
-    .tab:hover { transform: translateY(-2px); }
-    .tab.active { background: var(--lime); }
-    .workspace {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 390px;
-      gap: 18px;
-      align-items: start;
-    }
-    .panel, .result, .brief {
-      background: rgba(255,250,240,.94);
-      border: 2px solid var(--ink);
-      box-shadow: 6px 6px 0 rgba(17,20,18,.16);
-    }
-    .panel { padding: clamp(18px, 3vw, 30px); }
-    .section { display: none; }
-    .section.active { display: block; }
-    h2 {
-      margin: 0 0 18px;
-      font-size: clamp(26px, 3vw, 40px);
-      line-height: 1;
-    }
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-    }
-    label {
-      display: block;
-      font-weight: 700;
-      font-size: 13px;
-      margin-bottom: 8px;
-    }
-    input, select {
-      width: 100%;
-      min-height: 46px;
-      border: 2px solid var(--ink);
-      background: white;
-      color: var(--ink);
-      padding: 10px 12px;
-      font: 600 15px Onest, sans-serif;
-      border-radius: 0;
-    }
-    input[type="checkbox"] { width: 18px; min-height: 18px; accent-color: var(--red); }
-    .check {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      border: 1px solid var(--line);
-      padding: 12px;
-      background: rgba(255,255,255,.55);
-    }
-    .field-note {
-      margin-top: 6px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.35;
-    }
-    .addons {
-      display: grid;
-      gap: 10px;
-      margin-top: 18px;
-    }
-    .result {
-      position: sticky;
-      top: 82px;
-      padding: 22px;
-      background: var(--dark);
-      color: white;
-    }
-    .price {
-      font-size: clamp(38px, 5vw, 58px);
-      font-weight: 800;
-      line-height: .9;
-      margin: 10px 0 8px;
-      color: var(--lime);
-    }
-    .subprice { color: rgba(255,255,255,.7); margin-bottom: 18px; }
-    .lines { display: grid; gap: 9px; margin-top: 18px; }
-    .line {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255,255,255,.16);
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 13px;
-    }
-    .line span:first-child { color: rgba(255,255,255,.72); }
-    .warning {
-      margin-top: 16px;
-      padding: 13px;
-      background: rgba(214,64,39,.16);
-      border: 1px solid rgba(214,64,39,.8);
-      color: #ffd6cd;
-      font-size: 13px;
-      line-height: 1.45;
-    }
-    .copy-btn {
-      width: 100%;
-      margin-top: 18px;
-      border: 2px solid var(--lime);
-      background: var(--lime);
-      color: var(--ink);
-      padding: 13px 14px;
-      font: 800 13px "IBM Plex Mono", monospace;
-      cursor: pointer;
-    }
-    .brief {
-      margin-top: 18px;
-      padding: 24px;
-    }
-    .brief-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-    .brief-item {
-      background: white;
-      border: 1px solid var(--line);
-      padding: 14px;
-      min-height: 120px;
-    }
-    .brief-item strong { display: block; margin-bottom: 8px; }
-    .toast {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      background: var(--ink);
-      color: white;
-      padding: 12px 14px;
-      transform: translateY(80px);
-      opacity: 0;
-      transition: .25s ease;
-      z-index: 5;
-    }
-    .toast.show { transform: translateY(0); opacity: 1; }
-    @media (max-width: 980px) {
-      .hero, .workspace, .section-head, .calculator-intro, .contact-band { grid-template-columns: 1fr; }
-      .result { position: static; }
-      .brief-grid { grid-template-columns: 1fr; }
-      .trust-strip, .cards, .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .contact-actions { justify-content: flex-start; }
-      .contact-note { text-align: left; }
-    }
-    @media (max-width: 640px) {
-      header { align-items: flex-start; flex-direction: column; }
-      .header-links { justify-content: flex-start; }
-      .form-grid, .hero-grid { grid-template-columns: 1fr; }
-      .trust-strip, .cards, .feature-grid { grid-template-columns: 1fr; }
-      .tab { flex: 1 1 calc(50% - 8px); }
-    }
-  </style>
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Лазерное 3D-сканирование и обмеры в Нижнем Новгороде | Trimble X7</title>
+<meta name="description" content="Лазерное 3D-сканирование и точные обмеры зданий, помещений, фасадов, ОКН и резервуаров в Нижнем Новгороде на Trimble X7. Облако точек, DWG/PDF, 3D и BIM/Revit. Выезд до 500 км.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#0E1219">
+<link rel="canonical" href="https://3d-scan-nn.ru/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Лазерное 3D-сканирование и обмеры в Нижнем Новгороде | Trimble X7">
+<meta property="og:description" content="Лазерное 3D-сканирование и точные обмеры зданий, помещений, фасадов, ОКН и резервуаров в Нижнем Новгороде на Trimble X7. Облако точек, DWG/PDF, 3D и BIM/Revit. Выезд до 500 км.">
+<meta property="og:url" content="https://3d-scan-nn.ru/">
+<meta property="og:image" content="https://3d-scan-nn.ru/assets/img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"LocalBusiness","name":"3D-Scan NN — лазерное 3D-сканирование и обмеры","image":"https://3d-scan-nn.ru/assets/img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp","@id":"https://3d-scan-nn.ru/","url":"https://3d-scan-nn.ru/","telephone":"+79036060054","email":"frolovr9@gmail.com","priceRange":"от 20000 RUB","address":{"@type":"PostalAddress","addressLocality":"Нижний Новгород","addressRegion":"Нижегородская область","addressCountry":"RU"},"areaServed":"Нижний Новгород и выезд до 500 км","founder":"ИП Фролов Роман Александрович","taxID":"525903804858","description":"Лазерное 3D-сканирование и точные обмеры зданий, помещений, фасадов, ОКН и резервуаров на Trimble X7."}
+</script>
+<style>
+  .lf-row{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .lf-field{margin-bottom:14px;}
+  .lf-field label{display:block; font-family:'Manrope',sans-serif; font-size:13px; font-weight:600; color:#14181F; margin-bottom:6px;}
+  .lf-field input,.lf-field select,.lf-field textarea{width:100%; font-family:'Manrope',sans-serif; font-size:15px; color:#14181F; background:#fff; border:1px solid #D6DCE6; border-radius:6px; padding:12px 14px; outline:none;}
+  .lf-field input:focus,.lf-field select:focus,.lf-field textarea:focus{border-color:#0B5FFF;}
+  .lf-field input.lf-invalid{border-color:#FF5A1F; background:#FFF6F2;}
+  .lf-consent{display:flex; align-items:flex-start; gap:9px; font-family:'Manrope',sans-serif; font-size:13.5px; color:#5A6573; margin:6px 0 0;}
+  .lf-consent input{width:17px; height:17px; margin-top:1px; accent-color:#0B5FFF;}
+  .lf-submit{width:100%; margin-top:18px; font-family:'Manrope',sans-serif; font-weight:700; font-size:15.5px; color:#fff; background:#FF5A1F; border:none; padding:15px; border-radius:6px; cursor:pointer;}
+  .lf-msg{margin-top:14px; font-size:14px; text-align:center; display:none;}
+  .lf-msg.ok{display:block; color:#1E8A5A;}
+  .lf-msg.err{display:block; color:#D64027;}
+  #cookie{position:fixed; left:16px; right:16px; bottom:16px; max-width:560px; margin:0 auto; background:#14181F; color:#C5CDD8; font-family:'Manrope',sans-serif; font-size:13px; line-height:1.5; padding:16px 18px; border-radius:10px; box-shadow:0 16px 40px rgba(0,0,0,.4); display:none; align-items:center; gap:14px; z-index:1000;}
+  #cookie a{color:#5E9BFF;}
+  #cookie button{flex-shrink:0; font-family:'Manrope',sans-serif; font-weight:700; font-size:13px; color:#fff; background:#0B5FFF; border:none; padding:9px 16px; border-radius:6px; cursor:pointer;}
+  @media (max-width:880px){
+    [style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:1fr !important;}
+    [style*="grid-template-columns:repeat(4,1fr)"]{grid-template-columns:repeat(2,1fr) !important;}
+    [style*="grid-template-columns:repeat(7,1fr)"]{grid-template-columns:repeat(2,1fr) !important;}
+    [style*="grid-template-columns:repeat(2,1fr)"]{grid-template-columns:1fr !important;}
+    [style*="grid-template-columns:1.04fr"]{grid-template-columns:1fr !important;}
+    [style*="grid-template-columns:1.05fr"]{grid-template-columns:1fr !important;}
+    h1{font-size:34px !important;}
+    h2{font-size:26px !important;}
+    [style*="padding:96px 40px"]{padding:54px 18px !important;}
+    [style*="padding:104px 40px"]{padding:60px 18px !important;}
+    [style*="padding:60px 40px 0"]{padding:32px 18px 0 !important;}
+    [style*="padding:48px 40px"]{padding:30px 18px !important;}
+    [style*="padding:20px 40px"]{padding:18px 18px !important;}
+    [style*="padding:22px 40px"]{padding:16px 18px !important; flex-wrap:wrap; gap:12px;}
+    .nav-links{display:none !important;}
+    .proc-line{display:none !important;}
+    .lf-row{grid-template-columns:1fr;}
+    #calc{padding:22px 16px !important;}
+    [style*="width:440px"]{width:100% !important;}
+    [style*="max-width:480px"]{max-width:100% !important;}
+  }
+  @media (max-width:560px){
+    [style*="grid-template-columns:repeat(4,1fr)"]{grid-template-columns:1fr !important;}
+    [style*="grid-template-columns:repeat(7,1fr)"]{grid-template-columns:1fr !important;}
+    h1{font-size:29px !important;}
+  }
+</style>
+<!-- Yandex.Metrika: замените XXXXXXXX на номер счётчика с metrika.yandex.ru -->
+<script type="text/javascript">
+(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
+window.METRIKA_ID="XXXXXXXX";
+if(window.METRIKA_ID!=="XXXXXXXX"){ym(window.METRIKA_ID,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});}
+</script>
 </head>
 <body>
-  <header>
-    <div class="brand"><div class="mark">3D</div><div>Лазерные обмеры<br><span class="mono">Trimble X7 · Нижний Новгород</span></div></div>
-    <div class="header-links">
-      <a href="#services">Услуги</a>
-      <a href="#deliverables">Результат</a>
-      <a href="#calculator">Калькулятор</a>
-      <a href="#contacts">Контакты</a>
-      <a href="https://t.me/frolovr9">Telegram</a>
-      <a href="tel:+79036060054">+7 903 606-00-54</a>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<style>/* cyrillic-ext */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/bde85973-3b5c-4adc-9c02-c516f0b76879.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/dcbd8b9a-925e-4d14-879c-f9a58ebb33ca.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/95b4319a-537d-43ad-994a-84d12729f25a.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/b7b45745-5b98-4f5e-a995-44d9dca4a095.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/04169149-9833-42bc-bd3e-707d957d42d3.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/16179b2e-8a54-4ac8-bfc3-00b5014c2525.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/53488fd7-5470-4c49-83d6-551e17fee4e6.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/804056ce-a179-45e1-b903-7aa7005631b0.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/67068b53-9927-42e5-915d-5021e7d5d509.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/36de96ea-7cdd-4880-acbf-79b23a626c83.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/1a4913e0-0f6e-4c33-8d25-f994c60f21ff.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/6df0e662-773d-42fe-b201-f37a36764d86.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/41c2d21c-c149-4591-a516-05cb44fa1a02.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/8887462a-64cf-4df9-a0cc-a7287481df98.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/a6a1c43e-9114-418e-8e59-de0676c23112.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/77e05ded-d66d-42f0-8dc2-6433ca0f7aee.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/7bd36ca5-da13-4add-bcb9-5f84f7443dcf.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/a292103c-0dd5-48a4-be1a-19da1da19d52.woff2") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/3ce1ae9d-8c56-447e-93be-425cecfc8666.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/77e05ded-d66d-42f0-8dc2-6433ca0f7aee.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/7bd36ca5-da13-4add-bcb9-5f84f7443dcf.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/a292103c-0dd5-48a4-be1a-19da1da19d52.woff2") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/3ce1ae9d-8c56-447e-93be-425cecfc8666.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/77e05ded-d66d-42f0-8dc2-6433ca0f7aee.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/7bd36ca5-da13-4add-bcb9-5f84f7443dcf.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/a292103c-0dd5-48a4-be1a-19da1da19d52.woff2") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/3ce1ae9d-8c56-447e-93be-425cecfc8666.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/77e05ded-d66d-42f0-8dc2-6433ca0f7aee.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/7bd36ca5-da13-4add-bcb9-5f84f7443dcf.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/a292103c-0dd5-48a4-be1a-19da1da19d52.woff2") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/3ce1ae9d-8c56-447e-93be-425cecfc8666.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("assets/fonts/77e05ded-d66d-42f0-8dc2-6433ca0f7aee.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("assets/fonts/7bd36ca5-da13-4add-bcb9-5f84f7443dcf.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("assets/fonts/a292103c-0dd5-48a4-be1a-19da1da19d52.woff2") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("assets/fonts/3ce1ae9d-8c56-447e-93be-425cecfc8666.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("assets/fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("assets/fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/9e8b96cb-2953-4687-a194-a2e497d38343.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/2db06161-42df-438b-b56a-73444d83b1ca.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/9e8b96cb-2953-4687-a194-a2e497d38343.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/2db06161-42df-438b-b56a-73444d83b1ca.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/9e8b96cb-2953-4687-a194-a2e497d38343.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/2db06161-42df-438b-b56a-73444d83b1ca.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/9e8b96cb-2953-4687-a194-a2e497d38343.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/2db06161-42df-438b-b56a-73444d83b1ca.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+</style>
+<style>
+  *{ box-sizing:border-box; }
+  body{ margin:0; }
+  @keyframes ringpulse{ 0%{ transform:scale(.9); opacity:.7 } 50%{ transform:scale(1.05); opacity:.25 } 100%{ transform:scale(.9); opacity:.7 } }
+  @keyframes scan{ 0%{ transform:translateY(-50%) } 100%{ transform:translateY(50%) } }
+</style>
+
+
+
+<div style="font-family:'Manrope',sans-serif; color:#14181F; background:#fff;">
+
+<!-- ============ NAV + HERO (dark premium) ============ -->
+<div style="position:relative; background:#0E1219; overflow:hidden;">
+  <div style="position:absolute; inset:0; background-image:radial-gradient(rgba(120,170,255,.55) 1px, transparent 1.4px); background-size:18px 18px; opacity:.22;"></div>
+  <div style="position:absolute; top:-160px; right:-120px; width:640px; height:640px; background:radial-gradient(circle, rgba(11,95,255,.32), transparent 62%);"></div>
+  <div style="position:absolute; bottom:-200px; left:-140px; width:520px; height:520px; background:radial-gradient(circle, rgba(11,95,255,.14), transparent 65%);"></div>
+
+  <!-- nav -->
+  <div style="position:relative; max-width:1180px; margin:0 auto; padding:22px 40px; display:flex; align-items:center; justify-content:space-between;">
+    <div style="display:flex; align-items:center; gap:11px;">
+      <div style="width:30px; height:30px; border:2px solid #fff; border-radius:50%; position:relative;"><div style="position:absolute; inset:7px; border:1.5px solid #FF5A1F; border-radius:50%;"></div></div>
+      <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:19px; color:#fff; letter-spacing:-.01em;">3D-SCAN<span style="color:#FF5A1F;">·</span>NN</div>
     </div>
-  </header>
+    <div class="nav-links" style="display:flex; align-items:center; gap:28px; font-size:14px; color:#AAB4C2; font-weight:500;">
+      <a href="#advantages" style="color:#C5CDD8; text-decoration:none;">Услуги</a>
+      <a href="#cases" style="color:#C5CDD8; text-decoration:none;">Кейсы</a>
+      <a href="#process" style="color:#C5CDD8; text-decoration:none;">Как работаем</a>
+      <a href="#price" style="color:#C5CDD8; text-decoration:none;">Стоимость</a>
+      <a href="#faq" style="color:#C5CDD8; text-decoration:none;">FAQ</a>
+    </div>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <a href="tel:+79036060054" style="font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:14px; color:#fff; text-decoration:none;">+7 903 606-00-54</a>
+      <a href="#leadform" style="font-family:'Manrope',sans-serif; font-weight:700; font-size:13.5px; color:#fff; background:#FF5A1F; padding:11px 18px; border-radius:3px; text-decoration:none;">Заявка</a>
+    </div>
+  </div>
 
-  <main>
-    <section class="hero">
+  <!-- hero body -->
+  <div style="position:relative; max-width:1180px; margin:0 auto; padding:60px 40px 0; display:grid; grid-template-columns:1.04fr 0.96fr; gap:40px; align-items:center;">
+    <div style="padding-bottom:64px;">
+      <div style="display:inline-flex; align-items:center; gap:9px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600; letter-spacing:.1em; color:#9CC0FF; border:1px solid rgba(120,170,255,.3); padding:8px 13px; border-radius:99px;">
+        <span style="width:7px; height:7px; background:#48E0A0; border-radius:50%;"></span>ЛАЗЕРНОЕ 3D-СКАНИРОВАНИЕ · TRIMBLE X7
+      </div>
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:54px; line-height:1.04; letter-spacing:-.025em; color:#fff; margin:24px 0 0 0; text-wrap:balance;">Точные обмеры и 3D-сканирование <span style="color:#5E9BFF;">без ошибок</span> и переделок</h1>
+      <p style="font-size:17px; line-height:1.6; color:#AAB4C2; margin:22px 0 0 0; max-width:480px;">Облако точек, точные чертежи DWG / PDF, планы, фасады, разрезы и BIM-модели для дизайнеров, проектировщиков, строителей и промышленных предприятий. Нижний Новгород, область и выезд до 500 км.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:32px;">
+        <a href="#price" style="display:inline-flex; align-items:center; gap:9px; font-weight:700; font-size:15.5px; color:#fff; background:#FF5A1F; padding:16px 28px; border-radius:3px; text-decoration:none; box-shadow:0 10px 28px rgba(255,90,31,.34);">Рассчитать стоимость <span style="font-family:'IBM Plex Mono',monospace;">→</span></a>
+        <a href="https://t.me/frolovr9" style="display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:15.5px; color:#fff; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); padding:15px 22px; border-radius:3px; text-decoration:none;">Написать в Telegram</a>
+        <a href="tel:+79036060054" style="display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:15.5px; color:#fff; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); padding:15px 22px; border-radius:3px; text-decoration:none;">Написать в МАХ</a>
+        <a href="tel:+79036060054" style="display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:15.5px; color:#fff; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); padding:15px 22px; border-radius:3px; text-decoration:none;">Позвонить</a>
+      </div>
+    </div>
+
+    <!-- hero visual: scanner photo + point cloud inset -->
+    <div style="position:relative; align-self:stretch; min-height:460px; display:flex; align-items:center; justify-content:center; padding:40px 0 56px;">
+      <div style="position:absolute; width:300px; height:300px; border:1px solid rgba(120,170,255,.28); border-radius:50%; animation:ringpulse 6s ease-in-out infinite; top:30px; right:30px;"></div>
+      <div style="position:relative; width:440px; max-width:100%;">
+        <div style="position:relative; border-radius:12px; overflow:hidden; border:1px solid rgba(120,170,255,.25); box-shadow:0 34px 70px rgba(0,0,0,.5);">
+          <img loading="eager" decoding="async" src="assets/img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp" alt="Лазерный 3D-сканер Trimble X7" style="display:block; width:100%; height:auto;">
+          <div style="position:absolute; top:14px; left:14px; width:20px; height:20px; border-left:2px solid #5E9BFF; border-top:2px solid #5E9BFF;"></div>
+          <div style="position:absolute; top:14px; right:14px; width:20px; height:20px; border-right:2px solid #5E9BFF; border-top:2px solid #5E9BFF;"></div>
+          <div style="position:absolute; bottom:14px; left:14px; width:20px; height:20px; border-left:2px solid #5E9BFF; border-bottom:2px solid #5E9BFF;"></div>
+          <div style="position:absolute; bottom:14px; right:14px; width:20px; height:20px; border-right:2px solid #5E9BFF; border-bottom:2px solid #5E9BFF;"></div>
+          <div style="position:absolute; top:16px; right:42px; font-family:'IBM Plex Mono',monospace; font-size:10px; color:#fff; background:rgba(14,18,25,.72); border:1px solid rgba(120,170,255,.4); padding:5px 9px; backdrop-filter:blur(2px);">TRIMBLE X7 · ±2 мм</div>
+        </div>
+        <div style="position:absolute; bottom:-30px; left:-44px; width:236px; border-radius:9px; overflow:hidden; border:1px solid rgba(120,170,255,.4); box-shadow:0 18px 38px rgba(0,0,0,.55); background:#0E1219;">
+          <img loading="eager" decoding="async" src="assets/img/e9ffe9a6-a0b4-4562-8a34-3df7facb4e64.webp" alt="Облако точек объекта" style="display:block; width:100%; height:134px; object-fit:cover; background:#fff;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:#9CC0FF; padding:7px 10px; border-top:1px solid rgba(120,170,255,.2);">ОБЛАКО ТОЧЕК · 2 480 000 pts</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- stat bar -->
+  <div style="position:relative; max-width:1180px; margin:0 auto; padding:0 40px;">
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid rgba(255,255,255,.1); font-family:'IBM Plex Mono',monospace;">
+      <div style="padding:22px 24px; border-right:1px solid rgba(255,255,255,.1);"><div style="font-size:26px; font-weight:600; color:#fff;">±2 мм</div><div style="font-size:11px; color:#7B8694; margin-top:5px; letter-spacing:.05em;">ТОЧНОСТЬ ИЗМЕРЕНИЙ</div></div>
+      <div style="padding:22px 24px; border-right:1px solid rgba(255,255,255,.1);"><div style="font-size:26px; font-weight:600; color:#fff;">500 км</div><div style="font-size:11px; color:#7B8694; margin-top:5px; letter-spacing:.05em;">РАДИУС ВЫЕЗДА</div></div>
+      <div style="padding:22px 24px; border-right:1px solid rgba(255,255,255,.1);"><div style="font-size:26px; font-weight:600; color:#fff;">1–2 дня</div><div style="font-size:11px; color:#7B8694; margin-top:5px; letter-spacing:.05em;">СРОК ВЫЕЗДА</div></div>
+      <div style="padding:22px 24px;"><div style="font-size:26px; font-weight:600; color:#FF7A47;">от 20 000 ₽</div><div style="font-size:11px; color:#7B8694; margin-top:5px; letter-spacing:.05em;">МИНИМАЛЬНЫЙ ЗАКАЗ</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ПРЕИМУЩЕСТВА / ДОВЕРИЕ ============ -->
+<section id="advantages" style="max-width:1180px; margin:0 auto; padding:96px 40px;">
+  <div style="display:flex; align-items:center; gap:9px; font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600; letter-spacing:.1em; color:#0B5FFF;"><span style="width:7px; height:7px; background:#0B5FFF; border-radius:50%;"></span>ПОЧЕМУ НАМ ДОВЕРЯЮТ</div>
+  <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:38px; line-height:1.1; letter-spacing:-.02em; color:#14181F; margin:16px 0 0 0; max-width:680px; text-wrap:balance;">Инженерная точность и понятный результат на каждом этапе</h2>
+
+  <div style="display:grid; grid-template-columns:1.05fr 0.95fr; margin-top:44px; border:1px solid #E6EAF1; border-radius:12px; overflow:hidden;">
+    <div style="position:relative; min-height:340px; background:#0E1219;"><img loading="lazy" decoding="async" src="assets/img/207ae4aa-6005-4f84-b37f-a9c74b1ded26.webp" alt="Сканирование на объекте Trimble X7" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"></div>
+    <div style="padding:44px;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.1em; color:#0B5FFF; font-weight:600;">ОБОРУДОВАНИЕ</div>
+      <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:27px; letter-spacing:-.01em; color:#14181F; margin-top:12px;">Сканируем на Trimble X7</div>
+      <p style="font-size:15px; line-height:1.6; color:#5A6573; margin:14px 0 0 0;">Профессиональный лазерный сканер мирового уровня: до 500 000 точек в секунду, автоматическая калибровка и регистрация сканов прямо на объекте. Геометрия фиксируется бесконтактно и без приблизительных замеров.</p>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:28px; padding-top:24px; border-top:1px solid #EDF0F5; font-family:'IBM Plex Mono',monospace;">
+        <div><div style="font-size:20px; font-weight:600; color:#14181F;">±2 мм</div><div style="font-size:10.5px; color:#7B8694; margin-top:4px;">ТОЧНОСТЬ</div></div>
+        <div><div style="font-size:20px; font-weight:600; color:#14181F;">500k</div><div style="font-size:10.5px; color:#7B8694; margin-top:4px;">ТОЧЕК / СЕК</div></div>
+        <div><div style="font-size:20px; font-weight:600; color:#14181F;">360°</div><div style="font-size:10.5px; color:#7B8694; margin-top:4px;">ОБЗОР</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:18px;">
+    <div style="border:1px solid #E6EAF1; border-radius:6px; padding:28px; background:#fff;">
+      <div style="width:46px; height:46px; border:1.5px solid #0B5FFF; border-radius:9px; display:flex; align-items:center; justify-content:center; margin-bottom:18px;"><div style="width:18px; height:24px; border:1.5px solid #0B5FFF; border-radius:3px;"></div></div>
+      <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:#14181F;">Сканер Trimble X7</div>
+      <p style="font-size:14.5px; line-height:1.55; color:#5A6573; margin:9px 0 0 0;">Профессиональное оборудование мирового уровня с автокалибровкой и регистрацией сканов прямо на объекте.</p>
+    </div>
+    <div style="border:1px solid #E6EAF1; border-radius:6px; padding:28px; background:#fff;">
+      <div style="width:46px; height:46px; border:1.5px solid #0B5FFF; border-radius:9px; display:flex; align-items:center; justify-content:center; margin-bottom:18px;"><div style="width:22px; height:22px; border:1.5px solid #0B5FFF; border-radius:50%; position:relative;"><div style="position:absolute; inset:6px; background:#0B5FFF; border-radius:50%;"></div></div></div>
+      <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:#14181F;">Высокая точность</div>
+      <p style="font-size:14.5px; line-height:1.55; color:#5A6573; margin:9px 0 0 0;">Погрешность до ±2 мм. Геометрия фиксируется как есть — без допущений и приблизительных замеров рулеткой.</p>
+    </div>
+    <div style="border:1px solid #E6EAF1; border-radius:6px; padding:28px; background:#fff;">
+      <div style="width:46px; height:46px; border:1.5px solid #0B5FFF; border-radius:9px; display:flex; align-items:center; justify-content:center; margin-bottom:18px;"><div style="width:20px; height:24px; border:1.5px solid #0B5FFF; border-radius:2px; border-top-width:4px;"></div></div>
+      <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:#14181F;">Официальный договор</div>
+      <p style="font-size:14.5px; line-height:1.55; color:#5A6573; margin:9px 0 0 0;">Работаем с физическими и юридическими лицами по договору с фиксированными сроками и составом результата.</p>
+    </div>
+    <div style="border:1px solid #E6EAF1; border-radius:6px; padding:28px; background:#fff;">
+      <div style="width:46px; height:46px; border:1.5px solid #0B5FFF; border-radius:9px; display:flex; align-items:center; justify-content:center; margin-bottom:18px;"><div style="width:24px; height:24px; border:1.5px solid #0B5FFF; border-radius:50%;"></div></div>
+      <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:#14181F;">Выезд до 500 км</div>
+      <p style="font-size:14.5px; line-height:1.55; color:#5A6573; margin:9px 0 0 0;">Нижний Новгород, область и соседние регионы. Выезжаем на объект в течение 1–2 дней после согласования.</p>
+    </div>
+    <div style="border:1px solid #E6EAF1; border-radius:6px; padding:28px; background:#fff;">
+      <div style="width:46px; height:46px; border:1.5px solid #0B5FFF; border-radius:9px; display:flex; align-items:center; justify-content:center; margin-bottom:18px;"><div style="width:24px; height:16px; border:1.5px solid #0B5FFF; border-radius:2px; border-left-width:4px;"></div></div>
+      <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:#14181F;">Быстрый расчёт</div>
+      <p style="font-size:14.5px; line-height:1.55; color:#5A6573; margin:9px 0 0 0;">Оценим стоимость и сроки в день обращения. Достаточно адреса, площади и фото или плана объекта.</p>
+    </div>
+    <div style="border:1px solid #E6EAF1; border-radius:6px; padding:28px; background:#fff;">
+      <div style="width:46px; height:46px; border:1.5px solid #0B5FFF; border-radius:9px; display:flex; align-items:center; justify-content:center; margin-bottom:18px;"><div style="display:flex; gap:3px;"><div style="width:5px; height:20px; background:#0B5FFF;"></div><div style="width:5px; height:14px; background:#0B5FFF;"></div><div style="width:5px; height:22px; background:#0B5FFF;"></div></div></div>
+      <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:#14181F;">Результат в любом формате</div>
+      <p style="font-size:14.5px; line-height:1.55; color:#5A6573; margin:9px 0 0 0;">Облако точек, DWG / PDF, планы и разрезы, 3D-модель, BIM / Revit — передаём ровно в том виде, что нужен проекту.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ДЛЯ КОГО ============ -->
+<section style="background:#F7F9FC; border-top:1px solid #EDF0F5; border-bottom:1px solid #EDF0F5;">
+  <div style="max-width:1180px; margin:0 auto; padding:96px 40px;">
+    <div style="display:flex; align-items:center; gap:9px; font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600; letter-spacing:.1em; color:#0B5FFF;"><span style="width:7px; height:7px; background:#0B5FFF; border-radius:50%;"></span>ДЛЯ КОГО ЭТА УСЛУГА</div>
+    <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:38px; line-height:1.1; letter-spacing:-.02em; color:#14181F; margin:16px 0 0 0; max-width:640px;">Решаем задачу там, где важна реальная геометрия</h2>
+
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:48px;">
+      <div style="background:#fff; border:1px solid #E6EAF1; border-radius:6px; padding:28px;"><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#0B5FFF; font-weight:600;">01</div><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:#14181F; margin-top:10px;">Дизайнеры интерьеров</div><p style="font-size:14.5px; line-height:1.55; color:#5A6573; margin:9px 0 0 0;">Точная подоснова под дизайн-проект: реальные стены, ниши, перепады. Меньше переделок планировок и мебели «не по размеру».</p></div>
+      <div style="background:#fff; border:1px solid #E6EAF1; border-radius:6px; padding:28px;"><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#0B5FFF; font-weight:600;">02</div><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:#14181F; margin-top:10px;">Проектировщики</div><p style="font-size:14.5px; line-height:1.55; color:#5A6573; margin:9px 0 0 0;">Достоверная исходная геометрия для рабочей документации. Облако точек как основа для планов, фасадов и разрезов.</p></div>
+      <div style="background:#fff; border:1px solid #E6EAF1; border-radius:6px; padding:28px;"><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#0B5FFF; font-weight:600;">03</div><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:#14181F; margin-top:10px;">Строители</div><p style="font-size:14.5px; line-height:1.55; color:#5A6573; margin:9px 0 0 0;">Контроль геометрии «как построено», проверка отклонений и приёмка работ по фактическим размерам конструкций.</p></div>
+      <div style="background:#fff; border:1px solid #E6EAF1; border-radius:6px; padding:28px;"><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#0B5FFF; font-weight:600;">04</div><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:#14181F; margin-top:10px;">Промышленность</div><p style="font-size:14.5px; line-height:1.55; color:#5A6573; margin:9px 0 0 0;">Обмер цехов, оборудования и коммуникаций под реконструкцию и монтаж. Точная привязка узлов без остановки производства.</p></div>
+      <div style="background:#fff; border:1px solid #E6EAF1; border-radius:6px; padding:28px;"><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#0B5FFF; font-weight:600;">05</div><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:#14181F; margin-top:10px;">Фасады и обследования</div><p style="font-size:14.5px; line-height:1.55; color:#5A6573; margin:9px 0 0 0;">Геометрия фасадов и конструкций для обследования, паспортизации и расчёта объёмов работ без лесов и опасных замеров.</p></div>
+      <div style="background:#fff; border:1px solid #E6EAF1; border-radius:6px; padding:28px;"><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#0B5FFF; font-weight:600;">06</div><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:#14181F; margin-top:10px;">Объекты культурного наследия</div><p style="font-size:14.5px; line-height:1.55; color:#5A6573; margin:9px 0 0 0;">Бесконтактная фиксация сложного декора и геометрии ОКН для реставрационной документации и обмерных чертежей.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ЧТО ВЫ ПОЛУЧИТЕ ============ -->
+<section style="max-width:1180px; margin:0 auto; padding:96px 40px;">
+  <div style="display:flex; align-items:center; gap:9px; font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600; letter-spacing:.1em; color:#0B5FFF;"><span style="width:7px; height:7px; background:#0B5FFF; border-radius:50%;"></span>ЧТО ВЫ ПОЛУЧИТЕ</div>
+  <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:38px; line-height:1.1; letter-spacing:-.02em; color:#14181F; margin:16px 0 0 0; max-width:640px;">Готовые материалы под вашу задачу</h2>
+
+  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:48px;">
+    <div style="border:1px solid #E6EAF1; border-radius:8px; background:#fff; overflow:hidden;"><div style="height:168px; background:#0E1219;"><img loading="lazy" decoding="async" src="assets/img/2c50c825-3873-48c6-ae75-a6d6d01730ee.webp" alt="Облако точек" style="width:100%; height:100%; object-fit:cover; display:block;"></div><div style="padding:22px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#14181F;">Облако точек</div><p style="font-size:14px; line-height:1.5; color:#5A6573; margin:7px 0 0 0;">Полная цифровая копия объекта в форматах .rcp / .e57 / .pts.</p></div></div>
+    <div style="border:1px solid #E6EAF1; border-radius:8px; background:#fff; overflow:hidden;"><div style="height:168px; background:#EDF1F7;"><img loading="lazy" decoding="async" src="assets/img/05dd5c34-e18d-4272-8f44-108dc970bd7a.webp" alt="Чертёж DWG / PDF" style="width:100%; height:100%; object-fit:cover; display:block;"></div><div style="padding:22px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#14181F;">DWG / PDF</div><p style="font-size:14px; line-height:1.5; color:#5A6573; margin:7px 0 0 0;">Обмерные чертежи в рабочих форматах, готовые к проектированию.</p></div></div>
+    <div style="border:1px solid #E6EAF1; border-radius:8px; background:#fff; overflow:hidden;"><div style="height:168px; background:#EDF1F7;"><img loading="lazy" decoding="async" src="assets/img/6f004f32-34b1-4a87-96c7-43c50f0f7ec5.webp" alt="Планы, фасады, разрезы" style="width:100%; height:100%; object-fit:cover; display:block;"></div><div style="padding:22px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#14181F;">Планы, фасады, разрезы</div><p style="font-size:14px; line-height:1.5; color:#5A6573; margin:7px 0 0 0;">Полный комплект обмерной документации в нужном масштабе.</p></div></div>
+    <div style="border:1px solid #E6EAF1; border-radius:8px; background:#fff; overflow:hidden;"><div style="height:168px; background:#0E1219;"><img loading="lazy" decoding="async" src="assets/img/2bf2b836-2934-45d1-9e53-91709fa4cb70.webp" alt="3D-модель объекта" style="width:100%; height:100%; object-fit:cover; display:block;"></div><div style="padding:22px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#14181F;">3D-модель</div><p style="font-size:14px; line-height:1.5; color:#5A6573; margin:7px 0 0 0;">Трёхмерная модель объекта для визуализации и проектирования.</p></div></div>
+    <div style="border:1px solid #E6EAF1; border-radius:8px; background:#fff; overflow:hidden;"><div style="height:168px; background:#fff;"><img loading="lazy" decoding="async" src="assets/img/cdfa3155-5d6d-478a-bc59-ae8d4688ca87.webp" alt="BIM / Revit модель" style="width:100%; height:100%; object-fit:cover; display:block;"></div><div style="padding:22px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#14181F;">BIM / Revit</div><p style="font-size:14px; line-height:1.5; color:#5A6573; margin:7px 0 0 0;">Информационная модель по вашему техническому заданию.</p></div></div>
+    <div style="border:1px solid #E6EAF1; border-radius:8px; background:#fff; overflow:hidden;"><div style="height:168px; background:#0E1219;"><img loading="lazy" decoding="async" src="assets/img/59051e1c-5e2c-4fa6-83e4-e8fc02e23767.webp" alt="Точная геометрия объекта" style="width:100%; height:100%; object-fit:cover; display:block;"></div><div style="padding:22px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#14181F;">Точные размеры и геометрия</div><p style="font-size:14px; line-height:1.5; color:#5A6573; margin:7px 0 0 0;">Фактические габариты, отметки и привязки без погрешностей замера.</p></div></div>
+  </div>
+</section>
+
+<!-- ============ КАКИЕ ЗАДАЧИ РЕШАЕМ ============ -->
+<section style="background:#0E1219; position:relative; overflow:hidden;">
+  <div style="position:absolute; inset:0; background-image:radial-gradient(rgba(120,170,255,.5) 1px, transparent 1.3px); background-size:20px 20px; opacity:.16;"></div>
+  <div style="position:relative; max-width:1180px; margin:0 auto; padding:96px 40px;">
+    <div style="display:flex; align-items:center; gap:9px; font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600; letter-spacing:.1em; color:#9CC0FF;"><span style="width:7px; height:7px; background:#5E9BFF; border-radius:50%;"></span>КАКИЕ ЗАДАЧИ МЫ РЕШАЕМ</div>
+    <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:38px; line-height:1.1; letter-spacing:-.02em; color:#fff; margin:16px 0 0 0; max-width:640px;">Типовые объекты, которые мы сканируем</h2>
+
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:48px;">
+      <div style="background:#161C26; border:1px solid rgba(120,170,255,.16); border-radius:8px; overflow:hidden;"><div style="height:158px;"><img loading="lazy" decoding="async" src="assets/img/dcf663d0-5f6d-46d2-863a-a6135a62bf2f.webp" alt="Обмер квартиры" style="width:100%; height:100%; object-fit:cover; display:block;"></div><div style="padding:22px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#fff;">Обмер квартиры для дизайн-проекта</div><p style="font-size:14px; line-height:1.55; color:#AAB4C2; margin:9px 0 0 0;">Точная подоснова со всеми нишами, выступами и коммуникациями.</p></div></div>
+      <div style="background:#161C26; border:1px solid rgba(120,170,255,.16); border-radius:8px; overflow:hidden;"><div style="height:158px;"><img loading="lazy" decoding="async" src="assets/img/becd4128-1e50-4944-96b4-2f428b7d9b69.webp" alt="Сканирование фасада" style="width:100%; height:100%; object-fit:cover; display:block;"></div><div style="padding:22px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#fff;">Сканирование фасада</div><p style="font-size:14px; line-height:1.55; color:#AAB4C2; margin:9px 0 0 0;">Геометрия и декор фасада для реставрации, обследования и расчёта работ.</p></div></div>
+      <div style="background:#161C26; border:1px solid rgba(120,170,255,.16); border-radius:8px; overflow:hidden;"><div style="height:158px;"><img loading="lazy" decoding="async" src="assets/img/73a29c27-3d0b-4375-9e33-a27b37444bbe.webp" alt="Коммерческое помещение" style="width:100%; height:100%; object-fit:cover; display:block;"></div><div style="padding:22px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#fff;">Обмер коммерческого помещения</div><p style="font-size:14px; line-height:1.55; color:#AAB4C2; margin:9px 0 0 0;">Магазины, офисы, ТЦ — под аренду, ремонт и перепланировку.</p></div></div>
+      <div style="background:#161C26; border:1px solid rgba(120,170,255,.16); border-radius:8px; overflow:hidden;"><div style="height:158px;"><img loading="lazy" decoding="async" src="assets/img/287c6ff6-b274-465e-b8a6-3372f8d4c546.webp" alt="Сканирование цеха" style="width:100%; height:100%; object-fit:cover; display:block;"></div><div style="padding:22px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#fff;">Сканирование цеха или промобъекта</div><p style="font-size:14px; line-height:1.55; color:#AAB4C2; margin:9px 0 0 0;">Оборудование и коммуникации под реконструкцию и монтаж.</p></div></div>
+      <div style="background:#161C26; border:1px solid rgba(120,170,255,.16); border-radius:8px; overflow:hidden;"><div style="height:158px; background:#000;"><img loading="lazy" decoding="async" src="assets/img/0f23f624-b9e9-4692-8401-3b12e44f9102.webp" alt="Объект культурного наследия" style="width:100%; height:100%; object-fit:cover; display:block;"></div><div style="padding:22px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#fff;">Работы по объекту культурного наследия</div><p style="font-size:14px; line-height:1.55; color:#AAB4C2; margin:9px 0 0 0;">Бесконтактная фиксация сложной геометрии для реставрации.</p></div></div>
+      <div style="background:#161C26; border:1px solid rgba(120,170,255,.16); border-radius:8px; overflow:hidden;"><div style="height:158px;"><img loading="lazy" decoding="async" src="assets/img/6ee44861-66f6-44bf-bec7-17b33c96fa15.webp" alt="Обмер резервуара" style="width:100%; height:100%; object-fit:cover; display:block;"></div><div style="padding:22px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#fff;">Обмер резервуара или техконструкции</div><p style="font-size:14px; line-height:1.55; color:#AAB4C2; margin:9px 0 0 0;">Сложные технические объекты с криволинейной геометрией.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ КАК ПРОХОДИТ РАБОТА ============ -->
+<section id="process" style="max-width:1180px; margin:0 auto; padding:96px 40px;">
+  <div style="display:flex; align-items:center; gap:9px; font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600; letter-spacing:.1em; color:#0B5FFF;"><span style="width:7px; height:7px; background:#0B5FFF; border-radius:50%;"></span>КАК ПРОХОДИТ РАБОТА</div>
+  <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:38px; line-height:1.1; letter-spacing:-.02em; color:#14181F; margin:16px 0 0 0; max-width:640px;">Понятный процесс от заявки до результата</h2>
+
+  <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:0; margin-top:52px; position:relative;">
+    <div class="proc-line" style="position:absolute; top:21px; left:7%; right:7%; height:1px; background:#D6DCE6;"></div>
+    <div style="position:relative; text-align:center; padding:0 6px;"><div style="width:44px; height:44px; margin:0 auto; background:#0B5FFF; color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:15px;">1</div><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14.5px; color:#14181F; margin-top:16px;">Заявка</div><p style="font-size:12.5px; line-height:1.45; color:#6B7686; margin:6px 0 0 0;">Звонок, Telegram или форма на сайте</p></div>
+    <div style="position:relative; text-align:center; padding:0 6px;"><div style="width:44px; height:44px; margin:0 auto; background:#fff; border:1.5px solid #0B5FFF; color:#0B5FFF; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:15px;">2</div><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14.5px; color:#14181F; margin-top:16px;">Уточнение задачи</div><p style="font-size:12.5px; line-height:1.45; color:#6B7686; margin:6px 0 0 0;">Тип объекта и нужный результат</p></div>
+    <div style="position:relative; text-align:center; padding:0 6px;"><div style="width:44px; height:44px; margin:0 auto; background:#fff; border:1.5px solid #0B5FFF; color:#0B5FFF; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:15px;">3</div><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14.5px; color:#14181F; margin-top:16px;">Расчёт стоимости</div><p style="font-size:12.5px; line-height:1.45; color:#6B7686; margin:6px 0 0 0;">Цена и сроки в день обращения</p></div>
+    <div style="position:relative; text-align:center; padding:0 6px;"><div style="width:44px; height:44px; margin:0 auto; background:#fff; border:1.5px solid #0B5FFF; color:#0B5FFF; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:15px;">4</div><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14.5px; color:#14181F; margin-top:16px;">Выезд на объект</div><p style="font-size:12.5px; line-height:1.45; color:#6B7686; margin:6px 0 0 0;">В удобное время, 1–2 дня</p></div>
+    <div style="position:relative; text-align:center; padding:0 6px;"><div style="width:44px; height:44px; margin:0 auto; background:#fff; border:1.5px solid #0B5FFF; color:#0B5FFF; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:15px;">5</div><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14.5px; color:#14181F; margin-top:16px;">Сканирование</div><p style="font-size:12.5px; line-height:1.45; color:#6B7686; margin:6px 0 0 0;">Лазерная съёмка Trimble X7</p></div>
+    <div style="position:relative; text-align:center; padding:0 6px;"><div style="width:44px; height:44px; margin:0 auto; background:#fff; border:1.5px solid #0B5FFF; color:#0B5FFF; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:15px;">6</div><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14.5px; color:#14181F; margin-top:16px;">Обработка данных</div><p style="font-size:12.5px; line-height:1.45; color:#6B7686; margin:6px 0 0 0;">Облако точек и чертежи</p></div>
+    <div style="position:relative; text-align:center; padding:0 6px;"><div style="width:44px; height:44px; margin:0 auto; background:#FF5A1F; color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:15px;">7</div><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14.5px; color:#14181F; margin-top:16px;">Передача результата</div><p style="font-size:12.5px; line-height:1.45; color:#6B7686; margin:6px 0 0 0;">Готовые материалы клиенту</p></div>
+  </div>
+</section>
+
+<!-- ============ КЕЙСЫ ============ -->
+<section id="cases" style="background:#F7F9FC; border-top:1px solid #EDF0F5; border-bottom:1px solid #EDF0F5;">
+  <div style="max-width:1180px; margin:0 auto; padding:96px 40px;">
+    <div style="display:flex; align-items:center; gap:9px; font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600; letter-spacing:.1em; color:#0B5FFF;"><span style="width:7px; height:7px; background:#0B5FFF; border-radius:50%;"></span>ПРИМЕРЫ РАБОТ</div>
+    <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:38px; line-height:1.1; letter-spacing:-.02em; color:#14181F; margin:16px 0 0 0; max-width:640px;">Кейсы по разным типам объектов</h2>
+
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:20px; margin-top:48px;">
+      <div style="background:#fff; border:1px solid #E6EAF1; border-radius:8px; overflow:hidden;">
+        <div style="position:relative; height:200px; background:#0E1219; border-bottom:1px solid #E6EAF1; overflow:hidden;"><img loading="lazy" decoding="async" src="assets/img/dcf663d0-5f6d-46d2-863a-a6135a62bf2f.webp" alt="Облако точек квартиры" style="width:100%; height:100%; object-fit:cover; display:block;"><div style="position:absolute; top:14px; left:14px; font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:#0B5FFF; background:#fff; border:1px solid #C9D6EE; padding:3px 8px;">КВАРТИРА · 96 м²</div></div>
+        <div style="padding:24px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:#14181F;">Обмер квартиры под дизайн-проект</div><div style="margin-top:14px; display:grid; gap:8px; font-size:13.5px;"><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Задача</span><span style="color:#5A6573;">Точная подоснова для перепланировки</span></div><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Передано</span><span style="color:#5A6573;">Облако точек, план и разрезы в DWG</span></div><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Результат</span><span style="color:#5A6573;">Дизайнер работал по фактическим размерам — без переделок</span></div></div></div>
+      </div>
+      <div style="background:#fff; border:1px solid #E6EAF1; border-radius:8px; overflow:hidden;">
+        <div style="position:relative; height:200px; background:#0E1219; border-bottom:1px solid #E6EAF1; overflow:hidden;"><img loading="lazy" decoding="async" src="assets/img/f1a8d4c0-eb1a-4407-970c-c91203c62061.webp" alt="Скан фасада ОКН: фото, облако, 3D" style="width:100%; height:100%; object-fit:cover; display:block;"><div style="position:absolute; top:14px; left:14px; font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:#0B5FFF; background:#fff; border:1px solid #C9D6EE; padding:3px 8px;">ФАСАД · 1 240 м²</div></div>
+        <div style="padding:24px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:#14181F;">Сканирование исторического фасада</div><div style="margin-top:14px; display:grid; gap:8px; font-size:13.5px;"><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Задача</span><span style="color:#5A6573;">Фиксация декора для реставрации ОКН</span></div><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Передано</span><span style="color:#5A6573;">Облако точек, развёртка фасада, обмерные чертежи</span></div><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Результат</span><span style="color:#5A6573;">Реставраторы получили точную геометрию без лесов</span></div></div></div>
+      </div>
+      <div style="background:#fff; border:1px solid #E6EAF1; border-radius:8px; overflow:hidden;">
+        <div style="position:relative; height:200px; background:#0E1219; border-bottom:1px solid #E6EAF1; overflow:hidden;"><img loading="lazy" decoding="async" src="assets/img/287c6ff6-b274-465e-b8a6-3372f8d4c546.webp" alt="Облако точек цеха" style="width:100%; height:100%; object-fit:cover; display:block;"><div style="position:absolute; top:14px; left:14px; font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:#0B5FFF; background:#fff; border:1px solid #C9D6EE; padding:3px 8px;">ЦЕХ · 3 800 м²</div></div>
+        <div style="padding:24px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:#14181F;">Сканирование производственного цеха</div><div style="margin-top:14px; display:grid; gap:8px; font-size:13.5px;"><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Задача</span><span style="color:#5A6573;">Обмер под реконструкцию и монтаж линии</span></div><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Передано</span><span style="color:#5A6573;">Облако точек, 3D-модель, привязки оборудования</span></div><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Результат</span><span style="color:#5A6573;">Монтаж без коллизий — экономия недель на доработках</span></div></div></div>
+      </div>
+      <div style="background:#fff; border:1px solid #E6EAF1; border-radius:8px; overflow:hidden;">
+        <div style="position:relative; height:200px; background:#0E1219; border-bottom:1px solid #E6EAF1; overflow:hidden;"><img loading="lazy" decoding="async" src="assets/img/6ee44861-66f6-44bf-bec7-17b33c96fa15.webp" alt="Сканирование резервуара" style="width:100%; height:100%; object-fit:cover; display:block;"><div style="position:absolute; top:14px; left:14px; font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:#0B5FFF; background:#fff; border:1px solid #C9D6EE; padding:3px 8px;">РЕЗЕРВУАР · Ø24 м</div></div>
+        <div style="padding:24px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:#14181F;">Обмер резервуара РВС</div><div style="margin-top:14px; display:grid; gap:8px; font-size:13.5px;"><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Задача</span><span style="color:#5A6573;">Контроль геометрии и отклонений конструкции</span></div><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Передано</span><span style="color:#5A6573;">Облако точек, ведомость отклонений, разрезы</span></div><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Результат</span><span style="color:#5A6573;">Объективная оценка состояния для заключения</span></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ СТОИМОСТЬ + КАЛЬКУЛЯТОР ============ -->
+<section id="price" style="max-width:1180px; margin:0 auto; padding:96px 40px;">
+  <div style="display:flex; align-items:center; gap:9px; font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600; letter-spacing:.1em; color:#0B5FFF;"><span style="width:7px; height:7px; background:#0B5FFF; border-radius:50%;"></span>СТОИМОСТЬ</div>
+  <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:38px; line-height:1.1; letter-spacing:-.02em; color:#14181F; margin:16px 0 0 0; max-width:640px;">Прозрачная цена под задачу</h2>
+  <p style="font-size:16px; line-height:1.6; color:#5A6573; margin:14px 0 0 0; max-width:620px;">Минимальный заказ — <strong style="color:#14181F;">от 20 000 ₽</strong>. Итоговая стоимость зависит от площади, сложности, типа объекта и требуемого результата. Прикиньте порядок цены в калькуляторе ниже.</p>
+
+  <style>
+  .calc-tab{font-family:'Manrope',sans-serif;font-weight:600;font-size:13.5px;padding:10px 16px;border-radius:4px;cursor:pointer;background:rgba(255,255,255,.06);color:#C5CDD8;border:1px solid rgba(255,255,255,.16);transition:all .15s;}
+  .calc-tab.is-active{background:#FF5A1F;color:#fff;border-color:#FF5A1F;}
+  .calc-field label{display:block;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.04em;color:#9CC0FF;margin-bottom:7px;}
+  .calc-field input,.calc-field select{width:100%;font-family:'Manrope',sans-serif;font-size:14px;color:#fff;background:rgba(255,255,255,.05);border:1px solid rgba(120,170,255,.22);border-radius:5px;padding:11px 12px;outline:none;}
+  .calc-field select option{color:#14181F;}
+  .calc-field input:focus,.calc-field select:focus{border-color:#5E9BFF;}
+  .calc-note{font-size:12px;color:#7B8694;line-height:1.5;margin-top:10px;}
+  .calc-check{display:flex;align-items:center;gap:9px;font-size:13.5px;color:#C5CDD8;cursor:pointer;}
+  .calc-check input{width:16px;height:16px;accent-color:#FF5A1F;}
+  .calc-pane{display:none;}
+  .calc-pane.is-active{display:block;}
+  .calc-line{display:flex;justify-content:space-between;gap:12px;font-size:13px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.07);}
+  .calc-line span{color:#9CC0FF;font-family:'IBM Plex Mono',monospace;}
+  .calc-line strong{color:#fff;font-weight:600;text-align:right;}
+  @media(max-width:860px){#calc .calc-grid{grid-template-columns:1fr !important;}}
+</style>
+<div style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:44px;">
+  <div style="border:1px solid #E6EAF1; border-radius:8px; padding:24px; background:#fff; display:flex; justify-content:space-between; align-items:center;"><div><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#14181F;">Помещение / квартира</div><p style="font-size:13.5px; color:#6B7686; margin:5px 0 0 0;">Обмер под дизайн и проектирование</p></div><div style="font-family:'IBM Plex Mono',monospace; font-weight:600; color:#0B5FFF; font-size:14px; white-space:nowrap;">от 60 ₽/м²</div></div>
+  <div style="border:1px solid #E6EAF1; border-radius:8px; padding:24px; background:#fff; display:flex; justify-content:space-between; align-items:center;"><div><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#14181F;">Фасад здания</div><p style="font-size:13.5px; color:#6B7686; margin:5px 0 0 0;">Обследование, реставрация, ОКН</p></div><div style="font-family:'IBM Plex Mono',monospace; font-weight:600; color:#0B5FFF; font-size:14px; white-space:nowrap;">от 20 ₽/м²</div></div>
+  <div style="border:1px solid #E6EAF1; border-radius:8px; padding:24px; background:#fff; display:flex; justify-content:space-between; align-items:center;"><div><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#14181F;">Промышленный объект</div><p style="font-size:13.5px; color:#6B7686; margin:5px 0 0 0;">Топо, резервуары, реверс</p></div><div style="font-family:'IBM Plex Mono',monospace; font-weight:600; color:#0B5FFF; font-size:14px; white-space:nowrap;">от 20 000 ₽</div></div>
+</div>
+
+<div id="calc" style="background:#0E1219; border-radius:12px; padding:34px; margin-top:20px; position:relative; overflow:hidden;">
+  <div style="position:absolute; inset:0; background-image:radial-gradient(rgba(120,170,255,.5) 1px, transparent 1.3px); background-size:18px 18px; opacity:.12;"></div>
+  <div style="position:relative;">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.1em; color:#9CC0FF;">КАЛЬКУЛЯТОР · ОРИЕНТИРОВОЧНО</div>
+    <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:16px;">
+      <button class="calc-tab is-active" data-tab="interior">Помещения</button>
+      <button class="calc-tab" data-tab="facade">Фасады</button>
+      <button class="calc-tab" data-tab="topo">Топо / ВЛС</button>
+      <button class="calc-tab" data-tab="tanks">Резервуары</button>
+      <button class="calc-tab" data-tab="reverse">Реверс</button>
+    </div>
+
+    <div class="calc-grid" style="display:grid; grid-template-columns:1.45fr 1fr; gap:26px; margin-top:26px; align-items:start;">
       <div>
-        <div class="eyebrow">обмеры методом лазерного 3D-сканирования</div>
-        <h1>Лазерное 3D-сканирование и точные обмеры помещений</h1>
-        <p>Работаем на Trimble X7 для дизайнеров, проектировщиков, строителей, обследователей и собственников. Нижний Новгород, область и выезды в соседние регионы до 500 км.</p>
-        <div class="cta-row">
-          <a class="btn" href="#calculator">Рассчитать стоимость</a>
-          <a class="btn secondary" href="#contacts">Обсудить задачу</a>
-        </div>
-      </div>
-      <div class="hero-card">
-        <div class="mono">что получите</div>
-        <div class="hero-grid">
-          <div class="metric"><strong>1-2 мм</strong><span>точность измерений</span></div>
-          <div class="metric"><strong>5+ лет</strong><span>практический опыт</span></div>
-          <div class="metric"><strong>DWG</strong><span>чертежи, PDF, планы</span></div>
-          <div class="metric"><strong>500 км</strong><span>выезды от Нижнего</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="trust-strip" aria-label="Преимущества">
-      <div class="trust-item"><strong>Trimble X7</strong><span>Профессиональное лазерное сканирование помещений, фасадов, производств и сложной геометрии.</span></div>
-      <div class="trust-item"><strong>Договор и акт</strong><span>Работаем официально, по ТЗ, с понятным составом результата и сроками.</span></div>
-      <div class="trust-item"><strong>От 20 000 ₽</strong><span>Минимальная стоимость заказа. Точную цену считаем по площади, сложности и формату выдачи.</span></div>
-      <div class="trust-item"><strong>НН + регионы</strong><span>Выезд по Нижегородской области и в соседние регионы до 500 км от Нижнего Новгорода.</span></div>
-    </section>
-
-    <section class="content-section" id="services">
-      <div class="section-head">
-        <div>
-          <div class="mono">услуги</div>
-          <h2>Что обмеряем</h2>
-        </div>
-        <p>Берём задачи, где обычной рулетки и ручного обмера уже мало: нужна точная геометрия, фиксация фактического состояния и удобные материалы для проектирования.</p>
-      </div>
-      <div class="cards">
-        <div class="info-card"><strong>Квартиры и дома</strong><p>Обмеры для дизайн-проектов, перепланировок, ремонта, реконструкции и точной передачи геометрии помещения.</p></div>
-        <div class="info-card"><strong>Коммерческие объекты</strong><p>Офисы, магазины, склады, помещения сложной формы, фасады и внутренние сканы.</p></div>
-        <div class="info-card"><strong>Промышленные помещения</strong><p>Цеха, производства, инженерные коммуникации, оборудование, контрольные обмеры для строителей.</p></div>
-        <div class="info-card"><strong>Объекты культурного наследия</strong><p>Фиксация сложной архитектуры, фасадов, лепнины, сводов, исторических элементов и фактических отклонений.</p></div>
-        <div class="info-card"><strong>Резервуары</strong><p>Обмеры и градуировка резервуаров, геометрия ёмкостей, подготовка данных для расчётов и документации.</p></div>
-        <div class="info-card"><strong>Обследования</strong><p>Материалы для обследователей, проектировщиков и экспертов: облако точек, чертежи, модели, площади и габариты.</p></div>
-      </div>
-    </section>
-
-    <section class="content-section" id="deliverables">
-      <div class="section-head">
-        <div>
-          <div class="mono">результат</div>
-          <h2>Что передаём после работ</h2>
-        </div>
-        <p>Формат выдачи подбираем под задачу: от простого облака точек до чертежей, 3D-модели или BIM-модели по техническому заданию.</p>
-      </div>
-      <div class="feature-grid">
-        <div class="feature"><div class="num">01</div><div><strong>Облако точек</strong><p>Цветное или ч/б облако точек для проверки геометрии, проектирования и дальнейшей обработки.</p></div></div>
-        <div class="feature"><div class="num">02</div><div><strong>DWG и PDF</strong><p>Обмерные планы, потолки, стены, фасады, разрезы и видимые коммуникации в удобном формате.</p></div></div>
-        <div class="feature"><div class="num">03</div><div><strong>3D / Revit / BIM</strong><p>Модели по договорённости: детализация, LOD, состав элементов и формат согласуются до старта.</p></div></div>
-        <div class="feature"><div class="num">04</div><div><strong>Площади и габариты</strong><p>Фактические размеры, объёмы, площади, отклонения и данные для смет, ремонта или обследования.</p></div></div>
-      </div>
-    </section>
-
-    <section class="content-section">
-      <div class="section-head">
-        <div>
-          <div class="mono">процесс</div>
-          <h2>Как проходит работа</h2>
-        </div>
-        <p>Сначала уточняем задачу и формат результата, затем считаем стоимость. Это защищает от ситуации, когда сканирование сделали, а нужных заказчику файлов в итоге нет.</p>
-      </div>
-      <div class="cards">
-        <div class="info-card"><strong>1. Задача и исходные данные</strong><p>Вы присылаете адрес, площадь, фото или планы, описываете желаемый результат и сроки.</p></div>
-        <div class="info-card"><strong>2. Расчёт и договорённости</strong><p>Подбираем формат: облако точек, DWG/PDF, 3D, Revit/BIM, градуировка или материалы для обследования.</p></div>
-        <div class="info-card"><strong>3. Выезд и сканирование</strong><p>Проводим сканирование Trimble X7 на объекте в Нижнем Новгороде, области или соседнем регионе.</p></div>
-        <div class="info-card"><strong>4. Камеральная обработка</strong><p>Регистрируем сканы, готовим облако точек, чертежи, модели и дополнительные материалы.</p></div>
-        <div class="info-card"><strong>5. Передача результата</strong><p>Отдаём файлы в согласованных форматах, поясняем состав и при необходимости готовим документы.</p></div>
-        <div class="info-card"><strong>6. Поддержка после выдачи</strong><p>Помогаем разобраться с файлами, уточнить состав данных и подготовить дополнительную детализацию.</p></div>
-      </div>
-    </section>
-
-    <section class="content-section" id="calculator">
-      <div class="calculator-intro">
-        <div>
-          <div class="mono">предварительная оценка</div>
-          <h2>Калькулятор стоимости</h2>
-          <p>Расчёт ниже даёт ориентир по бюджету. Точная цена зависит от объекта, доступа, площади, удалённости, срочности, состава выдачи и нужной детализации.</p>
-        </div>
-        <div class="status">минимальный заказ · от 20 000 ₽</div>
-      </div>
-    <nav class="tabs" aria-label="Тип расчёта">
-      <button class="tab active" data-tab="interior">Помещения</button>
-      <button class="tab" data-tab="facade">Фасады</button>
-      <button class="tab" data-tab="topo">Топо / ВЛС</button>
-      <button class="tab" data-tab="tanks">Резервуары</button>
-      <button class="tab" data-tab="reverse">Реверс</button>
-    </nav>
-
-    <section class="workspace">
-      <div class="panel">
-        <div id="interior" class="section active">
-          <h2>Здания и помещения</h2>
-          <div class="form-grid">
-            <div><label>Площадь, м²</label><input id="area" type="number" min="1" value="350"></div>
-            <div><label>Результат</label><select id="interiorService">
+        <div class="calc-pane is-active" data-pane="interior">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div class="calc-field"><label>Площадь, м²</label><input id="area" type="number" min="1" value="350"></div>
+            <div class="calc-field"><label>Результат</label><select id="interiorService">
               <option value="scanColor">Только сканирование, цвет</option>
               <option value="scanBw">Только сканирование, ч/б</option>
               <option value="plan">Скан + чертёж план</option>
@@ -610,30 +877,29 @@
               <option value="modelEng">3D модель с видимыми инженерными сетями</option>
               <option value="archicad">3D модель с инж. сетями, Archicad</option>
             </select></div>
-            <div><label>Детализация</label><select id="lod"><option value="1">LOD200</option><option value="1.5">LOD300 ×1.5</option></select></div>
-            <div><label>НДС</label><select id="vat"><option value="0">Без НДС</option><option value="0.05">НДС 5%</option><option value="0.25">НДС 25%</option></select></div>
-            <div><label>Км от Нижнего Новгорода</label><input id="distance" type="number" min="0" value="0"><div class="field-note">Для выездов в область и соседние регионы. Ориентир: до 500 км от Нижнего.</div></div>
-            <div><label>Скидка для 1000+ м²</label><select id="discount"><option value="0">Нет</option><option value="0.1">10%</option><option value="0.25">25%</option><option value="0.5">50%</option></select></div>
+            <div class="calc-field"><label>Детализация</label><select id="lod"><option value="1">LOD200</option><option value="1.5">LOD300 ×1.5</option></select></div>
+            <div class="calc-field"><label>НДС</label><select id="vat"><option value="0">Без НДС</option><option value="0.05">НДС 5%</option><option value="0.25">НДС 25%</option></select></div>
+            <div class="calc-field"><label>Км от Нижнего Новгорода</label><input id="distance" type="number" min="0" value="0"></div>
+            <div class="calc-field"><label>Скидка для 1000+ м²</label><select id="discount"><option value="0">Нет</option><option value="0.1">10%</option><option value="0.25">25%</option><option value="0.5">50%</option></select></div>
           </div>
-          <div class="addons">
-            <label class="check"><input id="heritage" type="checkbox"> Культурное наследие ×1.35</label>
-            <label class="check"><input id="deviations" type="checkbox"> Отклонения на чертеже +5 000 ₽</label>
-            <label class="check"><input id="urgent" type="checkbox"> Сложный/срочный объект +20%</label>
+          <div style="display:flex; flex-wrap:wrap; gap:18px; margin-top:16px;">
+            <label class="calc-check"><input id="heritage" type="checkbox"> Культурное наследие ×1.35</label>
+            <label class="calc-check"><input id="deviations" type="checkbox"> Отклонения на чертеже +5 000 ₽</label>
+            <label class="calc-check"><input id="urgent" type="checkbox"> Сложный / срочный объект +20%</label>
           </div>
         </div>
 
-        <div id="facade" class="section">
-          <h2>Фасадные работы</h2>
-          <div class="form-grid">
-            <div><label>Площадь фасада, м²</label><input id="facadeArea" type="number" min="1" value="1200"></div>
-            <div><label>Сканирование</label><select id="facadeScan">
+        <div class="calc-pane" data-pane="facade">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div class="calc-field"><label>Площадь фасада, м²</label><input id="facadeArea" type="number" min="1" value="1200"></div>
+            <div class="calc-field"><label>Сканирование</label><select id="facadeScan">
               <option value="20">До 50 м, ч/б · 20 ₽/м²</option>
               <option value="25">До 50 м, цвет · 25 ₽/м²</option>
               <option value="30">50-200 м, ч/б · 30 ₽/м²</option>
               <option value="35">50-200 м, цвет · 35 ₽/м²</option>
               <option value="35">Лепнина, цвет · 35 ₽/м²</option>
             </select></div>
-            <div><label>Чертежи</label><select id="facadeDrawing">
+            <div class="calc-field"><label>Чертежи</label><select id="facadeDrawing">
               <option value="0">Не нужны</option>
               <option value="15">Простой фасад · 15 ₽/м²</option>
               <option value="25">Сложная геометрия · 25 ₽/м²</option>
@@ -641,7 +907,7 @@
               <option value="100">Детальная лепнина · 100 ₽/м²</option>
               <option value="150">Лепнина + повреждения · 150 ₽/м²</option>
             </select></div>
-            <div><label>3D модель</label><select id="facadeModel">
+            <div class="calc-field"><label>3D модель</label><select id="facadeModel">
               <option value="0">Не нужна</option>
               <option value="15">Простой LOD200 · 15 ₽/м²</option>
               <option value="25">Простой LOD300 · 25 ₽/м²</option>
@@ -650,277 +916,399 @@
               <option value="70">Сложный с лепниной · 70 ₽/м²</option>
             </select></div>
           </div>
-          <div class="addons">
-            <label class="check"><input id="ortho" type="checkbox"> Ортофото / фотограмметрия +30 ₽/м²</label>
-            <label class="check"><input id="lift" type="checkbox"> Автовышка или мачта +30 000 ₽</label>
-            <label class="check"><input id="facadeHeritage" type="checkbox"> Культурное наследие ×1.35</label>
+          <div style="display:flex; flex-wrap:wrap; gap:18px; margin-top:16px;">
+            <label class="calc-check"><input id="ortho" type="checkbox"> Ортофото / фотограмметрия +30 ₽/м²</label>
+            <label class="calc-check"><input id="lift" type="checkbox"> Автовышка или мачта +30 000 ₽</label>
+            <label class="calc-check"><input id="facadeHeritage" type="checkbox"> Культурное наследие ×1.35</label>
           </div>
         </div>
 
-        <div id="topo" class="section">
-          <h2>Топография и воздушное сканирование</h2>
-          <div class="form-grid">
-            <div><label>Площадь, га</label><input id="hectares" type="number" min="1" value="5"></div>
-            <div><label>Метод</label><select id="topoMethod">
+        <div class="calc-pane" data-pane="topo">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div class="calc-field"><label>Площадь, га</label><input id="hectares" type="number" min="1" value="5"></div>
+            <div class="calc-field"><label>Метод</label><select id="topoMethod">
               <option value="slam">Наземно / SLAM / RTK</option>
               <option value="vls">ВЛС, воздушное сканирование</option>
             </select></div>
-            <div><label>Результат</label><select id="topoResult">
+            <div class="calc-field"><label>Результат</label><select id="topoResult">
               <option value="20000">ЦММ + облако · от 20 000 ₽/га</option>
               <option value="25000">Топо без сетей · от 25 000 ₽/га</option>
               <option value="35000">Топо с сетями и согласованиями · от 35 000 ₽/га</option>
             </select></div>
-            <div><label>Локация</label><select id="topoLocation">
+            <div class="calc-field"><label>Локация</label><select id="topoLocation">
               <option value="0">Нижний Новгород / область</option>
               <option value="1">Соседний регион, командировочные отдельно</option>
             </select></div>
           </div>
-          <div class="field-note">Для ВЛС в таблице указан минимум 300 000 ₽ за облако и ЦММ, дальше ставка зависит от объёма.</div>
+          <div class="calc-note">Для ВЛС указан минимум 300 000 ₽ за облако и ЦММ, дальше ставка зависит от объёма.</div>
         </div>
 
-        <div id="tanks" class="section">
-          <h2>Градуировка резервуаров</h2>
-          <div class="form-grid">
-            <div><label>Количество резервуаров</label><input id="tankCount" type="number" min="1" value="2"></div>
-            <div><label>Объём одного резервуара</label><select id="tankVolume">
+        <div class="calc-pane" data-pane="tanks">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div class="calc-field"><label>Количество резервуаров</label><input id="tankCount" type="number" min="1" value="2"></div>
+            <div class="calc-field"><label>Объём одного резервуара</label><select id="tankVolume">
               <option value="50000">До 50 м³ · 50 000 ₽/шт</option>
               <option value="60000">Более 50 м³ · 60 000 ₽/шт</option>
               <option value="30000">400-1000 м³ · 30 000 ₽/шт</option>
               <option value="35000">5000 м³ · 35 000 ₽/шт</option>
               <option value="40000">10000 м³ · 40 000 ₽/шт</option>
             </select></div>
-            <div><label>Тип</label><select id="tankType"><option>Наземный</option><option>Подземный</option><option>С секциями / конусное дно</option></select></div>
-            <div><label>Документы</label><select id="tankDocs"><option value="0">Только таблица</option><option value="10000">Документы/сертификаты +10 000 ₽/шт</option><option value="20000">Поверка/калибровка +20 000 ₽/шт</option></select></div>
+            <div class="calc-field"><label>Тип</label><select id="tankType"><option>Наземный</option><option>Подземный</option><option>С секциями / конусное дно</option></select></div>
+            <div class="calc-field"><label>Документы</label><select id="tankDocs"><option value="0">Только таблица</option><option value="10000">Документы/сертификаты +10 000 ₽/шт</option><option value="20000">Поверка/калибровка +20 000 ₽/шт</option></select></div>
           </div>
         </div>
 
-        <div id="reverse" class="section">
-          <h2>Реверс-инжиниринг</h2>
-          <div class="form-grid">
-            <div><label>Количество деталей</label><input id="partCount" type="number" min="1" value="1"></div>
-            <div><label>Точность</label><select id="accuracy">
+        <div class="calc-pane" data-pane="reverse">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div class="calc-field"><label>Количество деталей</label><input id="partCount" type="number" min="1" value="1"></div>
+            <div class="calc-field"><label>Точность</label><select id="accuracy">
               <option value="1">Более 1 мм</option>
               <option value="1.4">0.5-1 мм</option>
               <option value="2">0.1-0.5 мм</option>
               <option value="3">0.05-0.1 мм</option>
               <option value="4">Менее 0.05 мм</option>
             </select></div>
-            <div><label>CAD-модель</label><select id="cad"><option value="0">Не нужна</option><option value="25000">STP / CAD-модель +25 000 ₽</option></select></div>
-            <div><label>Базовая оценка</label><input id="reverseBase" type="number" min="10000" value="30000"></div>
+            <div class="calc-field"><label>CAD-модель</label><select id="cad"><option value="0">Не нужна</option><option value="25000">STP / CAD-модель +25 000 ₽</option></select></div>
+            <div class="calc-field"><label>Базовая оценка, ₽</label><input id="reverseBase" type="number" min="10000" value="30000"></div>
           </div>
-          <div class="field-note">В файле для реверса есть чек-лист вопросов, но нет жёсткого прайса. Поэтому этот блок даёт вилку для первичной оценки.</div>
+          <div class="calc-note">Для реверс-инжиниринга нет жёсткого прайса — блок даёт вилку для первичной оценки.</div>
         </div>
       </div>
 
-      <aside class="result">
-        <div class="mono">предварительная стоимость</div>
-        <div class="price" id="price">0 ₽</div>
-        <div class="subprice" id="subtitle">Расчёт обновляется автоматически</div>
-        <div class="lines" id="lines"></div>
-        <div class="warning" id="warning">Цена предварительная. Для точного КП нужны адрес, фото/планы, требуемый результат, точность, сроки и условия доступа.</div>
-        <button class="copy-btn" id="copyBtn">Скопировать текст для КП</button>
-      </aside>
-    </section>
-    </section>
-
-    <section class="brief">
-      <h2>Что спросить у заказчика</h2>
-      <div class="brief-grid">
-        <div class="brief-item"><strong>Объект и адрес</strong>Город, точный адрес, тип объекта: квартира, офис, фасад, завод, территория, резервуар.</div>
-        <div class="brief-item"><strong>Результат</strong>Облако точек, DWG/PDF, Revit/RVT, Archicad/PLA, 3D модель, топоплан, градуировочная таблица.</div>
-        <div class="brief-item"><strong>Исходники</strong>Планы, фото, границы съёмки, KML/кадастровый номер, доступы, геодезическая система координат.</div>
-        <div class="brief-item"><strong>Инженерка</strong>Нужны ли видимые сети, скрытые сети по проекту, согласования подземных коммуникаций.</div>
-        <div class="brief-item"><strong>Точность и сроки</strong>Стандартно до 10 мм. Точность 1 мм и менее может стоить до ×3 из-за другого оборудования.</div>
-        <div class="brief-item"><strong>Риски</strong>Люди на объекте, закрытые помещения, отопление/освещение, высотность фасада, автовышка, командировка.</div>
-      </div>
-    </section>
-
-    <section class="content-section">
-      <div class="section-head">
-        <div>
-          <div class="mono">faq</div>
-          <h2>Частые вопросы</h2>
+      <div style="border:1px solid rgba(120,170,255,.25); border-radius:10px; padding:24px; background:rgba(255,255,255,.02);">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#7B8694;">ПРЕДВАРИТЕЛЬНАЯ СТОИМОСТЬ</div>
+        <div id="calcPrice" style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:34px; color:#FF7A47; margin-top:6px;">0 ₽</div>
+        <div id="calcSubtitle" style="font-size:13px; color:#9CC0FF; margin-top:4px;">Расчёт обновляется автоматически</div>
+        <div id="calcLines" style="margin-top:18px;"></div>
+        <div style="display:flex; flex-direction:column; gap:9px; margin-top:20px;">
+          <a href="#leadform" id="sendQuoteBtn" style="text-align:center; font-weight:700; font-size:14px; color:#fff; background:#FF5A1F; padding:13px 18px; border-radius:4px; text-decoration:none;">Отправить расчёт в заявку</a>
+          <button id="calcCopyBtn" type="button" style="font-family:'Manrope',sans-serif; font-weight:600; font-size:13.5px; color:#C5CDD8; background:rgba(255,255,255,.05); border:1px solid rgba(120,170,255,.22); padding:11px 18px; border-radius:4px; cursor:pointer;">Скопировать текст для КП</button>
         </div>
-        <p>Короткие ответы на вопросы, которые обычно возникают перед заказом лазерного сканирования и обмерных работ.</p>
+        <p style="font-size:11.5px; color:#7B8694; margin:16px 0 0 0; line-height:1.5;">Предварительная оценка. Точную стоимость подтвердим после уточнения задачи и параметров объекта.</p>
       </div>
-      <div class="cards">
-        <div class="info-card"><strong>Чем лазерное сканирование лучше ручного обмера?</strong><p>Сканер фиксирует миллионы точек и снижает риск пропустить выступы, отклонения, кривизну стен, потолков и сложные узлы.</p></div>
-        <div class="info-card"><strong>Можно ли получить DWG?</strong><p>Да. По результатам сканирования можно подготовить обмерные планы, фасады, разрезы и другие чертежи в DWG/PDF.</p></div>
-        <div class="info-card"><strong>Делаете Revit или BIM?</strong><p>Да, по договорённости. Сначала согласуем LOD, состав модели, формат и уровень детализации.</p></div>
-        <div class="info-card"><strong>Выезжаете за пределы Нижнего?</strong><p>Да. Работаем по Нижнему Новгороду, области и готовы выезжать в соседние регионы до 500 км.</p></div>
-        <div class="info-card"><strong>Работаете с ОКН?</strong><p>Да. Для объектов культурного наследия можно зафиксировать фасады, лепнину, своды, сложную геометрию и фактические отклонения.</p></div>
-        <div class="info-card"><strong>От чего зависит цена?</strong><p>От площади, сложности объекта, удалённости, доступа, срочности, точности и формата результата: облако, DWG, PDF, 3D или BIM.</p></div>
+    </div>
+  </div>
+</div>
+  </section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" style="background:#F7F9FC; border-top:1px solid #EDF0F5; border-bottom:1px solid #EDF0F5;">
+  <div style="max-width:860px; margin:0 auto; padding:96px 40px;">
+    <div style="display:flex; align-items:center; gap:9px; font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600; letter-spacing:.1em; color:#0B5FFF;"><span style="width:7px; height:7px; background:#0B5FFF; border-radius:50%;"></span>ЧАСТЫЕ ВОПРОСЫ</div>
+    <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:38px; line-height:1.1; letter-spacing:-.02em; color:#14181F; margin:16px 0 36px 0;">Отвечаем на главное</h2>
+
+    <div style="display:grid; gap:12px;">
+              <div class="faq-item is-open" style="background:#fff; border:1px solid #E6EAF1; border-radius:8px; padding:22px 24px; cursor:pointer;">
+          <div style="display:flex; align-items:center; gap:16px;">
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#0B5FFF; font-weight:600;">01</span>
+            <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:17px; color:#14181F; flex:1;">Какая точность сканирования?</span>
+            <span class="faq-sign" style="font-family:'IBM Plex Mono',monospace; font-size:18px; color:#0B5FFF; line-height:1;">–</span>
+          </div>
+          <p class="faq-answer" style="display:block; font-size:14.5px; line-height:1.6; color:#5A6573; margin:14px 0 0 38px;">Погрешность измерений составляет порядка ±2 мм. Сканер Trimble X7 фиксирует геометрию объекта как есть, без допущений ручного замера рулеткой.</p>
+        </div>
+        <div class="faq-item" style="background:#fff; border:1px solid #E6EAF1; border-radius:8px; padding:22px 24px; cursor:pointer;">
+          <div style="display:flex; align-items:center; gap:16px;">
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#0B5FFF; font-weight:600;">02</span>
+            <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:17px; color:#14181F; flex:1;">Сколько времени занимает работа?</span>
+            <span class="faq-sign" style="font-family:'IBM Plex Mono',monospace; font-size:18px; color:#0B5FFF; line-height:1;">+</span>
+          </div>
+          <p class="faq-answer" style="display:none; font-size:14.5px; line-height:1.6; color:#5A6573; margin:14px 0 0 38px;">Сканирование на объекте — от нескольких часов до 1–2 дней в зависимости от площади и сложности. Обработка данных и подготовка чертежей — обычно от 2 до 7 рабочих дней.</p>
+        </div>
+        <div class="faq-item" style="background:#fff; border:1px solid #E6EAF1; border-radius:8px; padding:22px 24px; cursor:pointer;">
+          <div style="display:flex; align-items:center; gap:16px;">
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#0B5FFF; font-weight:600;">03</span>
+            <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:17px; color:#14181F; flex:1;">В каких форматах передаётся результат?</span>
+            <span class="faq-sign" style="font-family:'IBM Plex Mono',monospace; font-size:18px; color:#0B5FFF; line-height:1;">+</span>
+          </div>
+          <p class="faq-answer" style="display:none; font-size:14.5px; line-height:1.6; color:#5A6573; margin:14px 0 0 38px;">Облако точек (.rcp / .e57 / .pts), чертежи в DWG и PDF, планы, фасады и разрезы, 3D-модель, а также BIM / Revit по техническому заданию.</p>
+        </div>
+        <div class="faq-item" style="background:#fff; border:1px solid #E6EAF1; border-radius:8px; padding:22px 24px; cursor:pointer;">
+          <div style="display:flex; align-items:center; gap:16px;">
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#0B5FFF; font-weight:600;">04</span>
+            <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:17px; color:#14181F; flex:1;">Работаете ли по области и другим регионам?</span>
+            <span class="faq-sign" style="font-family:'IBM Plex Mono',monospace; font-size:18px; color:#0B5FFF; line-height:1;">+</span>
+          </div>
+          <p class="faq-answer" style="display:none; font-size:14.5px; line-height:1.6; color:#5A6573; margin:14px 0 0 38px;">Да. Выезжаем по Нижнему Новгороду, Нижегородской области и с выездом до 500 км. Для удалённых объектов согласуем логистику заранее.</p>
+        </div>
+        <div class="faq-item" style="background:#fff; border:1px solid #E6EAF1; border-radius:8px; padding:22px 24px; cursor:pointer;">
+          <div style="display:flex; align-items:center; gap:16px;">
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#0B5FFF; font-weight:600;">05</span>
+            <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:17px; color:#14181F; flex:1;">Можно ли заказать только облако точек?</span>
+            <span class="faq-sign" style="font-family:'IBM Plex Mono',monospace; font-size:18px; color:#0B5FFF; line-height:1;">+</span>
+          </div>
+          <p class="faq-answer" style="display:none; font-size:14.5px; line-height:1.6; color:#5A6573; margin:14px 0 0 38px;">Да. Можно ограничиться только облаком точек, если ваша команда самостоятельно строит чертежи и модели. Состав работ согласуем под вашу задачу.</p>
+        </div>
+        <div class="faq-item" style="background:#fff; border:1px solid #E6EAF1; border-radius:8px; padding:22px 24px; cursor:pointer;">
+          <div style="display:flex; align-items:center; gap:16px;">
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#0B5FFF; font-weight:600;">06</span>
+            <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:17px; color:#14181F; flex:1;">Можно ли сделать BIM / Revit-модель?</span>
+            <span class="faq-sign" style="font-family:'IBM Plex Mono',monospace; font-size:18px; color:#0B5FFF; line-height:1;">+</span>
+          </div>
+          <p class="faq-answer" style="display:none; font-size:14.5px; line-height:1.6; color:#5A6573; margin:14px 0 0 38px;">Да. Информационную модель в Revit / BIM выполняем по вашему техническому заданию с нужным уровнем детализации (LOD).</p>
+        </div>
+        <div class="faq-item" style="background:#fff; border:1px solid #E6EAF1; border-radius:8px; padding:22px 24px; cursor:pointer;">
+          <div style="display:flex; align-items:center; gap:16px;">
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#0B5FFF; font-weight:600;">07</span>
+            <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:17px; color:#14181F; flex:1;">От чего зависит цена?</span>
+            <span class="faq-sign" style="font-family:'IBM Plex Mono',monospace; font-size:18px; color:#0B5FFF; line-height:1;">+</span>
+          </div>
+          <p class="faq-answer" style="display:none; font-size:14.5px; line-height:1.6; color:#5A6573; margin:14px 0 0 38px;">От площади и сложности объекта, типа объекта, требуемого состава результата (облако, чертежи, 3D, BIM) и удалённости. Минимальный заказ — от 20 000 ₽.</p>
+        </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ФИНАЛЬНЫЙ CTA ============ -->
+<section id="leadform" style="position:relative; background:#0E1219; overflow:hidden;">
+  <div style="position:absolute; inset:0; background-image:radial-gradient(rgba(120,170,255,.55) 1px, transparent 1.4px); background-size:18px 18px; opacity:.2;"></div>
+  <div style="position:absolute; top:-120px; left:50%; transform:translateX(-50%); width:560px; height:560px; background:radial-gradient(circle, rgba(11,95,255,.28), transparent 62%);"></div>
+  <div style="position:relative; max-width:840px; margin:0 auto; padding:104px 40px; text-align:center;">
+    <div style="display:inline-flex; align-items:center; gap:9px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600; letter-spacing:.1em; color:#9CC0FF; border:1px solid rgba(120,170,255,.3); padding:8px 13px; border-radius:99px;"><span style="width:7px; height:7px; background:#48E0A0; border-radius:50%;"></span>ОТВЕТИМ В ДЕНЬ ОБРАЩЕНИЯ</div>
+    <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:42px; line-height:1.1; letter-spacing:-.02em; color:#fff; margin:22px 0 0 0; text-wrap:balance;">Подскажем оптимальный формат работ и стоимость</h2>
+    <p style="font-size:17px; line-height:1.6; color:#AAB4C2; margin:18px auto 0; max-width:560px;">Пришлите адрес, площадь и фото или план объекта — быстро оценим задачу, сроки и подберём подходящий результат.</p>
+    <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:34px;">
+      <a href="https://t.me/frolovr9" data-goal="telegram" style="display:inline-flex; align-items:center; gap:8px; font-weight:700; font-size:15.5px; color:#fff; background:#FF5A1F; padding:16px 28px; border-radius:3px; text-decoration:none; box-shadow:0 10px 28px rgba(255,90,31,.34);">Написать в Telegram</a>
+      <a href="tel:+79036060054" data-goal="max" style="display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:15.5px; color:#fff; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); padding:15px 24px; border-radius:3px; text-decoration:none;">Написать в МАХ</a>
+      <a href="tel:+79036060054" data-goal="call" style="display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:15.5px; color:#fff; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); padding:15px 24px; border-radius:3px; text-decoration:none;">Позвонить</a>
+    </div>
+
+    <form id="leadForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" enctype="multipart/form-data" style="max-width:640px; margin:38px auto 0; background:#fff; border-radius:12px; padding:32px; text-align:left; box-shadow:0 24px 60px rgba(0,0,0,.4);">
+      <div class="lf-row">
+        <div class="lf-field"><label>Имя *</label><input type="text" name="Имя" required></div>
+        <div class="lf-field"><label>Телефон *</label><input type="tel" id="lfPhone" name="Телефон" required placeholder="+7 (___) ___-__-__"></div>
       </div>
-    </section>
-
-    <section class="contact-band" id="contacts">
-      <div>
-        <h2>Пришлите задачу — подскажем формат и стоимость</h2>
-        <p>Напишите, что нужно обмерить, где находится объект, примерную площадь и какой результат нужен: облако точек, DWG/PDF, 3D, Revit/BIM, данные для обследования или резервуаров.</p>
+      <div class="lf-row">
+        <div class="lf-field"><label>Адрес или площадь объекта</label><input type="text" name="Адрес/площадь"></div>
+        <div class="lf-field"><label>Тип объекта</label><select name="Тип объекта">
+          <option value="">— не выбрано —</option>
+          <option>Помещение / квартира</option>
+          <option>Фасад</option>
+          <option>Промышленный объект</option>
+          <option>Объект культурного наследия (ОКН)</option>
+          <option>Резервуар</option>
+        </select></div>
       </div>
-      <div class="contact-actions">
-        <a class="btn" href="https://t.me/frolovr9">Написать в Telegram</a>
-        <a class="btn" href="tel:+79036060054">Позвонить</a>
-        <a class="btn secondary" href="mailto:frolovr9@gmail.com?subject=%D0%97%D0%B0%D0%BF%D1%80%D0%BE%D1%81%20%D0%BD%D0%B0%203D-%D1%81%D0%BA%D0%B0%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5">Написать на почту</a>
-        <div class="contact-note">Telegram: @frolovr9 · Телефон и MAX: +7 903 606-00-54 · Email: frolovr9@gmail.com</div>
+      <div class="lf-row">
+        <div class="lf-field"><label>Желаемый результат</label><select name="Желаемый результат">
+          <option value="">— не выбрано —</option>
+          <option>Облако точек</option>
+          <option>DWG / PDF</option>
+          <option>3D-модель</option>
+          <option>BIM / Revit</option>
+        </select></div>
+        <div class="lf-field"><label>Фото или план объекта</label><input type="file" name="Файлы" multiple accept=".jpg,.jpeg,.png,.pdf"></div>
       </div>
-    </section>
-  </main>
+      <div class="lf-field"><label>Комментарий</label><textarea name="Комментарий" rows="3"></textarea></div>
+      <input type="hidden" name="Расчёт калькулятора" id="lfQuote">
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px;">
+      <label class="lf-consent"><input type="checkbox" id="lfConsent" required> Я согласен на <a href="privacy.html" target="_blank" style="color:#0B5FFF;">обработку персональных данных</a></label>
+      <button type="submit" class="lf-submit">Отправить заявку</button>
+      <div id="lfMsg" class="lf-msg"></div>
+    </form>
+  </div>
+</section>
 
-  <div class="toast" id="toast">Скопировано</div>
+<!-- ============ FOOTER ============ -->
+<footer style="background:#0A0D12; color:#8A96A6;">
+  <div style="max-width:1180px; margin:0 auto; padding:48px 40px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; border-bottom:1px solid rgba(255,255,255,.07);">
+    <div style="display:flex; align-items:center; gap:11px;">
+      <div style="width:28px; height:28px; border:2px solid #fff; border-radius:50%; position:relative;"><div style="position:absolute; inset:6px; border:1.5px solid #FF5A1F; border-radius:50%;"></div></div>
+      <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:17px; color:#fff;">3D-SCAN<span style="color:#FF5A1F;">·</span>NN</div>
+    </div>
+    <div style="font-size:14px; color:#AAB4C2; max-width:420px; line-height:1.5;">Лазерное 3D-сканирование и точные обмеры объектов. Нижний Новгород, область и выезд до 500 км.</div>
+    <div style="text-align:right;"><a href="tel:+79036060054" style="font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:16px; color:#fff; text-decoration:none;">+7 903 606-00-54</a><div style="font-size:13px; margin-top:5px;"><a href="mailto:frolovr9@gmail.com" style="color:#AAB4C2; text-decoration:none;">frolovr9@gmail.com</a></div></div>
+  </div>
+  <div style="max-width:1180px; margin:0 auto; padding:20px 40px; font-size:12.5px; color:#5A6573; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+    <div>© 2026 3D-Scan NN · ИП Фролов Роман Александрович · ИНН 525903804858</div>
+    <div>Работаем с физическими и юридическими лицами по договору · Оборудование Trimble X7</div>
+  </div>
+</footer>
 
-  <script>
-    const fmt = new Intl.NumberFormat('ru-RU');
-    const tabs = document.querySelectorAll('.tab');
-    const sections = document.querySelectorAll('.section');
-    let current = 'interior';
+</div>
 
-    const el = id => document.getElementById(id);
-    const rub = value => fmt.format(Math.round(value)) + ' ₽';
-    const num = id => Number(el(id).value || 0);
-    const checked = id => el(id).checked;
 
-    tabs.forEach(tab => tab.addEventListener('click', () => {
-      current = tab.dataset.tab;
-      tabs.forEach(t => t.classList.toggle('active', t === tab));
-      sections.forEach(s => s.classList.toggle('active', s.id === current));
-      calculate();
-    }));
 
-    document.querySelectorAll('input, select').forEach(input => input.addEventListener('input', calculate));
 
-    function minInterior(area, service) {
-      if (area <= 100) {
-        return {
-          scanColor: 15000,
-          scanBw: 15000,
-          plan: 18000,
-          planEng: 20000,
-          model: 20000,
-          modelEng: 30000,
-          archicad: 35000
-        }[service];
-      }
-      return 0;
-    }
-
-    function interiorRate(service) {
-      return {
-        scanBw: 60,
-        scanColor: 80,
-        plan: 80,
-        planEng: 120,
-        model: 130,
-        modelEng: 180,
-        archicad: 260
-      }[service];
-    }
-
-    function serviceName(service) {
-      return {
-        scanColor: 'только сканирование, цвет',
-        scanBw: 'только сканирование, ч/б',
-        plan: 'сканирование + чертёж план',
-        planEng: 'план + видимые инженерные сети',
-        model: 'план + 3D модель',
-        modelEng: '3D модель с инженерными сетями',
-        archicad: 'Archicad/PLA с инженерными сетями'
-      }[service];
-    }
-
-    function calcInterior() {
-      const area = num('area');
-      const service = el('interiorService').value;
-      const base = Math.max(minInterior(area, service), area * interiorRate(service));
-      let total = base;
-      const lines = [
-        ['Площадь', area + ' м²'],
-        ['Результат', serviceName(service)],
-        ['База', rub(base)]
-      ];
-      if (checked('deviations')) { total += 5000; lines.push(['Отклонения', rub(5000)]); }
-      const distanceCost = num('distance') * 200;
-      if (distanceCost) { total += distanceCost; lines.push(['Удалённость', rub(distanceCost)]); }
-      if (checked('heritage')) { total *= 1.35; lines.push(['Культурное наследие', '×1.35']); }
-      total *= Number(el('lod').value);
-      if (el('lod').value !== '1') lines.push(['Детализация', 'LOD300 ×1.5']);
-      if (area > 1000 && num('discount')) { total *= 1 - num('discount'); lines.push(['Скидка объём', '-' + Math.round(num('discount') * 100) + '%']); }
-      if (checked('urgent')) { total *= 1.2; lines.push(['Сложность/срочность', '+20%']); }
-      const vat = num('vat');
-      if (vat) { lines.push(['НДС', '+' + Math.round(vat * 100) + '%']); total *= 1 + vat; }
-      return { total, lines, subtitle: 'Помещения и гражданские объекты' };
-    }
-
-    function calcFacade() {
-      const area = num('facadeArea');
-      let rate = num('facadeScan') + num('facadeDrawing') + num('facadeModel');
-      if (checked('ortho')) rate += 30;
-      let total = Math.max(area * rate, 50000);
-      const lines = [['Площадь фасада', area + ' м²'], ['Ставка', rate + ' ₽/м²'], ['Минимальный выезд', '50 000 ₽']];
-      if (checked('lift')) { total += 30000; lines.push(['Автовышка/мачта', rub(30000)]); }
-      if (checked('facadeHeritage')) { total *= 1.35; lines.push(['Культурное наследие', '×1.35']); }
-      return { total, lines, subtitle: 'Фасады, чертежи, модели и ортофото' };
-    }
-
-    function calcTopo() {
-      const ha = num('hectares');
-      const method = el('topoMethod').value;
-      let rate = num('topoResult');
-      let total = ha * rate;
-      if (method === 'vls') total = Math.max(total, 300000);
-      const lines = [['Площадь', ha + ' га'], ['Метод', method === 'vls' ? 'ВЛС' : 'Наземно / SLAM / RTK'], ['Ставка', rub(rate) + '/га']];
-      if (method === 'vls') lines.push(['Минимум ВЛС', '300 000 ₽']);
-      if (el('topoLocation').value === '1') lines.push(['Регион', 'командировка отдельно']);
-      return { total, lines, subtitle: 'Территории, ЦММ, топоплан и сети' };
-    }
-
-    function calcTanks() {
-      const count = num('tankCount');
-      const base = num('tankVolume');
-      const docs = num('tankDocs');
-      let total = count * (base + docs);
-      const lines = [['Количество', count + ' шт'], ['База за резервуар', rub(base)], ['Документы', docs ? rub(docs) + '/шт' : 'без доплаты'], ['Тип', el('tankType').value]];
-      if (count >= 10) { total *= .9; lines.push(['Скидка 10+ шт', '-10%']); }
-      return { total, lines, subtitle: 'Градуировка и калибровка резервуаров' };
-    }
-
-    function calcReverse() {
-      const count = num('partCount');
-      const factor = num('accuracy');
-      const base = num('reverseBase');
-      const cad = num('cad');
-      const total = count * base * factor + cad;
-      const lines = [['Деталей', count + ' шт'], ['База', rub(base)], ['Коэффициент точности', '×' + factor], ['CAD', cad ? rub(cad) : 'не требуется']];
-      return { total, lines, subtitle: 'Реверс-инжиниринг: первичная вилка' };
-    }
-
-    function calculate() {
-      const result = { interior: calcInterior, facade: calcFacade, topo: calcTopo, tanks: calcTanks, reverse: calcReverse }[current]();
-      el('price').textContent = rub(result.total);
-      el('subtitle').textContent = result.subtitle;
-      el('lines').innerHTML = result.lines.map(([k, v]) => '<div class="line"><span>' + k + '</span><strong>' + v + '</strong></div>').join('');
-      window.currentQuote = result;
-    }
-
-    el('copyBtn').addEventListener('click', async () => {
-      const quote = window.currentQuote;
-      const lines = quote.lines.map(([k, v]) => k + ': ' + v).join('\n');
-      const text = 'Предварительный расчёт лазерного сканирования\n' + lines + '\nИтого: ' + rub(quote.total) + '\n\nЦена предварительная, для точного КП нужны адрес, фото/планы, результат, точность, сроки и условия доступа.';
-      try {
-        await navigator.clipboard.writeText(text);
-        showToast('Текст КП скопирован');
-      } catch {
-        showToast('Не удалось скопировать');
-      }
+<div id="toast" style="position:fixed; left:50%; bottom:28px; transform:translateX(-50%) translateY(20px); background:#14181F; color:#fff; font-family:'Manrope',sans-serif; font-size:14px; padding:13px 22px; border-radius:6px; box-shadow:0 12px 30px rgba(0,0,0,.4); opacity:0; pointer-events:none; transition:all .25s; z-index:999;"></div>
+<script>
+(function(){
+  // ---- FAQ accordion ----
+  document.querySelectorAll('.faq-item').forEach(function(item){
+    item.addEventListener('click', function(){
+      var ans=item.querySelector('.faq-answer'), sign=item.querySelector('.faq-sign');
+      var open=ans.style.display!=='none';
+      document.querySelectorAll('.faq-item').forEach(function(o){
+        o.querySelector('.faq-answer').style.display='none';
+        o.querySelector('.faq-sign').textContent='+';
+        o.classList.remove('is-open');
+      });
+      if(!open){ ans.style.display='block'; sign.textContent='–'; item.classList.add('is-open'); }
     });
+  });
 
-    function showToast(text) {
-      const toast = el('toast');
-      toast.textContent = text;
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2200);
+  // ---- Calculator (Variant B) ----
+  var calc=document.getElementById('calc');
+  if(!calc) return;
+  var fmt=new Intl.NumberFormat('ru-RU');
+  var current='interior';
+  var el=function(id){return document.getElementById(id);};
+  var rub=function(v){return fmt.format(Math.round(v))+' ₽';};
+  var num=function(id){return Number(el(id).value||0);};
+  var checked=function(id){return el(id).checked;};
+
+  calc.querySelectorAll('.calc-tab').forEach(function(tab){
+    tab.addEventListener('click', function(){
+      current=tab.dataset.tab;
+      calc.querySelectorAll('.calc-tab').forEach(function(t){t.classList.toggle('is-active',t===tab);});
+      calc.querySelectorAll('.calc-pane').forEach(function(p){p.classList.toggle('is-active',p.dataset.pane===current);});
+      calculate();
+    });
+  });
+  calc.querySelectorAll('input,select').forEach(function(i){i.addEventListener('input',calculate);});
+
+  function minInterior(area,service){
+    if(area<=100){return {scanColor:15000,scanBw:15000,plan:18000,planEng:20000,model:20000,modelEng:30000,archicad:35000}[service];}
+    return 0;
+  }
+  function interiorRate(s){return {scanBw:60,scanColor:80,plan:80,planEng:120,model:130,modelEng:180,archicad:260}[s];}
+  function serviceName(s){return {scanColor:'только сканирование, цвет',scanBw:'только сканирование, ч/б',plan:'сканирование + чертёж план',planEng:'план + видимые инженерные сети',model:'план + 3D модель',modelEng:'3D модель с инженерными сетями',archicad:'Archicad/PLA с инженерными сетями'}[s];}
+
+  function calcInterior(){
+    var area=num('area'), service=el('interiorService').value;
+    var base=Math.max(minInterior(area,service), area*interiorRate(service));
+    var total=base;
+    var lines=[['Площадь',area+' м²'],['Результат',serviceName(service)],['База',rub(base)]];
+    if(checked('deviations')){total+=5000;lines.push(['Отклонения',rub(5000)]);}
+    var d=num('distance')*200;
+    if(d){total+=d;lines.push(['Удалённость',rub(d)]);}
+    if(checked('heritage')){total*=1.35;lines.push(['Культурное наследие','×1.35']);}
+    total*=Number(el('lod').value);
+    if(el('lod').value!=='1')lines.push(['Детализация','LOD300 ×1.5']);
+    if(area>1000&&num('discount')){total*=1-num('discount');lines.push(['Скидка объём','-'+Math.round(num('discount')*100)+'%']);}
+    if(checked('urgent')){total*=1.2;lines.push(['Сложность/срочность','+20%']);}
+    var vat=num('vat');
+    if(vat){lines.push(['НДС','+'+Math.round(vat*100)+'%']);total*=1+vat;}
+    return {total:total,lines:lines,subtitle:'Помещения и гражданские объекты'};
+  }
+  function calcFacade(){
+    var area=num('facadeArea');
+    var rate=num('facadeScan')+num('facadeDrawing')+num('facadeModel');
+    if(checked('ortho'))rate+=30;
+    var total=Math.max(area*rate,50000);
+    var lines=[['Площадь фасада',area+' м²'],['Ставка',rate+' ₽/м²'],['Минимальный выезд','50 000 ₽']];
+    if(checked('lift')){total+=30000;lines.push(['Автовышка/мачта',rub(30000)]);}
+    if(checked('facadeHeritage')){total*=1.35;lines.push(['Культурное наследие','×1.35']);}
+    return {total:total,lines:lines,subtitle:'Фасады, чертежи, модели и ортофото'};
+  }
+  function calcTopo(){
+    var ha=num('hectares'), method=el('topoMethod').value, rate=num('topoResult');
+    var total=ha*rate;
+    if(method==='vls')total=Math.max(total,300000);
+    var lines=[['Площадь',ha+' га'],['Метод',method==='vls'?'ВЛС':'Наземно / SLAM / RTK'],['Ставка',rub(rate)+'/га']];
+    if(method==='vls')lines.push(['Минимум ВЛС','300 000 ₽']);
+    if(el('topoLocation').value==='1')lines.push(['Регион','командировка отдельно']);
+    return {total:total,lines:lines,subtitle:'Территории, ЦММ, топоплан и сети'};
+  }
+  function calcTanks(){
+    var count=num('tankCount'), base=num('tankVolume'), docs=num('tankDocs');
+    var total=count*(base+docs);
+    var lines=[['Количество',count+' шт'],['База за резервуар',rub(base)],['Документы',docs?rub(docs)+'/шт':'без доплаты'],['Тип',el('tankType').value]];
+    if(count>=10){total*=.9;lines.push(['Скидка 10+ шт','-10%']);}
+    return {total:total,lines:lines,subtitle:'Градуировка и калибровка резервуаров'};
+  }
+  function calcReverse(){
+    var count=num('partCount'), factor=num('accuracy'), base=num('reverseBase'), cad=num('cad');
+    var total=count*base*factor+cad;
+    var lines=[['Деталей',count+' шт'],['База',rub(base)],['Коэффициент точности','×'+factor],['CAD',cad?rub(cad):'не требуется']];
+    return {total:total,lines:lines,subtitle:'Реверс-инжиниринг: первичная вилка'};
+  }
+  function calculate(){
+    var r={interior:calcInterior,facade:calcFacade,topo:calcTopo,tanks:calcTanks,reverse:calcReverse}[current]();
+    el('calcPrice').textContent=rub(r.total);
+    el('calcSubtitle').textContent=r.subtitle;
+    el('calcLines').innerHTML=r.lines.map(function(p){return '<div class="calc-line"><span>'+p[0]+'</span><strong>'+p[1]+'</strong></div>';}).join('');
+    window.currentQuote=r;
+  }
+  function showToast(t){var el=document.getElementById('toast');el.textContent=t;el.style.opacity='1';el.style.transform='translateX(-50%) translateY(0)';setTimeout(function(){el.style.opacity='0';el.style.transform='translateX(-50%) translateY(20px)';},2200);}
+  el('calcCopyBtn').addEventListener('click', function(){
+    var q=window.currentQuote;
+    var lines=q.lines.map(function(p){return p[0]+': '+p[1];}).join('\n');
+    var text='Предварительный расчёт лазерного сканирования\n'+lines+'\nИтого: '+rub(q.total)+'\n\nЦена предварительная, для точного КП нужны адрес, фото/планы, результат, точность, сроки и условия доступа.';
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){showToast('Текст КП скопирован');},function(){showToast('Не удалось скопировать');});}
+    else{showToast('Не удалось скопировать');}
+  });
+  calculate();
+})();
+</script>
+<div id="cookie">
+  <span>Мы используем cookie и Яндекс.Метрику для аналитики. Продолжая пользоваться сайтом, вы соглашаетесь с <a href="privacy.html" target="_blank">политикой конфиденциальности</a>.</span>
+  <button id="cookieOk" type="button">Принять</button>
+</div>
+<script>
+(function(){
+  function ymGoal(g){try{if(window.ym&&window.METRIKA_ID&&window.METRIKA_ID!=="XXXXXXXX")ym(window.METRIKA_ID,"reachGoal",g);}catch(e){}}
+  document.querySelectorAll('[data-goal]').forEach(function(a){a.addEventListener('click',function(){ymGoal(a.dataset.goal);});});
+
+  // phone mask
+  var ph=document.getElementById('lfPhone');
+  if(ph){ph.addEventListener('input',function(){
+    var d=ph.value.replace(/\D/g,'');
+    if(d[0]==='8')d='7'+d.slice(1);
+    if(d[0]!=='7')d='7'+d;
+    d=d.slice(0,11);
+    var o='+7';
+    if(d.length>1)o+=' ('+d.slice(1,4);
+    if(d.length>=4)o+=') '+d.slice(4,7);
+    if(d.length>=7)o+='-'+d.slice(7,9);
+    if(d.length>=9)o+='-'+d.slice(9,11);
+    ph.value=o;
+  });}
+
+  // quote -> form
+  var sq=document.getElementById('sendQuoteBtn');
+  if(sq){sq.addEventListener('click',function(){
+    var q=window.currentQuote; if(!q)return;
+    var lines=q.lines.map(function(p){return p[0]+': '+p[1];}).join('; ');
+    var txt=q.subtitle+' — '+lines+'. Итого: '+document.getElementById('calcPrice').textContent;
+    var hid=document.getElementById('lfQuote'); if(hid)hid.value=txt;
+    var c=document.querySelector('#leadForm textarea[name="Комментарий"]');
+    if(c&&!c.value)c.value='Расчёт из калькулятора: '+txt;
+    ymGoal('calc');
+  });}
+
+  // form submit
+  var f=document.getElementById('leadForm');
+  if(f){f.addEventListener('submit',function(ev){
+    ev.preventDefault();
+    var msg=document.getElementById('lfMsg'); msg.className='lf-msg';
+    if(f._gotcha.value)return;
+    var name=f.elements['Имя'], phone=f.elements['Телефон'], consent=document.getElementById('lfConsent');
+    var ok=true;
+    [name,phone].forEach(function(el){var bad=!el.value.trim(); el.classList.toggle('lf-invalid',bad); if(bad)ok=false;});
+    if((phone.value.replace(/\D/g,'')).length<11){phone.classList.add('lf-invalid');ok=false;}
+    if(!consent.checked)ok=false;
+    if(!ok){msg.textContent='Заполните имя, телефон и подтвердите согласие.';msg.className='lf-msg err';return;}
+    if(f.action.indexOf('YOUR_FORM_ID')>-1){
+      msg.textContent='Форма в режиме настройки. Напишите в Telegram или позвоните — ответим в день обращения.';
+      msg.className='lf-msg err';return;
     }
-    calculate();
-  </script>
-</body>
-</html>
+    var btn=f.querySelector('.lf-submit'); btn.disabled=true; btn.textContent='Отправляем…';
+    fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}})
+      .then(function(r){
+        if(r.ok){f.reset();msg.textContent='Заявка отправлена! Свяжемся с вами в день обращения.';msg.className='lf-msg ok';ymGoal('lead');}
+        else{msg.textContent='Не удалось отправить. Напишите в Telegram или позвоните.';msg.className='lf-msg err';}
+      })
+      .catch(function(){msg.textContent='Ошибка сети. Напишите в Telegram или позвоните.';msg.className='lf-msg err';})
+      .finally(function(){btn.disabled=false;btn.textContent='Отправить заявку';});
+  });}
+
+  // cookie notice
+  try{
+    if(!localStorage.getItem('cookieOk')){
+      var c=document.getElementById('cookie'); c.style.display='flex';
+      document.getElementById('cookieOk').addEventListener('click',function(){localStorage.setItem('cookieOk','1');c.style.display='none';});
+    }
+  }catch(e){}
+})();
+</script>
+</body></html>

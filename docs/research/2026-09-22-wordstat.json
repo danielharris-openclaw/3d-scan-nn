@@ -1,0 +1,662 @@
+{
+  "schema_version": 1,
+  "observed_on": "2026-09-22",
+  "source": "Яндекс Вордстат",
+  "method": "Чтение видимого интерфейса браузера после разрешённого входа; не API. Основной показатель — общий счётчик над таблицей.",
+  "regions": [
+    {
+      "id": 47,
+      "name": "Нижний Новгород"
+    },
+    {
+      "id": 11079,
+      "name": "Нижегородская область",
+      "includes_region_ids": [
+        47
+      ]
+    }
+  ],
+  "notes": [
+    "Регион задавался фильтром; название города не добавлялось в текст этих запросов.",
+    "Широкие формулировки содержат информационные и нецелевые запросы; это не число уникальных людей или заявок.",
+    "Город входит в область, поэтому показатели не суммируются; вложенные фразы тоже пересекаются.",
+    "Пустые таблицы показывали другой период. Для промышленной фразы счётчик 1 противоречил сообщению об отсутствии подходящих строк; она исключена из количественного сравнения.",
+    "При кавычках общий счётчик и первая строка таблицы различались. Сохранены оба значения; строка таблицы не считается частотностью с кавычками."
+  ],
+  "observations": [
+    {
+      "query": "лазерное сканирование",
+      "region_id": 47,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 80,
+      "first_table_row_count": 80,
+      "table_present": true,
+      "quality": "table_present",
+      "source_url": "https://wordstat.yandex.ru/?region=47&view=table&words=%D0%BB%D0%B0%D0%B7%D0%B5%D1%80%D0%BD%D0%BE%D0%B5%20%D1%81%D0%BA%D0%B0%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5"
+    },
+    {
+      "query": "лазерное сканирование",
+      "region_id": 11079,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 115,
+      "first_table_row_count": 115,
+      "table_present": true,
+      "quality": "table_present",
+      "source_url": "https://wordstat.yandex.ru/?region=11079&view=table&words=%D0%BB%D0%B0%D0%B7%D0%B5%D1%80%D0%BD%D0%BE%D0%B5%20%D1%81%D0%BA%D0%B0%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5"
+    },
+    {
+      "query": "обмер помещений",
+      "region_id": 47,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 10,
+      "first_table_row_count": 10,
+      "table_present": true,
+      "quality": "table_present",
+      "source_url": "https://wordstat.yandex.ru/?region=47&view=table&words=%D0%BE%D0%B1%D0%BC%D0%B5%D1%80%20%D0%BF%D0%BE%D0%BC%D0%B5%D1%89%D0%B5%D0%BD%D0%B8%D0%B9"
+    },
+    {
+      "query": "обмер помещений",
+      "region_id": 11079,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 11,
+      "first_table_row_count": 11,
+      "table_present": true,
+      "quality": "table_present",
+      "source_url": "https://wordstat.yandex.ru/?region=11079&view=table&words=%D0%BE%D0%B1%D0%BC%D0%B5%D1%80%20%D0%BF%D0%BE%D0%BC%D0%B5%D1%89%D0%B5%D0%BD%D0%B8%D0%B9"
+    },
+    {
+      "query": "обмер квартиры",
+      "region_id": 47,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 10,
+      "first_table_row_count": 10,
+      "table_present": true,
+      "quality": "table_present",
+      "source_url": "https://wordstat.yandex.ru/?region=47&view=table&words=%D0%BE%D0%B1%D0%BC%D0%B5%D1%80%20%D0%BA%D0%B2%D0%B0%D1%80%D1%82%D0%B8%D1%80%D1%8B"
+    },
+    {
+      "query": "обмер квартиры",
+      "region_id": 11079,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 12,
+      "first_table_row_count": 12,
+      "table_present": true,
+      "quality": "table_present",
+      "source_url": "https://wordstat.yandex.ru/?region=11079&view=table&words=%D0%BE%D0%B1%D0%BC%D0%B5%D1%80%20%D0%BA%D0%B2%D0%B0%D1%80%D1%82%D0%B8%D1%80%D1%8B"
+    },
+    {
+      "query": "обмер фасадов",
+      "region_id": 47,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-21",
+      "period_to": "2026-09-21",
+      "header_count": 0,
+      "first_table_row_count": null,
+      "table_present": false,
+      "quality": "no_matching_rows_other_period",
+      "source_url": "https://wordstat.yandex.ru/?region=47&view=table&words=%D0%BE%D0%B1%D0%BC%D0%B5%D1%80%20%D1%84%D0%B0%D1%81%D0%B0%D0%B4%D0%BE%D0%B2"
+    },
+    {
+      "query": "обмер фасадов",
+      "region_id": 11079,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 1,
+      "first_table_row_count": 1,
+      "table_present": true,
+      "quality": "table_present",
+      "source_url": "https://wordstat.yandex.ru/?region=11079&view=table&words=%D0%BE%D0%B1%D0%BC%D0%B5%D1%80%20%D1%84%D0%B0%D1%81%D0%B0%D0%B4%D0%BE%D0%B2"
+    },
+    {
+      "query": "обмерные работы",
+      "region_id": 47,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 66,
+      "first_table_row_count": 66,
+      "table_present": true,
+      "quality": "table_present",
+      "source_url": "https://wordstat.yandex.ru/?region=47&view=table&words=%D0%BE%D0%B1%D0%BC%D0%B5%D1%80%D0%BD%D1%8B%D0%B5%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B"
+    },
+    {
+      "query": "обмерные работы",
+      "region_id": 11079,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 71,
+      "first_table_row_count": 71,
+      "table_present": true,
+      "quality": "table_present",
+      "source_url": "https://wordstat.yandex.ru/?region=11079&view=table&words=%D0%BE%D0%B1%D0%BC%D0%B5%D1%80%D0%BD%D1%8B%D0%B5%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B"
+    },
+    {
+      "query": "сканирование резервуаров",
+      "region_id": 47,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-21",
+      "period_to": "2026-09-21",
+      "header_count": 0,
+      "first_table_row_count": null,
+      "table_present": false,
+      "quality": "no_matching_rows_other_period",
+      "source_url": "https://wordstat.yandex.ru/?region=47&view=table&words=%D1%81%D0%BA%D0%B0%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20%D1%80%D0%B5%D0%B7%D0%B5%D1%80%D0%B2%D1%83%D0%B0%D1%80%D0%BE%D0%B2"
+    },
+    {
+      "query": "сканирование резервуаров",
+      "region_id": 11079,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-21",
+      "period_to": "2026-09-21",
+      "header_count": 0,
+      "first_table_row_count": null,
+      "table_present": false,
+      "quality": "no_matching_rows_other_period",
+      "source_url": "https://wordstat.yandex.ru/?region=11079&view=table&words=%D1%81%D0%BA%D0%B0%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20%D1%80%D0%B5%D0%B7%D0%B5%D1%80%D0%B2%D1%83%D0%B0%D1%80%D0%BE%D0%B2"
+    },
+    {
+      "query": "лазерное сканирование промышленных объектов",
+      "region_id": 47,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-21",
+      "period_to": "2026-09-21",
+      "header_count": 1,
+      "first_table_row_count": null,
+      "table_present": false,
+      "quality": "counter_and_empty_table_conflict",
+      "source_url": "https://wordstat.yandex.ru/?region=47&view=table&words=%D0%BB%D0%B0%D0%B7%D0%B5%D1%80%D0%BD%D0%BE%D0%B5%20%D1%81%D0%BA%D0%B0%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%BF%D1%80%D0%BE%D0%BC%D1%8B%D1%88%D0%BB%D0%B5%D0%BD%D0%BD%D1%8B%D1%85%20%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D0%BE%D0%B2"
+    },
+    {
+      "query": "лазерное сканирование промышленных объектов",
+      "region_id": 11079,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-21",
+      "period_to": "2026-09-21",
+      "header_count": 1,
+      "first_table_row_count": null,
+      "table_present": false,
+      "quality": "counter_and_empty_table_conflict",
+      "source_url": "https://wordstat.yandex.ru/?region=11079&view=table&words=%D0%BB%D0%B0%D0%B7%D0%B5%D1%80%D0%BD%D0%BE%D0%B5%20%D1%81%D0%BA%D0%B0%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%BF%D1%80%D0%BE%D0%BC%D1%8B%D1%88%D0%BB%D0%B5%D0%BD%D0%BD%D1%8B%D1%85%20%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D0%BE%D0%B2"
+    },
+    {
+      "query": "замер помещений",
+      "region_id": 47,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 32,
+      "first_table_row_count": 32,
+      "table_present": true,
+      "quality": "table_present",
+      "source_url": "https://wordstat.yandex.ru/?region=47&view=table&words=%D0%B7%D0%B0%D0%BC%D0%B5%D1%80%20%D0%BF%D0%BE%D0%BC%D0%B5%D1%89%D0%B5%D0%BD%D0%B8%D0%B9"
+    },
+    {
+      "query": "замер помещений",
+      "region_id": 11079,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 63,
+      "first_table_row_count": 63,
+      "table_present": true,
+      "quality": "table_present",
+      "source_url": "https://wordstat.yandex.ru/?region=11079&view=table&words=%D0%B7%D0%B0%D0%BC%D0%B5%D1%80%20%D0%BF%D0%BE%D0%BC%D0%B5%D1%89%D0%B5%D0%BD%D0%B8%D0%B9"
+    },
+    {
+      "query": "замер квартиры",
+      "region_id": 47,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 129,
+      "first_table_row_count": 129,
+      "table_present": true,
+      "quality": "table_present",
+      "source_url": "https://wordstat.yandex.ru/?region=47&view=table&words=%D0%B7%D0%B0%D0%BC%D0%B5%D1%80%20%D0%BA%D0%B2%D0%B0%D1%80%D1%82%D0%B8%D1%80%D1%8B"
+    },
+    {
+      "query": "замер квартиры",
+      "region_id": 11079,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 256,
+      "first_table_row_count": 256,
+      "table_present": true,
+      "quality": "table_present",
+      "source_url": "https://wordstat.yandex.ru/?region=11079&view=table&words=%D0%B7%D0%B0%D0%BC%D0%B5%D1%80%20%D0%BA%D0%B2%D0%B0%D1%80%D1%82%D0%B8%D1%80%D1%8B"
+    },
+    {
+      "query": "сканирование зданий",
+      "region_id": 47,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 10,
+      "first_table_row_count": 10,
+      "table_present": true,
+      "quality": "table_present",
+      "source_url": "https://wordstat.yandex.ru/?region=47&view=table&words=%D1%81%D0%BA%D0%B0%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B9"
+    },
+    {
+      "query": "сканирование зданий",
+      "region_id": 11079,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 10,
+      "first_table_row_count": 10,
+      "table_present": true,
+      "quality": "table_present",
+      "source_url": "https://wordstat.yandex.ru/?region=11079&view=table&words=%D1%81%D0%BA%D0%B0%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B9"
+    },
+    {
+      "query": "фасадная съемка",
+      "region_id": 47,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 22,
+      "first_table_row_count": 22,
+      "table_present": true,
+      "quality": "table_present",
+      "source_url": "https://wordstat.yandex.ru/?region=47&view=table&words=%D1%84%D0%B0%D1%81%D0%B0%D0%B4%D0%BD%D0%B0%D1%8F%20%D1%81%D1%8A%D0%B5%D0%BC%D0%BA%D0%B0"
+    },
+    {
+      "query": "фасадная съемка",
+      "region_id": 11079,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 24,
+      "first_table_row_count": 24,
+      "table_present": true,
+      "quality": "table_present",
+      "source_url": "https://wordstat.yandex.ru/?region=11079&view=table&words=%D1%84%D0%B0%D1%81%D0%B0%D0%B4%D0%BD%D0%B0%D1%8F%20%D1%81%D1%8A%D0%B5%D0%BC%D0%BA%D0%B0"
+    },
+    {
+      "query": "BIM моделирование",
+      "region_id": 47,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 51,
+      "first_table_row_count": 51,
+      "table_present": true,
+      "quality": "table_present",
+      "source_url": "https://wordstat.yandex.ru/?region=47&view=table&words=BIM%20%D0%BC%D0%BE%D0%B4%D0%B5%D0%BB%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5"
+    },
+    {
+      "query": "BIM моделирование",
+      "region_id": 11079,
+      "match_mode": "without_operators",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 83,
+      "first_table_row_count": 83,
+      "table_present": true,
+      "quality": "table_present",
+      "source_url": "https://wordstat.yandex.ru/?region=11079&view=table&words=BIM%20%D0%BC%D0%BE%D0%B4%D0%B5%D0%BB%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5"
+    },
+    {
+      "query": "\"обмерные работы\"",
+      "region_id": 11079,
+      "match_mode": "quotes_fix_word_count_not_order_or_word_forms",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 7,
+      "first_table_row_count": 71,
+      "table_present": true,
+      "quality": "operator_header_differs_from_table_row",
+      "source_url": "https://wordstat.yandex.ru/?region=11079&view=table&words=%22%D0%BE%D0%B1%D0%BC%D0%B5%D1%80%D0%BD%D1%8B%D0%B5%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%22"
+    },
+    {
+      "query": "\"лазерное сканирование\"",
+      "region_id": 11079,
+      "match_mode": "quotes_fix_word_count_not_order_or_word_forms",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 0,
+      "first_table_row_count": 115,
+      "table_present": true,
+      "quality": "operator_header_differs_from_table_row",
+      "source_url": "https://wordstat.yandex.ru/?region=11079&view=table&words=%22%D0%BB%D0%B0%D0%B7%D0%B5%D1%80%D0%BD%D0%BE%D0%B5%20%D1%81%D0%BA%D0%B0%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%22"
+    },
+    {
+      "query": "\"фасадная съемка\"",
+      "region_id": 11079,
+      "match_mode": "quotes_fix_word_count_not_order_or_word_forms",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 0,
+      "first_table_row_count": 24,
+      "table_present": true,
+      "quality": "operator_header_differs_from_table_row",
+      "source_url": "https://wordstat.yandex.ru/?region=11079&view=table&words=%22%D1%84%D0%B0%D1%81%D0%B0%D0%B4%D0%BD%D0%B0%D1%8F%20%D1%81%D1%8A%D0%B5%D0%BC%D0%BA%D0%B0%22"
+    },
+    {
+      "query": "\"обмер помещений\"",
+      "region_id": 11079,
+      "match_mode": "quotes_fix_word_count_not_order_or_word_forms",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 0,
+      "first_table_row_count": 11,
+      "table_present": true,
+      "quality": "operator_header_differs_from_table_row",
+      "source_url": "https://wordstat.yandex.ru/?region=11079&view=table&words=%22%D0%BE%D0%B1%D0%BC%D0%B5%D1%80%20%D0%BF%D0%BE%D0%BC%D0%B5%D1%89%D0%B5%D0%BD%D0%B8%D0%B9%22"
+    },
+    {
+      "query": "\"обмер квартиры\"",
+      "region_id": 11079,
+      "match_mode": "quotes_fix_word_count_not_order_or_word_forms",
+      "devices": "all",
+      "period_from": "2026-08-22",
+      "period_to": "2026-09-20",
+      "header_count": 2,
+      "first_table_row_count": 12,
+      "table_present": true,
+      "quality": "operator_header_differs_from_table_row",
+      "source_url": "https://wordstat.yandex.ru/?region=11079&view=table&words=%22%D0%BE%D0%B1%D0%BC%D0%B5%D1%80%20%D0%BA%D0%B2%D0%B0%D1%80%D1%82%D0%B8%D1%80%D1%8B%22"
+    }
+  ],
+  "monthly_series": [
+    {
+      "query": "лазерное сканирование",
+      "region_id": 11079,
+      "devices": "all",
+      "match_mode": "without_operators",
+      "source_url": "https://wordstat.yandex.ru/?region=11079&view=graph&words=%D0%BB%D0%B0%D0%B7%D0%B5%D1%80%D0%BD%D0%BE%D0%B5%20%D1%81%D0%BA%D0%B0%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5",
+      "observations": [
+        {
+          "month": "2024-09",
+          "query_count": 120
+        },
+        {
+          "month": "2024-10",
+          "query_count": 221
+        },
+        {
+          "month": "2024-11",
+          "query_count": 174
+        },
+        {
+          "month": "2024-12",
+          "query_count": 216
+        },
+        {
+          "month": "2025-01",
+          "query_count": 182
+        },
+        {
+          "month": "2025-02",
+          "query_count": 163
+        },
+        {
+          "month": "2025-03",
+          "query_count": 204
+        },
+        {
+          "month": "2025-04",
+          "query_count": 192
+        },
+        {
+          "month": "2025-05",
+          "query_count": 166
+        },
+        {
+          "month": "2025-06",
+          "query_count": 152
+        },
+        {
+          "month": "2025-07",
+          "query_count": 158
+        },
+        {
+          "month": "2025-08",
+          "query_count": 151
+        },
+        {
+          "month": "2025-09",
+          "query_count": 132
+        },
+        {
+          "month": "2025-10",
+          "query_count": 252
+        },
+        {
+          "month": "2025-11",
+          "query_count": 217
+        },
+        {
+          "month": "2025-12",
+          "query_count": 383
+        },
+        {
+          "month": "2026-01",
+          "query_count": 216
+        },
+        {
+          "month": "2026-02",
+          "query_count": 186
+        },
+        {
+          "month": "2026-03",
+          "query_count": 157
+        },
+        {
+          "month": "2026-04",
+          "query_count": 184
+        },
+        {
+          "month": "2026-05",
+          "query_count": 154
+        },
+        {
+          "month": "2026-06",
+          "query_count": 106
+        },
+        {
+          "month": "2026-07",
+          "query_count": 120
+        },
+        {
+          "month": "2026-08",
+          "query_count": 97
+        }
+      ]
+    },
+    {
+      "query": "обмерные работы",
+      "region_id": 11079,
+      "devices": "all",
+      "match_mode": "without_operators",
+      "source_url": "https://wordstat.yandex.ru/?region=11079&view=graph&words=%D0%BE%D0%B1%D0%BC%D0%B5%D1%80%D0%BD%D1%8B%D0%B5%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B",
+      "observations": [
+        {
+          "month": "2024-09",
+          "query_count": 90
+        },
+        {
+          "month": "2024-10",
+          "query_count": 155
+        },
+        {
+          "month": "2024-11",
+          "query_count": 146
+        },
+        {
+          "month": "2024-12",
+          "query_count": 80
+        },
+        {
+          "month": "2025-01",
+          "query_count": 68
+        },
+        {
+          "month": "2025-02",
+          "query_count": 98
+        },
+        {
+          "month": "2025-03",
+          "query_count": 96
+        },
+        {
+          "month": "2025-04",
+          "query_count": 97
+        },
+        {
+          "month": "2025-05",
+          "query_count": 71
+        },
+        {
+          "month": "2025-06",
+          "query_count": 78
+        },
+        {
+          "month": "2025-07",
+          "query_count": 86
+        },
+        {
+          "month": "2025-08",
+          "query_count": 45
+        },
+        {
+          "month": "2025-09",
+          "query_count": 69
+        },
+        {
+          "month": "2025-10",
+          "query_count": 74
+        },
+        {
+          "month": "2025-11",
+          "query_count": 71
+        },
+        {
+          "month": "2025-12",
+          "query_count": 67
+        },
+        {
+          "month": "2026-01",
+          "query_count": 57
+        },
+        {
+          "month": "2026-02",
+          "query_count": 57
+        },
+        {
+          "month": "2026-03",
+          "query_count": 100
+        },
+        {
+          "month": "2026-04",
+          "query_count": 128
+        },
+        {
+          "month": "2026-05",
+          "query_count": 84
+        },
+        {
+          "month": "2026-06",
+          "query_count": 73
+        },
+        {
+          "month": "2026-07",
+          "query_count": 52
+        },
+        {
+          "month": "2026-08",
+          "query_count": 40
+        }
+      ]
+    }
+  ],
+  "composition_examples": [
+    {
+      "region_id": 11079,
+      "parent_query": "лазерное сканирование",
+      "child_query": "данные лазерного сканирования",
+      "query_count": 30
+    },
+    {
+      "region_id": 11079,
+      "parent_query": "обмерные работы",
+      "child_query": "сбцп обмерные работы",
+      "query_count": 16
+    },
+    {
+      "region_id": 11079,
+      "parent_query": "обмерные работы",
+      "child_query": "обмерные работы цена",
+      "query_count": 11
+    },
+    {
+      "region_id": 11079,
+      "parent_query": "фасадная съемка",
+      "child_query": "как отрисовать отклонения фасадной съемки в автокаде",
+      "query_count": 21
+    },
+    {
+      "region_id": 11079,
+      "parent_query": "замер квартиры",
+      "child_query": "замер шума в квартире",
+      "query_count": 46
+    },
+    {
+      "region_id": 11079,
+      "parent_query": "замер квартиры",
+      "child_query": "замер квартиры цена",
+      "query_count": 12
+    },
+    {
+      "region_id": 11079,
+      "parent_query": "замер помещений",
+      "child_query": "приложение для замеров помещения",
+      "query_count": 10
+    }
+  ],
+  "operator_reference": "https://yandex.ru/support2/wordstat/ru/content/operators"
+}

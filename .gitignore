@@ -1,0 +1,8 @@
+access.md
+.env
+.env.*
+*.key
+*.pem
+*secret*
+*token*
+credentials*

@@ -56,6 +56,7 @@ const areas = [
   ['header', '<!-- nav -->', '<!-- hero body -->', ['call']],
   ['hero', '<!-- hero body -->', '<!-- hero visual:', ['telegram', 'max', 'call']],
   ['contacts', '<section id="leadform"', '<form id="leadForm"', ['telegram', 'max', 'call']],
+  ['form', '<form id="leadForm"', '</form>', ['max', 'telegram', 'email']],
   ['footer', '<footer', '</footer>', ['call', 'email']]
 ];
 
@@ -65,7 +66,7 @@ for (const [area, start, end, goals] of areas) {
     const startIndex = html.indexOf(start), endIndex = html.indexOf(end, startIndex);
     assert.ok(startIndex >= 0 && endIndex > startIndex, `Find ${area} in the real page`);
     const contacts = links.filter(link => link.position > startIndex && link.position < endIndex
-      && (/^tel:|^mailto:|^https:\/\/t\.me\//.test(link.href) || /М[АA][ХX]/i.test(link.text)));
+      && (/^tel:|^mailto:|^https:\/\/t\.me\//.test(link.href) || /[МM][АA][ХX]/i.test(link.text)));
     assert.equal(contacts.length, goals.length);
     for (const [index, link] of contacts.entries()) {
       calls.length = 0;
@@ -78,10 +79,10 @@ for (const [area, start, end, goals] of areas) {
   });
 }
 
-test('both MAX buttons use the owner-provided profile URL instead of a phone link', () => {
+test('all MAX links use the owner-provided profile URL instead of a phone link', () => {
   const { links } = page();
-  const maxLinks = links.filter(link => /М[АA][ХX]/i.test(link.text));
-  assert.equal(maxLinks.length, 2);
+  const maxLinks = links.filter(link => /[МM][АA][ХX]/i.test(link.text));
+  assert.equal(maxLinks.length, 3);
   for (const link of maxLinks) {
     assert.equal(link.href, maxUrl);
     assert.equal(link.dataset.goal, 'max');

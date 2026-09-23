@@ -1074,7 +1074,7 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
       <a href="tel:+79036060054" data-goal="call" style="display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:15.5px; color:#fff; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); padding:15px 24px; border-radius:3px; text-decoration:none;">Позвонить</a>
     </div>
 
-    <form id="leadForm" action="https://formspree.io/f/mlgybbgv" method="POST" enctype="multipart/form-data" style="max-width:640px; margin:38px auto 0; background:#fff; border-radius:12px; padding:32px; text-align:left; box-shadow:0 24px 60px rgba(0,0,0,.4);">
+    <form id="leadForm" action="https://formspree.io/f/mlgybbgv" method="POST" style="max-width:640px; margin:38px auto 0; background:#fff; border-radius:12px; padding:32px; text-align:left; box-shadow:0 24px 60px rgba(0,0,0,.4);">
       <div class="lf-row">
         <div class="lf-field"><label>Имя *</label><input type="text" name="Имя" required></div>
         <div class="lf-field"><label>Телефон *</label><input type="tel" id="lfPhone" name="Телефон" required placeholder="+7 (___) ___-__-__"></div>
@@ -1090,17 +1090,15 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
           <option>Резервуар</option>
         </select></div>
       </div>
-      <div class="lf-row">
-        <div class="lf-field"><label>Желаемый результат</label><select name="Желаемый результат">
-          <option value="">— не выбрано —</option>
-          <option>Облако точек</option>
-          <option>DWG / PDF</option>
-          <option>3D-модель</option>
-          <option>BIM / Revit</option>
-        </select></div>
-        <div class="lf-field"><label>Фото или план объекта</label><input type="file" name="Файлы" multiple accept=".jpg,.jpeg,.png,.pdf"></div>
-      </div>
+      <div class="lf-field"><label>Желаемый результат</label><select name="Желаемый результат">
+        <option value="">— не выбрано —</option>
+        <option>Облако точек</option>
+        <option>DWG / PDF</option>
+        <option>3D-модель</option>
+        <option>BIM / Revit</option>
+      </select></div>
       <div class="lf-field"><label>Комментарий</label><textarea name="Комментарий" rows="3"></textarea></div>
+      <p style="font-size:13.5px; line-height:1.6; color:#5A6573; margin:0 0 16px;">Фото и планы объекта можно отправить в <a href="https://max.ru/u/f9LHodD0cOKQJvAxbQRGybXhznQk8_Y7LqODhTtC9LwLBpcAMsGiYcZlj8o" data-goal="max" style="color:#0B5FFF;">MAX</a>, <a href="https://t.me/frolovr9" data-goal="telegram" style="color:#0B5FFF;">Telegram</a> или <a href="mailto:frolovr9@gmail.com" data-goal="email" style="color:#0B5FFF;">на почту</a>.</p>
       <input type="hidden" name="Расчёт калькулятора" id="lfQuote">
       <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px;">
       <label class="lf-consent"><input type="checkbox" id="lfConsent" required> Я согласен на <a href="privacy.html" target="_blank" style="color:#0B5FFF;">обработку персональных данных</a></label>

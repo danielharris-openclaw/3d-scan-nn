@@ -1168,16 +1168,15 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
   });
   calc.querySelectorAll('input,select').forEach(function(i){i.addEventListener('input',calculate);});
 
-  function minInterior(area,service){
-    if(area<=100){return {scanColor:15000,scanBw:15000,plan:18000,planEng:20000,model:20000,modelEng:30000,archicad:35000}[service];}
-    return 0;
+  function minInterior(service){
+    return {scanColor:20000,scanBw:20000,plan:20000,planEng:20000,model:20000,modelEng:30000,archicad:35000}[service];
   }
   function interiorRate(s){return {scanBw:60,scanColor:80,plan:80,planEng:120,model:130,modelEng:180,archicad:260}[s];}
   function serviceName(s){return {scanColor:'только сканирование, цвет',scanBw:'только сканирование, ч/б',plan:'сканирование + чертёж план',planEng:'план + видимые инженерные сети',model:'план + 3D модель',modelEng:'3D модель с инженерными сетями',archicad:'Archicad/PLA с инженерными сетями'}[s];}
 
   function calcInterior(){
     var area=num('area'), service=el('interiorService').value;
-    var base=Math.max(minInterior(area,service), area*interiorRate(service));
+    var base=Math.max(minInterior(service), area*interiorRate(service));
     var total=base;
     var lines=[['Площадь',area+' м²'],['Результат',serviceName(service)],['База',rub(base)]];
     if(checked('deviations')){total+=5000;lines.push(['Отклонения',rub(5000)]);}
@@ -1226,6 +1225,7 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
   }
   function calculate(){
     var r={interior:calcInterior,facade:calcFacade,topo:calcTopo,tanks:calcTanks,reverse:calcReverse}[current]();
+    if(r.total<20000){r.total=20000;r.lines.push(['Минимальный заказ',rub(20000)]);}
     el('calcPrice').textContent=rub(r.total);
     el('calcSubtitle').textContent=r.subtitle;
     el('calcLines').innerHTML=r.lines.map(function(p){return '<div class="calc-line"><span>'+p[0]+'</span><strong>'+p[1]+'</strong></div>';}).join('');

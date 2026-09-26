@@ -1,0 +1,559 @@
+{
+  "date": "2026-09-26",
+  "commit": "ec2913c204deb9615a8d1535628ec3438dbd756b",
+  "tool": "Google PageSpeed Insights / Lighthouse 13.5.0 / HeadlessChromium 153.0.8010.36",
+  "mobileProfile": "Moto G Power, slow 4G, initial page load",
+  "desktopProfile": "Emulated desktop, custom throttling, initial page load",
+  "fieldData": "No field data displayed by PSI; no field INP or Core Web Vitals pass established",
+  "redaction": "All diagnostic URL query parameters omitted. No cookies, authorization material or form submissions included.",
+  "http": [
+    {
+      "url": "https://3d-scan-nn.ru/",
+      "status": 200,
+      "decodedBytes": 115919,
+      "cacheControl": "max-age=600",
+      "contentEncoding": "gzip",
+      "sameAsLocal": true,
+      "sha256": "78788354ebf982d7b717c38b2d2906a9c7d115face5d9b963446b7f833fa47dd"
+    },
+    {
+      "url": "https://3d-scan-nn.ru/uslugi/obmery-pomeshcheniy/",
+      "status": 200,
+      "decodedBytes": 33592,
+      "cacheControl": "max-age=600",
+      "contentEncoding": "gzip",
+      "sameAsLocal": true,
+      "sha256": "e6d75331253b92ccd759d16a7723e78ddd8ebaf97de34362708d8f13b72f3bfc"
+    },
+    {
+      "url": "https://3d-scan-nn.ru/favicon.ico",
+      "status": 404,
+      "decodedBytes": 9379,
+      "cacheControl": null,
+      "contentEncoding": "gzip",
+      "sameAsLocal": null,
+      "sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368"
+    },
+    {
+      "url": "https://3d-scan-nn.ru/favicon.svg",
+      "status": 200,
+      "decodedBytes": 737,
+      "cacheControl": "max-age=600",
+      "contentEncoding": "gzip",
+      "sameAsLocal": true,
+      "sha256": "3d1d8b1649d1929427cc4353a5a85eba226550a503ff743b67acda79d6ee52d7"
+    },
+    {
+      "url": "https://3d-scan-nn.ru/favicon.png",
+      "status": 200,
+      "decodedBytes": 5134,
+      "cacheControl": "max-age=600",
+      "contentEncoding": null,
+      "sameAsLocal": true,
+      "sha256": "1090d54159a475db54a3273f3e9fec8a8fa26979064639516581a53a01ab70f1"
+    },
+    {
+      "url": "https://3d-scan-nn.ru/index.html",
+      "status": 200,
+      "decodedBytes": 115919,
+      "sameAsLocal": true,
+      "contentEncoding": "gzip",
+      "cacheControl": "max-age=600"
+    }
+  ],
+  "primary": [
+    {
+      "key": "home-mobile-1",
+      "url": "https://3d-scan-nn.ru/",
+      "profile": "mobile",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-3d-scan-nn-ru/71d9b0u3tv?form_factor=mobile",
+      "reportTime": "26 сент. 2026 г., 16:08:01",
+      "fieldDataAvailable": false,
+      "performance": 85,
+      "fcpSeconds": 2,
+      "lcpSeconds": 4.1,
+      "tbtMs": 80,
+      "cls": 0.019,
+      "speedIndexSeconds": 2.6,
+      "captureLabel": "Captured at 26 сент. 2026 г., 16:08 GMT+3",
+      "audits": [
+        {
+          "id": "image-delivery-insight",
+          "text": "Улучшите загрузку изображений Ожидаемая экономия – 47 КиБ\nЕсли изображения будут быстрее скачиваться, то время загрузки страницы и значение LCP могут стать меньше. Узнайте, как оптимизировать размер изображений.LCPFCPНе оценивается\n\t\nURL\n\t\nРазмер файла\n\t\nОжидаемая экономия\n\n\n3d-scan-nn.ru Собственные\n\t77,4 KiB\t46,5 KiB\n\nСканирование на объекте Trimble X7\n<img loading=\"lazy\" decoding=\"async\" src=\"assets/img/207ae4aa-6005-4f84-b37f-a9c74b1ded26.webp\" alt=\"Сканирование на объекте Trimble X7\" style=\"position:absolute; inset:0; width:100%; height:100%; object-fit:cover;\">\n\t\n…img/207ae4aa-6005-4f84-b37f-a9c74b1ded26.webp(3d-scan-nn.ru)\n\t\n38,2 KiB\n\t\n25,3 KiB\n\n\nРазмер изображения (770x700) превышает размер контейнера (534x340). Используйте адаптивный стиль, чтобы размер графического файла был меньше.\n\t\t\n25,3 KiB\n\n\nЛазерный 3D-сканер Trimble X7\n<img class=\"hero-photo\" loading=\"eager\" decoding=\"async\" src=\"assets/img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp\" alt=\"Лазерный 3D-сканер Trimble X7\" style=\"display:block; width:100%; height:auto;\">\n\t\n…img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp(3d-scan-nn.ru)\n\t\n39,2 KiB\n\t\n21,2 KiB\n\n\nРазмер изображения (720x424) превышает размер контейнера (374x374). Используйте адаптивный стиль, чтобы размер графического файла был меньше.\n\t\t\n21,2 KiB"
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "text": "Дерево зависимостей в сети\nСтарайтесь избегать цепочек критических запросов. Чтобы ускорить загрузку страницы, сократите количество запросов, уменьшите размер скачиваемых ресурсов или отложите скачивание ненужных ресурсов.LCPНе оценивается\nМаксимальная задержка критического пути: 452 мс\nНачальная навигация\nhttps://3d-scan-nn.ru - 345 мс, 22,43 KiB\n…fonts/dcbd8b9a-925e-4d14-879c-f9a58ebb33ca.woff2(3d-scan-nn.ru) - 451 мс, 8,80 KiB\n…fonts/04169149-9833-42bc-bd3e-707d957d42d3.woff2(3d-scan-nn.ru) - 448 мс, 15,01 KiB\n…fonts/6df0e662-773d-42fe-b201-f37a36764d86.woff2(3d-scan-nn.ru) - 341 мс, 9,75 KiB\n…fonts/8887462a-64cf-4df9-a0cc-a7287481df98.woff2(3d-scan-nn.ru) - 343 мс, 14,64 KiB\n…fonts/a6a1c43e-9114-418e-8e59-de0676c23112.woff2(3d-scan-nn.ru) - 340 мс, 15,88 KiB\n…fonts/7bd36ca5-da13-4add-bcb9-5f84f7443dcf.woff2(3d-scan-nn.ru) - 341 мс, 14,80 KiB\n…fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2(3d-scan-nn.ru) - 342 мс, 15,41 KiB\n…fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2(3d-scan-nn.ru) - 339 мс, 24,88 KiB\n…fonts/2db06161-42df-438b-b56a-73444d83b1ca.woff2(3d-scan-nn.ru) - 452 мс, 19,14 KiB\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru) - 380 мс, 22,38 KiB\nПредварительно подключенные источники\nПодсказки preconnect помогают браузеру установить соединение на более ранних этапах загрузки страницы, что экономит время при первом запросе к источнику. Далее перечислены источники, к которым предварительно подключилась страница.\nИсточник\n\t\nИсточник\n\n\nhttps://fonts.googleapis.com/\n\t\nbody > link\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n\n\nНеиспользуемое предварительное подключение. Применяйте preconnect только для источников, которые будут запрашиваться с наибольшей вероятностью.\n\t\n\nhttps://fonts.gstatic.com/\n\t\nbody > link\n<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin=\"\">\n\n\nНеиспользуемое предварительное подключение. Применяйте preconnect только для источников, которые будут запрашиваться с наибольшей вероятностью.\n\t\nВарианты предварительного подключения\nДобавьте к самым значимым источникам подсказки для предварительного подключения, но не более четырех.\nОтсутствуют дополнительные источники и хорошие варианты для предварительного подключения"
+        },
+        {
+          "id": "cls-culprits-insight",
+          "text": "Причины смещения макета\nСмещение макета происходит, когда элементы передвигаются без взаимодействия с пользователем. Это может быть связано с добавлением и удалением элементов или изменением их шрифтов при загрузке страницы. Выясните причины сдвигов.CLSНе оценивается\nЭлемент\n\t\nПоказатель смещения макета\n\n\nВсего\n\t\n0,019\n\n\nЛАЗЕРНОЕ 3D-СКАНИРОВАНИЕ · TRIMBLE X7 Лазерное 3D-сканирование и обмеры в Нижне…\n<div style=\"position: relative; max-width: 1180px; margin: 0px auto; padding: 60px 40px 0px;\">\n\t\n0,019"
+        },
+        {
+          "id": "lcp-breakdown-insight",
+          "text": "Разбивка LCP\nДля каждого этапа есть стратегии улучшения. В идеале большая часть времени, требуемого на полную отрисовку элементов LCP, должна тратиться на загрузку ресурсов, а не на задержки.LCPНе оценивается\nЭтап\n\t\nДлительность\n\n\nTime to First Byte\n\t\n0 мс\n\n\nЗадержка при отрисовке элемента\n\t\n1 320 мс\nОбмеряем квартиры, помещения, фасады и промышленные объекты. Подготавливаем обл…\n<p style=\"font-size: 17px; line-height: 1.6; color: rgb(170, 180, 194); margin: 22px 0px 0px;\">"
+        },
+        {
+          "id": "unused-javascript",
+          "text": "Удалите неиспользуемый код JavaScript Ожидаемая экономия – 43 КиБ\nЧтобы сократить расход трафика, удалите неиспользуемый код JavaScript и отложите загрузку скриптов до тех пор, пока они не понадобятся. Подробнее о том, как удалить неиспользуемый код JavaScript…LCPFCPНе оценивается\nURL\n\t\nОбъем переданных данных\n\t\nОжидаемая экономия\n\n\nYandex Metrica Analytics \n87,5 KiB\t42,5 KiB\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\n87,5 KiB\n\t\n42,5 KiB"
+        },
+        {
+          "id": "unsized-images",
+          "text": "Для изображений не заданы явным образом атрибуты width и height.\nЧтобы уменьшить совокупное смещение макета и избежать проблем, связанных со смещением элементов, рекомендуем всегда явным образом задавать ширину и высоту для изображений. Подробнее о том, как задавать размеры изображений…CLSНе оценивается\n\t\nURL\n\n\n3d-scan-nn.ru Собственные\n\n\nЛазерный 3D-сканер Trimble X7\n<img class=\"hero-photo\" loading=\"eager\" decoding=\"async\" src=\"assets/img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp\" alt=\"Лазерный 3D-сканер Trimble X7\" style=\"display:block; width:100%; height:auto;\">\n\t\n…img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp(3d-scan-nn.ru)"
+        },
+        {
+          "id": "document-latency-insight",
+          "text": "Задержка при запросе документа\nПервый сетевой запрос – самый важный. Уменьшите задержку при его отправке: не используйте переадресацию, применяйте сжатие текста и следите за тем, чтобы ответ с сервера приходил быстро.LCPFCPНе оценивается\nНе используются переадресации\nСервер отвечает быстро. Фактическая скорость – 4 ms.\nПрименяется сжатие текста"
+        },
+        {
+          "id": "total-byte-weight",
+          "text": "Предотвращение чрезмерной нагрузки на сеть Общий размер достиг 416 КиБ\nЧрезмерная полезная нагрузка на сеть приводит к финансовым затратам пользователей и может замедлять время загрузки контента. Подробнее о том, как сократить объем полезной нагрузки…Не оценивается\n Показывать сторонние ресурсы (1)\nURL\n\t\nОбъем переданных данных\n\n\n3d-scan-nn.ru Собственные\n250,4 KiB\n\n…img/e9ffe9a6-a0b4-4562-8a34-3df7facb4e64.webp(3d-scan-nn.ru)\n\t\n51,7 KiB\n\n\n…img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp(3d-scan-nn.ru)\n\t\n39,9 KiB\n\n\n…img/207ae4aa-6005-4f84-b37f-a9c74b1ded26.webp(3d-scan-nn.ru)\n\t\n38,8 KiB\n\n\n…fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2(3d-scan-nn.ru)\n\t\n24,9 KiB\n\n\nhttps://3d-scan-nn.ru\n\t\n22,4 KiB\n\n\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru)\n\t\n22,4 KiB\n\n\n…fonts/2db06161-42df-438b-b56a-73444d83b1ca.woff2(3d-scan-nn.ru)\n\t\n19,1 KiB\n\n\n…fonts/a6a1c43e-9114-418e-8e59-de0676c23112.woff2(3d-scan-nn.ru)\n\t\n15,9 KiB\n\n\n…fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2(3d-scan-nn.ru)\n\t\n15,4 KiB\n\n\nYandex Metrica Analytics \n88,5 KiB\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\n88,5 KiB"
+        },
+        {
+          "id": "errors-in-console",
+          "text": "Ошибки браузера занесены в журнал консоли\nОшибки, которые появляются в консоли, указывают на нерешенные проблемы. Это могут быть невыполненные сетевые запросы и другие сбои в работе браузера. Подробнее об этих ошибках в результатах диагностики консоли…\nИсточник\n\t\nОписание\n\n\nYandex Metrica Analytics \n\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\nWebSocket connection to 'wss://mc.yandex.com/solid.ws' failed: Error in connection establishment: net::ERR_NAME_NOT_RESOLVED\n\n\n/metrika/match.html:19:108(mc.yandex.com)\n\t\nWebSocket connection to 'wss://mc.yandex.com/solid.ws' failed: Error in connection establishment: net::ERR_NAME_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "key": "home-desktop-1",
+      "url": "https://3d-scan-nn.ru/",
+      "profile": "desktop",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-3d-scan-nn-ru/71d9b0u3tv?form_factor=desktop",
+      "reportTime": "26 сент. 2026 г., 16:08:01",
+      "fieldDataAvailable": false,
+      "performance": 97,
+      "fcpSeconds": 0.5,
+      "lcpSeconds": 0.9,
+      "tbtMs": 100,
+      "cls": 0,
+      "speedIndexSeconds": 1.3,
+      "captureLabel": "Captured at 26 сент. 2026 г., 16:08 GMT+3",
+      "audits": [
+        {
+          "id": "image-delivery-insight",
+          "text": "Улучшите загрузку изображений Ожидаемая экономия – 99 КиБ\nЕсли изображения будут быстрее скачиваться, то время загрузки страницы и значение LCP могут стать меньше. Узнайте, как оптимизировать размер изображений.LCPFCPНе оценивается\n\t\nURL\n\t\nРазмер файла\n\t\nОжидаемая экономия\n\n\n3d-scan-nn.ru Собственные\n\t128,4 KiB\t99,0 KiB\n\nОблако точек объекта\n<img loading=\"eager\" decoding=\"async\" src=\"assets/img/e9ffe9a6-a0b4-4562-8a34-3df7facb4e64.webp\" alt=\"Облако точек объекта\" style=\"display:block; width:100%; height:134px; object-fit:cover; background:#fff;\">\n\t\n…img/e9ffe9a6-a0b4-4562-8a34-3df7facb4e64.webp(3d-scan-nn.ru)\n\t\n51,0 KiB\n\t\n48,8 KiB\n\n\nРазмер изображения (1131x647) превышает размер контейнера (238x134). Используйте адаптивный стиль, чтобы размер графического файла был меньше.\n\t\t\n48,8 KiB\n\n\nСканирование на объекте Trimble X7\n<img loading=\"lazy\" decoding=\"async\" src=\"assets/img/207ae4aa-6005-4f84-b37f-a9c74b1ded26.webp\" alt=\"Сканирование на объекте Trimble X7\" style=\"position:absolute; inset:0; width:100%; height:100%; object-fit:cover;\">\n\t\n…img/207ae4aa-6005-4f84-b37f-a9c74b1ded26.webp(3d-scan-nn.ru)\n\t\n38,2 KiB\n\t\n25,5 KiB\n\n\nРазмер изображения (1032x700) превышает размер контейнера (614x391). Используйте адаптивный стиль, чтобы размер графического файла был меньше.\n\t\t\n25,5 KiB\n\n\nЛазерный 3D-сканер Trimble X7\n<img class=\"hero-photo\" loading=\"eager\" decoding=\"async\" src=\"assets/img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp\" alt=\"Лазерный 3D-сканер Trimble X7\" style=\"display:block; width:100%; height:auto;\">\n\t\n…img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp(3d-scan-nn.ru)\n\t\n39,2 KiB\n\t\n24,7 KiB\n\n\nРазмер изображения (720x720) превышает размер контейнера (438x438). Используйте адаптивный стиль, чтобы размер графического файла был меньше.\n\t\t\n24,7 KiB"
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "text": "Дерево зависимостей в сети\nСтарайтесь избегать цепочек критических запросов. Чтобы ускорить загрузку страницы, сократите количество запросов, уменьшите размер скачиваемых ресурсов или отложите скачивание ненужных ресурсов.LCPНе оценивается\nМаксимальная задержка критического пути: 1 433 мс\nНачальная навигация\nhttps://3d-scan-nn.ru - 259 мс, 22,43 KiB\n/amb/connect(support.zoom.com) - 1 433 мс, 0,00 KiB\n…fonts/dcbd8b9a-925e-4d14-879c-f9a58ebb33ca.woff2(3d-scan-nn.ru) - 646 мс, 8,80 KiB\n…fonts/04169149-9833-42bc-bd3e-707d957d42d3.woff2(3d-scan-nn.ru) - 648 мс, 15,01 KiB\n…fonts/6df0e662-773d-42fe-b201-f37a36764d86.woff2(3d-scan-nn.ru) - 649 мс, 9,75 KiB\n…fonts/8887462a-64cf-4df9-a0cc-a7287481df98.woff2(3d-scan-nn.ru) - 831 мс, 14,64 KiB\n…fonts/a6a1c43e-9114-418e-8e59-de0676c23112.woff2(3d-scan-nn.ru) - 647 мс, 15,88 KiB\n…fonts/7bd36ca5-da13-4add-bcb9-5f84f7443dcf.woff2(3d-scan-nn.ru) - 647 мс, 14,80 KiB\n…fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2(3d-scan-nn.ru) - 649 мс, 15,41 KiB\n…fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2(3d-scan-nn.ru) - 648 мс, 24,88 KiB\n…fonts/2db06161-42df-438b-b56a-73444d83b1ca.woff2(3d-scan-nn.ru) - 650 мс, 19,14 KiB\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru) - 647 мс, 22,38 KiB\nПредварительно подключенные источники\nПодсказки preconnect помогают браузеру установить соединение на более ранних этапах загрузки страницы, что экономит время при первом запросе к источнику. Далее перечислены источники, к которым предварительно подключилась страница.\nИсточник\n\t\nИсточник\n\n\nhttps://fonts.googleapis.com/\n\t\nbody > link\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n\n\nНеиспользуемое предварительное подключение. Применяйте preconnect только для источников, которые будут запрашиваться с наибольшей вероятностью.\n\t\n\nhttps://fonts.gstatic.com/\n\t\nbody > link\n<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin=\"\">\n\n\nНеиспользуемое предварительное подключение. Применяйте preconnect только для источников, которые будут запрашиваться с наибольшей вероятностью.\n\t\nВарианты предварительного подключения\nДобавьте к самым значимым источникам подсказки для предварительного подключения, но не более четырех.\nОтсутствуют дополнительные источники и хорошие варианты для предварительного подключения"
+        },
+        {
+          "id": "lcp-breakdown-insight",
+          "text": "Разбивка LCP\nДля каждого этапа есть стратегии улучшения. В идеале большая часть времени, требуемого на полную отрисовку элементов LCP, должна тратиться на загрузку ресурсов, а не на задержки.LCPНе оценивается\nЭтап\n\t\nДлительность\n\n\nTime to First Byte\n\t\n10 мс\n\n\nЗадержка загрузки ресурса\n\t\n230 мс\n\n\nПродолжительность загрузки ресурса\n\t\n220 мс\n\n\nЗадержка при отрисовке элемента\n\t\n1 370 мс\nЛазерный 3D-сканер Trimble X7\n<img class=\"hero-photo\" loading=\"eager\" decoding=\"async\" src=\"assets/img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp\" alt=\"Лазерный 3D-сканер Trimble X7\" style=\"display:block; width:100%; height:auto;\">"
+        },
+        {
+          "id": "unused-javascript",
+          "text": "Удалите неиспользуемый код JavaScript Ожидаемая экономия – 43 КиБ\nЧтобы сократить расход трафика, удалите неиспользуемый код JavaScript и отложите загрузку скриптов до тех пор, пока они не понадобятся. Подробнее о том, как удалить неиспользуемый код JavaScript…LCPFCPНе оценивается\nURL\n\t\nОбъем переданных данных\n\t\nОжидаемая экономия\n\n\nYandex Metrica Analytics \n87,5 KiB\t42,6 KiB\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\n87,5 KiB\n\t\n42,6 KiB"
+        },
+        {
+          "id": "unsized-images",
+          "text": "Для изображений не заданы явным образом атрибуты width и height.\nЧтобы уменьшить совокупное смещение макета и избежать проблем, связанных со смещением элементов, рекомендуем всегда явным образом задавать ширину и высоту для изображений. Подробнее о том, как задавать размеры изображений…CLSНе оценивается\n\t\nURL\n\n\n3d-scan-nn.ru Собственные\n\n\nЛазерный 3D-сканер Trimble X7\n<img class=\"hero-photo\" loading=\"eager\" decoding=\"async\" src=\"assets/img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp\" alt=\"Лазерный 3D-сканер Trimble X7\" style=\"display:block; width:100%; height:auto;\">\n\t\n…img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp(3d-scan-nn.ru)"
+        },
+        {
+          "id": "cls-culprits-insight",
+          "text": "Причины смещения макета\nСмещение макета происходит, когда элементы передвигаются без взаимодействия с пользователем. Это может быть связано с добавлением и удалением элементов или изменением их шрифтов при загрузке страницы. Выясните причины сдвигов.CLSНе оценивается"
+        },
+        {
+          "id": "document-latency-insight",
+          "text": "Задержка при запросе документа\nПервый сетевой запрос – самый важный. Уменьшите задержку при его отправке: не используйте переадресацию, применяйте сжатие текста и следите за тем, чтобы ответ с сервера приходил быстро.LCPFCPНе оценивается\nНе используются переадресации\nСервер отвечает быстро. Фактическая скорость – 5 ms.\nПрименяется сжатие текста"
+        },
+        {
+          "id": "total-byte-weight",
+          "text": "Предотвращение чрезмерной нагрузки на сеть Общий размер достиг 417 КиБ\nЧрезмерная полезная нагрузка на сеть приводит к финансовым затратам пользователей и может замедлять время загрузки контента. Подробнее о том, как сократить объем полезной нагрузки…Не оценивается\n Показывать сторонние ресурсы (1)\nURL\n\t\nОбъем переданных данных\n\n\n3d-scan-nn.ru Собственные\n250,5 KiB\n\n…img/e9ffe9a6-a0b4-4562-8a34-3df7facb4e64.webp(3d-scan-nn.ru)\n\t\n51,7 KiB\n\n\n…img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp(3d-scan-nn.ru)\n\t\n39,9 KiB\n\n\n…img/207ae4aa-6005-4f84-b37f-a9c74b1ded26.webp(3d-scan-nn.ru)\n\t\n38,8 KiB\n\n\n…fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2(3d-scan-nn.ru)\n\t\n24,9 KiB\n\n\nhttps://3d-scan-nn.ru\n\t\n22,4 KiB\n\n\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru)\n\t\n22,4 KiB\n\n\n…fonts/2db06161-42df-438b-b56a-73444d83b1ca.woff2(3d-scan-nn.ru)\n\t\n19,1 KiB\n\n\n…fonts/a6a1c43e-9114-418e-8e59-de0676c23112.woff2(3d-scan-nn.ru)\n\t\n15,9 KiB\n\n\n…fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2(3d-scan-nn.ru)\n\t\n15,4 KiB\n\n\nYandex Metrica Analytics \n88,5 KiB\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\n88,5 KiB"
+        },
+        {
+          "id": "errors-in-console",
+          "text": "Ошибки браузера занесены в журнал консоли\nОшибки, которые появляются в консоли, указывают на нерешенные проблемы. Это могут быть невыполненные сетевые запросы и другие сбои в работе браузера. Подробнее об этих ошибках в результатах диагностики консоли…\nИсточник\n\t\nОписание\n\n\nYandex Metrica Analytics \n\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\nWebSocket connection to 'wss://mc.yandex.com/solid.ws' failed: Error in connection establishment: net::ERR_NAME_NOT_RESOLVED\n\n\n/metrika/match.html:19:108(mc.yandex.com)\n\t\nWebSocket connection to 'wss://mc.yandex.com/solid.ws' failed: Error in connection establishment: net::ERR_NAME_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "key": "home-mobile-2",
+      "url": "https://3d-scan-nn.ru/",
+      "profile": "mobile",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-3d-scan-nn-ru/e4oa3kpmn3?form_factor=mobile",
+      "reportTime": "26 сент. 2026 г., 16:12:19",
+      "fieldDataAvailable": false,
+      "performance": 97,
+      "fcpSeconds": 1.8,
+      "lcpSeconds": 2.3,
+      "tbtMs": 20,
+      "cls": 0.019,
+      "speedIndexSeconds": 1.8,
+      "captureLabel": "Captured at 26 сент. 2026 г., 16:12 GMT+3",
+      "audits": [
+        {
+          "id": "network-dependency-tree-insight",
+          "text": "Дерево зависимостей в сети\nСтарайтесь избегать цепочек критических запросов. Чтобы ускорить загрузку страницы, сократите количество запросов, уменьшите размер скачиваемых ресурсов или отложите скачивание ненужных ресурсов.LCPНе оценивается\nМаксимальная задержка критического пути: 318 мс\nНачальная навигация\nhttps://3d-scan-nn.ru - 205 мс, 22,43 KiB\n…fonts/dcbd8b9a-925e-4d14-879c-f9a58ebb33ca.woff2(3d-scan-nn.ru) - 318 мс, 8,80 KiB\n…fonts/04169149-9833-42bc-bd3e-707d957d42d3.woff2(3d-scan-nn.ru) - 196 мс, 15,01 KiB\n…fonts/6df0e662-773d-42fe-b201-f37a36764d86.woff2(3d-scan-nn.ru) - 196 мс, 9,75 KiB\n…fonts/8887462a-64cf-4df9-a0cc-a7287481df98.woff2(3d-scan-nn.ru) - 197 мс, 14,64 KiB\n…fonts/a6a1c43e-9114-418e-8e59-de0676c23112.woff2(3d-scan-nn.ru) - 195 мс, 15,88 KiB\n…fonts/7bd36ca5-da13-4add-bcb9-5f84f7443dcf.woff2(3d-scan-nn.ru) - 194 мс, 14,80 KiB\n…fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2(3d-scan-nn.ru) - 196 мс, 15,41 KiB\n…fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2(3d-scan-nn.ru) - 194 мс, 24,88 KiB\n…fonts/2db06161-42df-438b-b56a-73444d83b1ca.woff2(3d-scan-nn.ru) - 197 мс, 19,14 KiB\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru) - 195 мс, 22,38 KiB\nПредварительно подключенные источники\nПодсказки preconnect помогают браузеру установить соединение на более ранних этапах загрузки страницы, что экономит время при первом запросе к источнику. Далее перечислены источники, к которым предварительно подключилась страница.\nИсточник\n\t\nИсточник\n\n\nhttps://fonts.googleapis.com/\n\t\nbody > link\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n\n\nНеиспользуемое предварительное подключение. Применяйте preconnect только для источников, которые будут запрашиваться с наибольшей вероятностью.\n\t\n\nhttps://fonts.gstatic.com/\n\t\nbody > link\n<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin=\"\">\n\n\nНеиспользуемое предварительное подключение. Применяйте preconnect только для источников, которые будут запрашиваться с наибольшей вероятностью.\n\t\nВарианты предварительного подключения\nДобавьте к самым значимым источникам подсказки для предварительного подключения, но не более четырех.\nОтсутствуют дополнительные источники и хорошие варианты для предварительного подключения"
+        },
+        {
+          "id": "cls-culprits-insight",
+          "text": "Причины смещения макета\nСмещение макета происходит, когда элементы передвигаются без взаимодействия с пользователем. Это может быть связано с добавлением и удалением элементов или изменением их шрифтов при загрузке страницы. Выясните причины сдвигов.CLSНе оценивается\nЭлемент\n\t\nПоказатель смещения макета\n\n\nВсего\n\t\n0,019\n\n\nЛАЗЕРНОЕ 3D-СКАНИРОВАНИЕ · TRIMBLE X7 Лазерное 3D-сканирование и обмеры в Нижне…\n<div style=\"position: relative; max-width: 1180px; margin: 0px auto; padding: 60px 40px 0px;\">\n\t\n0,019\n\n\n…fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/a6a1c43e-9114-418e-8e59-de0676c23112.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/7bd36ca5-da13-4add-bcb9-5f84f7443dcf.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/04169149-9833-42bc-bd3e-707d957d42d3.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/6df0e662-773d-42fe-b201-f37a36764d86.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/8887462a-64cf-4df9-a0cc-a7287481df98.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/2db06161-42df-438b-b56a-73444d83b1ca.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт"
+        },
+        {
+          "id": "lcp-breakdown-insight",
+          "text": "Разбивка LCP\nДля каждого этапа есть стратегии улучшения. В идеале большая часть времени, требуемого на полную отрисовку элементов LCP, должна тратиться на загрузку ресурсов, а не на задержки.LCPНе оценивается\nЭтап\n\t\nДлительность\n\n\nTime to First Byte\n\t\n0 мс\n\n\nЗадержка при отрисовке элемента\n\t\n210 мс\nОбмеряем квартиры, помещения, фасады и промышленные объекты. Подготавливаем обл…\n<p style=\"font-size: 17px; line-height: 1.6; color: rgb(170, 180, 194); margin: 22px 0px 0px;\">"
+        },
+        {
+          "id": "unsized-images",
+          "text": "Для изображений не заданы явным образом атрибуты width и height.\nЧтобы уменьшить совокупное смещение макета и избежать проблем, связанных со смещением элементов, рекомендуем всегда явным образом задавать ширину и высоту для изображений. Подробнее о том, как задавать размеры изображений…CLSНе оценивается\n\t\nURL\n\n\n3d-scan-nn.ru Собственные\n\n\nЛазерный 3D-сканер Trimble X7\n<img class=\"hero-photo\" loading=\"eager\" decoding=\"async\" src=\"assets/img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp\" alt=\"Лазерный 3D-сканер Trimble X7\" style=\"display:block; width:100%; height:auto;\">\n\t\n…img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp(3d-scan-nn.ru)"
+        },
+        {
+          "id": "unused-javascript",
+          "text": "Удалите неиспользуемый код JavaScript Ожидаемая экономия – 42 КиБ\nЧтобы сократить расход трафика, удалите неиспользуемый код JavaScript и отложите загрузку скриптов до тех пор, пока они не понадобятся. Подробнее о том, как удалить неиспользуемый код JavaScript…LCPFCPНе оценивается\nURL\n\t\nОбъем переданных данных\n\t\nОжидаемая экономия\n\n\nYandex Metrica Analytics \n87,5 KiB\t42,5 KiB\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\n87,5 KiB\n\t\n42,5 KiB"
+        },
+        {
+          "id": "document-latency-insight",
+          "text": "Задержка при запросе документа\nПервый сетевой запрос – самый важный. Уменьшите задержку при его отправке: не используйте переадресацию, применяйте сжатие текста и следите за тем, чтобы ответ с сервера приходил быстро.LCPFCPНе оценивается\nНе используются переадресации\nСервер отвечает быстро. Фактическая скорость – 3 ms.\nПрименяется сжатие текста"
+        },
+        {
+          "id": "image-delivery-insight",
+          "text": "Улучшите загрузку изображений\nЕсли изображения будут быстрее скачиваться, то время загрузки страницы и значение LCP могут стать меньше. Узнайте, как оптимизировать размер изображений.LCPFCPНе оценивается"
+        },
+        {
+          "id": "total-byte-weight",
+          "text": "Предотвращение чрезмерной нагрузки на сеть Общий размер достиг 416 КиБ\nЧрезмерная полезная нагрузка на сеть приводит к финансовым затратам пользователей и может замедлять время загрузки контента. Подробнее о том, как сократить объем полезной нагрузки…Не оценивается\n Показывать сторонние ресурсы (1)\nURL\n\t\nОбъем переданных данных\n\n\n3d-scan-nn.ru Собственные\n250,5 KiB\n\n…img/e9ffe9a6-a0b4-4562-8a34-3df7facb4e64.webp(3d-scan-nn.ru)\n\t\n51,7 KiB\n\n\n…img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp(3d-scan-nn.ru)\n\t\n39,9 KiB\n\n\n…img/207ae4aa-6005-4f84-b37f-a9c74b1ded26.webp(3d-scan-nn.ru)\n\t\n38,8 KiB\n\n\n…fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2(3d-scan-nn.ru)\n\t\n24,9 KiB\n\n\nhttps://3d-scan-nn.ru\n\t\n22,4 KiB\n\n\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru)\n\t\n22,4 KiB\n\n\n…fonts/2db06161-42df-438b-b56a-73444d83b1ca.woff2(3d-scan-nn.ru)\n\t\n19,1 KiB\n\n\n…fonts/a6a1c43e-9114-418e-8e59-de0676c23112.woff2(3d-scan-nn.ru)\n\t\n15,9 KiB\n\n\n…fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2(3d-scan-nn.ru)\n\t\n15,4 KiB\n\n\nYandex Metrica Analytics \n88,5 KiB\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\n88,5 KiB"
+        },
+        {
+          "id": "errors-in-console",
+          "text": "Ошибки браузера занесены в журнал консоли\nОшибки, которые появляются в консоли, указывают на нерешенные проблемы. Это могут быть невыполненные сетевые запросы и другие сбои в работе браузера. Подробнее об этих ошибках в результатах диагностики консоли…\nИсточник\n\t\nОписание\n\n\nYandex Metrica Analytics \n\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\nWebSocket connection to 'wss://mc.yandex.com/solid.ws' failed: Error in connection establishment: net::ERR_NAME_NOT_RESOLVED\n\n\n/metrika/match.html:19:108(mc.yandex.com)\n\t\nWebSocket connection to 'wss://mc.yandex.com/solid.ws' failed: Error in connection establishment: net::ERR_NAME_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "key": "home-desktop-2",
+      "url": "https://3d-scan-nn.ru/",
+      "profile": "desktop",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-3d-scan-nn-ru/e4oa3kpmn3?form_factor=desktop",
+      "reportTime": "26 сент. 2026 г., 16:12:19",
+      "fieldDataAvailable": false,
+      "performance": 99,
+      "fcpSeconds": 0.4,
+      "lcpSeconds": 0.5,
+      "tbtMs": 10,
+      "cls": 0.068,
+      "speedIndexSeconds": 0.4,
+      "captureLabel": "Captured at 26 сент. 2026 г., 16:12 GMT+3",
+      "audits": [
+        {
+          "id": "image-delivery-insight",
+          "text": "Улучшите загрузку изображений Ожидаемая экономия – 270 КиБ\nЕсли изображения будут быстрее скачиваться, то время загрузки страницы и значение LCP могут стать меньше. Узнайте, как оптимизировать размер изображений.LCPFCPНе оценивается\n\t\nURL\n\t\nРазмер файла\n\t\nОжидаемая экономия\n\n\n3d-scan-nn.ru Собственные\n\t330,4 KiB\t269,7 KiB\n\nЧертёж DWG / PDF\n<img loading=\"lazy\" decoding=\"async\" src=\"assets/img/05dd5c34-e18d-4272-8f44-108dc970bd7a.webp\" alt=\"Чертёж DWG / PDF\" style=\"width:100%; height:100%; object-fit:cover; display:block;\">\n\t\n…img/05dd5c34-e18d-4272-8f44-108dc970bd7a.webp(3d-scan-nn.ru)\n\t\n98,5 KiB\n\t\n87,4 KiB\n\n\nРазмер изображения (1280x611) превышает размер контейнера (353x249). Используйте адаптивный стиль, чтобы размер графического файла был меньше.\n\t\t\n87,4 KiB\n\n\nОблако точек объекта\n<img loading=\"eager\" decoding=\"async\" src=\"assets/img/e9ffe9a6-a0b4-4562-8a34-3df7facb4e64.webp\" alt=\"Облако точек объекта\" style=\"display:block; width:100%; height:134px; object-fit:cover; background:#fff;\">\n\t\n…img/e9ffe9a6-a0b4-4562-8a34-3df7facb4e64.webp(3d-scan-nn.ru)\n\t\n51,0 KiB\n\t\n48,8 KiB\n\n\nРазмер изображения (1131x647) превышает размер контейнера (238x134). Используйте адаптивный стиль, чтобы размер графического файла был меньше.\n\t\t\n48,8 KiB\n\n\nОблако точек\n<img loading=\"lazy\" decoding=\"async\" src=\"assets/img/2c50c825-3873-48c6-ae75-a6d6d01730ee.webp\" alt=\"Облако точек\" style=\"width:100%; height:100%; object-fit:cover; display:block;\">\n\t\n…img/2c50c825-3873-48c6-ae75-a6d6d01730ee.webp(3d-scan-nn.ru)\n\t\n56,8 KiB\n\t\n47,6 KiB\n\n\nРазмер изображения (877x418) превышает размер контейнера (353x168). Используйте адаптивный стиль, чтобы размер графического файла был меньше.\n\t\t\n47,6 KiB\n\n\nПланы, фасады, разрезы\n<img loading=\"lazy\" decoding=\"async\" src=\"assets/img/6f004f32-34b1-4a87-96c7-43c50f0f7ec5.webp\" alt=\"Планы, фасады, разрезы\" style=\"width:100%; height:100%; object-fit:cover; display:block;\">\n\t\n…img/6f004f32-34b1-4a87-96c7-43c50f0f7ec5.webp(3d-scan-nn.ru)\n\t\n46,7 KiB\n\t\n35,7 KiB\n\n\nЕсли увеличить коэффициент сжатия изображения, размер файла будет меньше.\n\t\t\n21,3 KiB\n\n\nРазмер изображения (572x273) превышает размер контейнера (400x168). Используйте адаптивный стиль, чтобы размер графического файла был меньше.\n\t\t\n26,6 KiB\n\n\nСканирование на объекте Trimble X7\n<img loading=\"lazy\" decoding=\"async\" src=\"assets/img/207ae4aa-6005-4f84-b37f-a9c74b1ded26.webp\" alt=\"Сканирование на объекте Trimble X7\" style=\"position:absolute; inset:0; width:100%; height:100%; object-fit:cover;\">\n\t\n…img/207ae4aa-6005-4f84-b37f-a9c74b1ded26.webp(3d-scan-nn.ru)\n\t\n38,2 KiB\n\t\n25,5 KiB\n\n\nРазмер изображения (1032x700) превышает размер контейнера (614x391). Используйте адаптивный стиль, чтобы размер графического файла был меньше.\n\t\t\n25,5 KiB\n\n\nЛазерный 3D-сканер Trimble X7\n<img class=\"hero-photo\" loading=\"eager\" decoding=\"async\" src=\"assets/img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp\" alt=\"Лазерный 3D-сканер Trimble X7\" style=\"display:block; width:100%; height:auto;\">\n\t\n…img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp(3d-scan-nn.ru)\n\t\n39,2 KiB\n\t\n24,7 KiB\n\n\nРазмер изображения (720x720) превышает размер контейнера (438x438). Используйте адаптивный стиль, чтобы размер графического файла был меньше.\n\t\t\n24,7 KiB"
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "text": "Дерево зависимостей в сети\nСтарайтесь избегать цепочек критических запросов. Чтобы ускорить загрузку страницы, сократите количество запросов, уменьшите размер скачиваемых ресурсов или отложите скачивание ненужных ресурсов.LCPНе оценивается\nМаксимальная задержка критического пути: 239 мс\nНачальная навигация\nhttps://3d-scan-nn.ru - 162 мс, 22,43 KiB\n…fonts/dcbd8b9a-925e-4d14-879c-f9a58ebb33ca.woff2(3d-scan-nn.ru) - 160 мс, 8,80 KiB\n…fonts/04169149-9833-42bc-bd3e-707d957d42d3.woff2(3d-scan-nn.ru) - 158 мс, 15,01 KiB\n…fonts/6df0e662-773d-42fe-b201-f37a36764d86.woff2(3d-scan-nn.ru) - 159 мс, 9,75 KiB\n…fonts/8887462a-64cf-4df9-a0cc-a7287481df98.woff2(3d-scan-nn.ru) - 160 мс, 14,64 KiB\n…fonts/a6a1c43e-9114-418e-8e59-de0676c23112.woff2(3d-scan-nn.ru) - 157 мс, 15,88 KiB\n…fonts/7bd36ca5-da13-4add-bcb9-5f84f7443dcf.woff2(3d-scan-nn.ru) - 158 мс, 14,80 KiB\n…fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2(3d-scan-nn.ru) - 159 мс, 15,41 KiB\n…fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2(3d-scan-nn.ru) - 239 мс, 24,88 KiB\n…fonts/2db06161-42df-438b-b56a-73444d83b1ca.woff2(3d-scan-nn.ru) - 161 мс, 19,14 KiB\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru) - 158 мс, 22,38 KiB\nПредварительно подключенные источники\nПодсказки preconnect помогают браузеру установить соединение на более ранних этапах загрузки страницы, что экономит время при первом запросе к источнику. Далее перечислены источники, к которым предварительно подключилась страница.\nИсточник\n\t\nИсточник\n\n\nhttps://fonts.googleapis.com/\n\t\nbody > link\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n\n\nНеиспользуемое предварительное подключение. Применяйте preconnect только для источников, которые будут запрашиваться с наибольшей вероятностью.\n\t\n\nhttps://fonts.gstatic.com/\n\t\nbody > link\n<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin=\"\">\n\n\nНеиспользуемое предварительное подключение. Применяйте preconnect только для источников, которые будут запрашиваться с наибольшей вероятностью.\n\t\nВарианты предварительного подключения\nДобавьте к самым значимым источникам подсказки для предварительного подключения, но не более четырех.\nОтсутствуют дополнительные источники и хорошие варианты для предварительного подключения"
+        },
+        {
+          "id": "cls-culprits-insight",
+          "text": "Причины смещения макета\nСмещение макета происходит, когда элементы передвигаются без взаимодействия с пользователем. Это может быть связано с добавлением и удалением элементов или изменением их шрифтов при загрузке страницы. Выясните причины сдвигов.CLSНе оценивается\nЭлемент\n\t\nПоказатель смещения макета\n\n\nВсего\n\t\n0,068\n\n\nTRIMBLE X7 · ±2 мм\n<div style=\"position: relative; border-radius: 12px; overflow: hidden;\">\n\t\n0,036\n\n\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/7bd36ca5-da13-4add-bcb9-5f84f7443dcf.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/a6a1c43e-9114-418e-8e59-de0676c23112.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/04169149-9833-42bc-bd3e-707d957d42d3.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/6df0e662-773d-42fe-b201-f37a36764d86.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/dcbd8b9a-925e-4d14-879c-f9a58ebb33ca.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/8887462a-64cf-4df9-a0cc-a7287481df98.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/2db06161-42df-438b-b56a-73444d83b1ca.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\nTRIMBLE X7 · ±2 мм\n<div style=\"position: relative; border-radius: 12px; overflow: hidden;\">\n\t\n0,033\n\n\n…fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт"
+        },
+        {
+          "id": "lcp-breakdown-insight",
+          "text": "Разбивка LCP\nДля каждого этапа есть стратегии улучшения. В идеале большая часть времени, требуемого на полную отрисовку элементов LCP, должна тратиться на загрузку ресурсов, а не на задержки.LCPНе оценивается\nЭтап\n\t\nДлительность\n\n\nTime to First Byte\n\t\n0 мс\n\n\nЗадержка загрузки ресурса\n\t\n30 мс\n\n\nПродолжительность загрузки ресурса\n\t\n20 мс\n\n\nЗадержка при отрисовке элемента\n\t\n160 мс\nЛазерный 3D-сканер Trimble X7\n<img class=\"hero-photo\" loading=\"eager\" decoding=\"async\" src=\"assets/img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp\" alt=\"Лазерный 3D-сканер Trimble X7\" style=\"display:block; width:100%; height:auto;\">"
+        },
+        {
+          "id": "unsized-images",
+          "text": "Для изображений не заданы явным образом атрибуты width и height.\nЧтобы уменьшить совокупное смещение макета и избежать проблем, связанных со смещением элементов, рекомендуем всегда явным образом задавать ширину и высоту для изображений. Подробнее о том, как задавать размеры изображений…CLSНе оценивается\n\t\nURL\n\n\n3d-scan-nn.ru Собственные\n\n\nЛазерный 3D-сканер Trimble X7\n<img class=\"hero-photo\" loading=\"eager\" decoding=\"async\" src=\"assets/img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp\" alt=\"Лазерный 3D-сканер Trimble X7\" style=\"display:block; width:100%; height:auto;\">\n\t\n…img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp(3d-scan-nn.ru)"
+        },
+        {
+          "id": "unused-javascript",
+          "text": "Удалите неиспользуемый код JavaScript Ожидаемая экономия – 43 КиБ\nЧтобы сократить расход трафика, удалите неиспользуемый код JavaScript и отложите загрузку скриптов до тех пор, пока они не понадобятся. Подробнее о том, как удалить неиспользуемый код JavaScript…LCPFCPНе оценивается\nURL\n\t\nОбъем переданных данных\n\t\nОжидаемая экономия\n\n\nYandex Metrica Analytics \n87,5 KiB\t42,5 KiB\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\n87,5 KiB\n\t\n42,5 KiB"
+        },
+        {
+          "id": "document-latency-insight",
+          "text": "Задержка при запросе документа\nПервый сетевой запрос – самый важный. Уменьшите задержку при его отправке: не используйте переадресацию, применяйте сжатие текста и следите за тем, чтобы ответ с сервера приходил быстро.LCPFCPНе оценивается\nНе используются переадресации\nСервер отвечает быстро. Фактическая скорость – 4 ms.\nПрименяется сжатие текста"
+        },
+        {
+          "id": "total-byte-weight",
+          "text": "Предотвращение чрезмерной нагрузки на сеть Общий размер достиг 620 КиБ\nЧрезмерная полезная нагрузка на сеть приводит к финансовым затратам пользователей и может замедлять время загрузки контента. Подробнее о том, как сократить объем полезной нагрузки…Не оценивается\n Показывать сторонние ресурсы (1)\nURL\n\t\nОбъем переданных данных\n\n\n3d-scan-nn.ru Собственные\n403,9 KiB\n\n…img/05dd5c34-e18d-4272-8f44-108dc970bd7a.webp(3d-scan-nn.ru)\n\t\n99,1 KiB\n\n\n…img/2c50c825-3873-48c6-ae75-a6d6d01730ee.webp(3d-scan-nn.ru)\n\t\n57,4 KiB\n\n\n…img/e9ffe9a6-a0b4-4562-8a34-3df7facb4e64.webp(3d-scan-nn.ru)\n\t\n51,7 KiB\n\n\n…img/6f004f32-34b1-4a87-96c7-43c50f0f7ec5.webp(3d-scan-nn.ru)\n\t\n47,3 KiB\n\n\n…img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp(3d-scan-nn.ru)\n\t\n39,9 KiB\n\n\n…img/207ae4aa-6005-4f84-b37f-a9c74b1ded26.webp(3d-scan-nn.ru)\n\t\n38,8 KiB\n\n\n…fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2(3d-scan-nn.ru)\n\t\n24,9 KiB\n\n\nhttps://3d-scan-nn.ru\n\t\n22,4 KiB\n\n\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru)\n\t\n22,4 KiB\n\n\nYandex Metrica Analytics \n88,5 KiB\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\n88,5 KiB"
+        },
+        {
+          "id": "errors-in-console",
+          "text": "Ошибки браузера занесены в журнал консоли\nОшибки, которые появляются в консоли, указывают на нерешенные проблемы. Это могут быть невыполненные сетевые запросы и другие сбои в работе браузера. Подробнее об этих ошибках в результатах диагностики консоли…\nИсточник\n\t\nОписание\n\n\nYandex Metrica Analytics \n\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\nWebSocket connection to 'wss://mc.yandex.com/solid.ws' failed: Error in connection establishment: net::ERR_NAME_NOT_RESOLVED\n\n\n/metrika/match.html:19:108(mc.yandex.com)\n\t\nWebSocket connection to 'wss://mc.yandex.com/solid.ws' failed: Error in connection establishment: net::ERR_NAME_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "key": "interior-mobile",
+      "url": "https://3d-scan-nn.ru/uslugi/obmery-pomeshcheniy/",
+      "profile": "mobile",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-3d-scan-nn-ru-uslugi-obmery-pomeshcheniy/tj03fa7euy?form_factor=mobile",
+      "reportTime": "26 сент. 2026 г., 16:01:25",
+      "fieldDataAvailable": false,
+      "performance": 100,
+      "fcpSeconds": 0.9,
+      "lcpSeconds": 1,
+      "tbtMs": 20,
+      "cls": 0.004,
+      "speedIndexSeconds": 0.9,
+      "captureLabel": "Captured at 26 сент. 2026 г., 16:01 GMT+3",
+      "audits": [
+        {
+          "id": "network-dependency-tree-insight",
+          "text": "Дерево зависимостей в сети\nСтарайтесь избегать цепочек критических запросов. Чтобы ускорить загрузку страницы, сократите количество запросов, уменьшите размер скачиваемых ресурсов или отложите скачивание ненужных ресурсов.LCPНе оценивается\nМаксимальная задержка критического пути: 702 мс\nНачальная навигация\n/uslugi/obmery-pomeshcheniy/(3d-scan-nn.ru) - 305 мс, 9,93 KiB\n…fonts/7bd36ca5-da13-4add-bcb9-5f84f7443dcf.woff2(3d-scan-nn.ru) - 408 мс, 14,81 KiB\n…fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2(3d-scan-nn.ru) - 702 мс, 15,41 KiB\n…fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2(3d-scan-nn.ru) - 613 мс, 24,90 KiB\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru) - 394 мс, 22,39 KiB\n…fonts/53488fd7-5470-4c49-83d6-551e17fee4e6.woff2(3d-scan-nn.ru) - 563 мс, 8,91 KiB\n…fonts/36de96ea-7cdd-4880-acbf-79b23a626c83.woff2(3d-scan-nn.ru) - 576 мс, 15,18 KiB\nПредварительно подключенные источники\nПодсказки preconnect помогают браузеру установить соединение на более ранних этапах загрузки страницы, что экономит время при первом запросе к источнику. Далее перечислены источники, к которым предварительно подключилась страница.\nнет предварительно подключенных источников\nВарианты предварительного подключения\nДобавьте к самым значимым источникам подсказки для предварительного подключения, но не более четырех.\nОтсутствуют дополнительные источники и хорошие варианты для предварительного подключения"
+        },
+        {
+          "id": "cls-culprits-insight",
+          "text": "Причины смещения макета\nСмещение макета происходит, когда элементы передвигаются без взаимодействия с пользователем. Это может быть связано с добавлением и удалением элементов или изменением их шрифтов при загрузке страницы. Выясните причины сдвигов.CLSНе оценивается\nЭлемент\n\t\nПоказатель смещения макета\n\n\nВсего\n\t\n0,004\n\n\nСнимем геометрию помещения лазерным сканером Trimble X7. Подготовим облако точе…\n<p>\n\t\n0,004\n\n\n…fonts/7bd36ca5-da13-4add-bcb9-5f84f7443dcf.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n·\n<span>\n\t\n0,000\n\n\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт"
+        },
+        {
+          "id": "lcp-breakdown-insight",
+          "text": "Разбивка LCP\nДля каждого этапа есть стратегии улучшения. В идеале большая часть времени, требуемого на полную отрисовку элементов LCP, должна тратиться на загрузку ресурсов, а не на задержки.LCPНе оценивается\nЭтап\n\t\nДлительность\n\n\nTime to First Byte\n\t\n0 мс\n\n\nЗадержка при отрисовке элемента\n\t\n400 мс\nСнимем геометрию помещения лазерным сканером Trimble X7. Подготовим облако точе…\n<p>"
+        },
+        {
+          "id": "unused-javascript",
+          "text": "Удалите неиспользуемый код JavaScript Ожидаемая экономия – 43 КиБ\nЧтобы сократить расход трафика, удалите неиспользуемый код JavaScript и отложите загрузку скриптов до тех пор, пока они не понадобятся. Подробнее о том, как удалить неиспользуемый код JavaScript…LCPFCPНе оценивается\nURL\n\t\nОбъем переданных данных\n\t\nОжидаемая экономия\n\n\nYandex Metrica Analytics \n87,5 KiB\t43,5 KiB\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\n87,5 KiB\n\t\n43,5 KiB"
+        },
+        {
+          "id": "document-latency-insight",
+          "text": "Задержка при запросе документа\nПервый сетевой запрос – самый важный. Уменьшите задержку при его отправке: не используйте переадресацию, применяйте сжатие текста и следите за тем, чтобы ответ с сервера приходил быстро.LCPFCPНе оценивается\nНе используются переадресации\nСервер отвечает быстро. Фактическая скорость – 1 ms.\nПрименяется сжатие текста"
+        },
+        {
+          "id": "image-delivery-insight",
+          "text": "Улучшите загрузку изображений\nЕсли изображения будут быстрее скачиваться, то время загрузки страницы и значение LCP могут стать меньше. Узнайте, как оптимизировать размер изображений.LCPFCPНе оценивается"
+        },
+        {
+          "id": "total-byte-weight",
+          "text": "Предотвращение чрезмерной нагрузки на сеть Общий размер достиг 214 КиБ\nЧрезмерная полезная нагрузка на сеть приводит к финансовым затратам пользователей и может замедлять время загрузки контента. Подробнее о том, как сократить объем полезной нагрузки…Не оценивается\n Показывать сторонние ресурсы (3)\nURL\n\t\nОбъем переданных данных\n\n\n3d-scan-nn.ru Собственные\n111,5 KiB\n\n…fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2(3d-scan-nn.ru)\n\t\n24,9 KiB\n\n\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru)\n\t\n22,4 KiB\n\n\n…fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2(3d-scan-nn.ru)\n\t\n15,4 KiB\n\n\n…fonts/36de96ea-7cdd-4880-acbf-79b23a626c83.woff2(3d-scan-nn.ru)\n\t\n15,2 KiB\n\n\n…fonts/7bd36ca5-da13-4add-bcb9-5f84f7443dcf.woff2(3d-scan-nn.ru)\n\t\n14,8 KiB\n\n\n/uslugi/obmery-pomeshcheniy/(3d-scan-nn.ru)\n\t\n9,9 KiB\n\n\n…fonts/53488fd7-5470-4c49-83d6-551e17fee4e6.woff2(3d-scan-nn.ru)\n\t\n8,9 KiB\n\n\nYandex Metrica Analytics \n94,8 KiB\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\n88,5 KiB\n\n\n/metrika/match.html(mc.yandex.com)\n\t\n3,2 KiB\n\n\n/watch/110…?[parameters omitted](mc.yandex.com)\n\t\n3,1 KiB"
+        },
+        {
+          "id": "unsized-images",
+          "text": "Для изображений явным образом заданы атрибуты width и height.\nЧтобы уменьшить совокупное смещение макета и избежать проблем, связанных со смещением элементов, рекомендуем всегда явным образом задавать ширину и высоту для изображений. Подробнее о том, как задавать размеры изображений…CLSНе оценивается"
+        },
+        {
+          "id": "errors-in-console",
+          "text": "Ошибки браузера занесены в журнал консоли\nОшибки, которые появляются в консоли, указывают на нерешенные проблемы. Это могут быть невыполненные сетевые запросы и другие сбои в работе браузера. Подробнее об этих ошибках в результатах диагностики консоли…\nИсточник\n\t\nОписание\n\n\nYandex Metrica Analytics \n\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\nWebSocket connection to 'wss://mc.yandex.com/solid.ws' failed: Error in connection establishment: net::ERR_NAME_NOT_RESOLVED\n\n\n/metrika/match.html:19:108(mc.yandex.com)\n\t\nWebSocket connection to 'wss://mc.yandex.com/solid.ws' failed: Error in connection establishment: net::ERR_NAME_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "key": "interior-desktop",
+      "url": "https://3d-scan-nn.ru/uslugi/obmery-pomeshcheniy/",
+      "profile": "desktop",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-3d-scan-nn-ru-uslugi-obmery-pomeshcheniy/tj03fa7euy?form_factor=desktop",
+      "reportTime": "26 сент. 2026 г., 16:01:25",
+      "fieldDataAvailable": false,
+      "performance": 98,
+      "fcpSeconds": 0.3,
+      "lcpSeconds": 0.3,
+      "tbtMs": 10,
+      "cls": 0.088,
+      "speedIndexSeconds": 0.4,
+      "captureLabel": "Captured at 26 сент. 2026 г., 16:01 GMT+3",
+      "audits": [
+        {
+          "id": "network-dependency-tree-insight",
+          "text": "Дерево зависимостей в сети\nСтарайтесь избегать цепочек критических запросов. Чтобы ускорить загрузку страницы, сократите количество запросов, уменьшите размер скачиваемых ресурсов или отложите скачивание ненужных ресурсов.LCPНе оценивается\nМаксимальная задержка критического пути: 822 мс\nНачальная навигация\n/uslugi/obmery-pomeshcheniy/(3d-scan-nn.ru) - 461 мс, 9,95 KiB\n…fonts/7bd36ca5-da13-4add-bcb9-5f84f7443dcf.woff2(3d-scan-nn.ru) - 689 мс, 14,80 KiB\n…fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2(3d-scan-nn.ru) - 809 мс, 15,41 KiB\n…fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2(3d-scan-nn.ru) - 822 мс, 24,88 KiB\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru) - 737 мс, 22,38 KiB\n…fonts/53488fd7-5470-4c49-83d6-551e17fee4e6.woff2(3d-scan-nn.ru) - 751 мс, 8,91 KiB\n…fonts/36de96ea-7cdd-4880-acbf-79b23a626c83.woff2(3d-scan-nn.ru) - 644 мс, 15,18 KiB\nПредварительно подключенные источники\nПодсказки preconnect помогают браузеру установить соединение на более ранних этапах загрузки страницы, что экономит время при первом запросе к источнику. Далее перечислены источники, к которым предварительно подключилась страница.\nнет предварительно подключенных источников\nВарианты предварительного подключения\nДобавьте к самым значимым источникам подсказки для предварительного подключения, но не более четырех.\nОтсутствуют дополнительные источники и хорошие варианты для предварительного подключения"
+        },
+        {
+          "id": "cls-culprits-insight",
+          "text": "Причины смещения макета\nСмещение макета происходит, когда элементы передвигаются без взаимодействия с пользователем. Это может быть связано с добавлением и удалением элементов или изменением их шрифтов при загрузке страницы. Выясните причины сдвигов.CLSНе оценивается\nЭлемент\n\t\nПоказатель смещения макета\n\n\nВсего\n\t\n0,088\n\n\n01 / ЗАДАЧА Для каких задач подходят обмеры 01 Квартира перед дизайн-проектом …\n<section class=\"section\" aria-labelledby=\"tasks-title\">\n\t\n0,048\n\n\n…fonts/7bd36ca5-da13-4add-bcb9-5f84f7443dcf.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n01 / ЗАДАЧА Для каких задач подходят обмеры 01 Квартира перед дизайн-проектом …\n<section class=\"section\" aria-labelledby=\"tasks-title\">\n\t\n0,039\n\n\n…fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n20 000 ₽\n<div class=\"order-price\">\n\t\n0,000\n\n\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/53488fd7-5470-4c49-83d6-551e17fee4e6.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт"
+        },
+        {
+          "id": "lcp-breakdown-insight",
+          "text": "Разбивка LCP\nДля каждого этапа есть стратегии улучшения. В идеале большая часть времени, требуемого на полную отрисовку элементов LCP, должна тратиться на загрузку ресурсов, а не на задержки.LCPНе оценивается\nЭтап\n\t\nДлительность\n\n\nTime to First Byte\n\t\n0 мс\n\n\nЗадержка при отрисовке элемента\n\t\n510 мс\nОбмеры квартир и помещений в Нижнем Новгороде\n<h1 id=\"page-title\">"
+        },
+        {
+          "id": "unused-javascript",
+          "text": "Удалите неиспользуемый код JavaScript Ожидаемая экономия – 43 КиБ\nЧтобы сократить расход трафика, удалите неиспользуемый код JavaScript и отложите загрузку скриптов до тех пор, пока они не понадобятся. Подробнее о том, как удалить неиспользуемый код JavaScript…LCPFCPНе оценивается\nURL\n\t\nОбъем переданных данных\n\t\nОжидаемая экономия\n\n\nYandex Metrica Analytics \n87,5 KiB\t43,1 KiB\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\n87,5 KiB\n\t\n43,1 KiB"
+        },
+        {
+          "id": "document-latency-insight",
+          "text": "Задержка при запросе документа\nПервый сетевой запрос – самый важный. Уменьшите задержку при его отправке: не используйте переадресацию, применяйте сжатие текста и следите за тем, чтобы ответ с сервера приходил быстро.LCPFCPНе оценивается\nНе используются переадресации\nСервер отвечает быстро. Фактическая скорость – 2 ms.\nПрименяется сжатие текста"
+        },
+        {
+          "id": "image-delivery-insight",
+          "text": "Улучшите загрузку изображений\nЕсли изображения будут быстрее скачиваться, то время загрузки страницы и значение LCP могут стать меньше. Узнайте, как оптимизировать размер изображений.LCPFCPНе оценивается"
+        },
+        {
+          "id": "total-byte-weight",
+          "text": "Предотвращение чрезмерной нагрузки на сеть Общий размер достиг 215 КиБ\nЧрезмерная полезная нагрузка на сеть приводит к финансовым затратам пользователей и может замедлять время загрузки контента. Подробнее о том, как сократить объем полезной нагрузки…Не оценивается\n Показывать сторонние ресурсы (3)\nURL\n\t\nОбъем переданных данных\n\n\n3d-scan-nn.ru Собственные\n111,5 KiB\n\n…fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2(3d-scan-nn.ru)\n\t\n24,9 KiB\n\n\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru)\n\t\n22,4 KiB\n\n\n…fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2(3d-scan-nn.ru)\n\t\n15,4 KiB\n\n\n…fonts/36de96ea-7cdd-4880-acbf-79b23a626c83.woff2(3d-scan-nn.ru)\n\t\n15,2 KiB\n\n\n…fonts/7bd36ca5-da13-4add-bcb9-5f84f7443dcf.woff2(3d-scan-nn.ru)\n\t\n14,8 KiB\n\n\n/uslugi/obmery-pomeshcheniy/(3d-scan-nn.ru)\n\t\n10,0 KiB\n\n\n…fonts/53488fd7-5470-4c49-83d6-551e17fee4e6.woff2(3d-scan-nn.ru)\n\t\n8,9 KiB\n\n\nYandex Metrica Analytics \n94,8 KiB\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\n88,5 KiB\n\n\n/watch/110…?[parameters omitted](mc.yandex.com)\n\t\n3,2 KiB\n\n\n/metrika/match.html(mc.yandex.com)\n\t\n3,2 KiB"
+        },
+        {
+          "id": "unsized-images",
+          "text": "Для изображений явным образом заданы атрибуты width и height.\nЧтобы уменьшить совокупное смещение макета и избежать проблем, связанных со смещением элементов, рекомендуем всегда явным образом задавать ширину и высоту для изображений. Подробнее о том, как задавать размеры изображений…CLSНе оценивается"
+        },
+        {
+          "id": "errors-in-console",
+          "text": "Ошибки браузера занесены в журнал консоли\nОшибки, которые появляются в консоли, указывают на нерешенные проблемы. Это могут быть невыполненные сетевые запросы и другие сбои в работе браузера. Подробнее об этих ошибках в результатах диагностики консоли…\nИсточник\n\t\nОписание\n\n\nYandex Metrica Analytics \n\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\nWebSocket connection to 'wss://mc.yandex.com/solid.ws' failed: Error in connection establishment: net::ERR_NAME_NOT_RESOLVED\n\n\n/metrika/match.html:19:108(mc.yandex.com)\n\t\nWebSocket connection to 'wss://mc.yandex.com/solid.ws' failed: Error in connection establishment: net::ERR_NAME_NOT_RESOLVED"
+        }
+      ]
+    }
+  ],
+  "supplementary": [
+    {
+      "key": "direct-home-mobile-1",
+      "url": "https://3d-scan-nn.ru/index.html",
+      "profile": "mobile",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-3d-scan-nn-ru-index-html/ho0af48cth?form_factor=mobile",
+      "reportTime": "26 сент. 2026 г., 16:09:39",
+      "fieldDataAvailable": false,
+      "performance": 88,
+      "fcpSeconds": 1.8,
+      "lcpSeconds": 3.8,
+      "tbtMs": 60,
+      "cls": 0.019,
+      "speedIndexSeconds": 2.5,
+      "captureLabel": "Captured at 26 сент. 2026 г., 16:09 GMT+3",
+      "audits": [
+        {
+          "id": "network-dependency-tree-insight",
+          "text": "Дерево зависимостей в сети\nСтарайтесь избегать цепочек критических запросов. Чтобы ускорить загрузку страницы, сократите количество запросов, уменьшите размер скачиваемых ресурсов или отложите скачивание ненужных ресурсов.LCPНе оценивается\nМаксимальная задержка критического пути: 548 мс\nНачальная навигация\n/index.html(3d-scan-nn.ru) - 123 мс, 22,46 KiB\n…fonts/dcbd8b9a-925e-4d14-879c-f9a58ebb33ca.woff2(3d-scan-nn.ru) - 492 мс, 8,80 KiB\n…fonts/04169149-9833-42bc-bd3e-707d957d42d3.woff2(3d-scan-nn.ru) - 489 мс, 14,99 KiB\n…fonts/6df0e662-773d-42fe-b201-f37a36764d86.woff2(3d-scan-nn.ru) - 489 мс, 9,76 KiB\n…fonts/8887462a-64cf-4df9-a0cc-a7287481df98.woff2(3d-scan-nn.ru) - 493 мс, 14,62 KiB\n…fonts/a6a1c43e-9114-418e-8e59-de0676c23112.woff2(3d-scan-nn.ru) - 494 мс, 15,88 KiB\n…fonts/7bd36ca5-da13-4add-bcb9-5f84f7443dcf.woff2(3d-scan-nn.ru) - 488 мс, 14,80 KiB\n…fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2(3d-scan-nn.ru) - 490 мс, 15,41 KiB\n…fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2(3d-scan-nn.ru) - 493 мс, 24,90 KiB\n…fonts/2db06161-42df-438b-b56a-73444d83b1ca.woff2(3d-scan-nn.ru) - 548 мс, 19,14 KiB\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru) - 493 мс, 22,39 KiB\nПредварительно подключенные источники\nПодсказки preconnect помогают браузеру установить соединение на более ранних этапах загрузки страницы, что экономит время при первом запросе к источнику. Далее перечислены источники, к которым предварительно подключилась страница.\nИсточник\n\t\nИсточник\n\n\nhttps://fonts.googleapis.com/\n\t\nbody > link\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n\n\nНеиспользуемое предварительное подключение. Применяйте preconnect только для источников, которые будут запрашиваться с наибольшей вероятностью.\n\t\n\nhttps://fonts.gstatic.com/\n\t\nbody > link\n<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin=\"\">\n\n\nНеиспользуемое предварительное подключение. Применяйте preconnect только для источников, которые будут запрашиваться с наибольшей вероятностью.\n\t\nВарианты предварительного подключения\nДобавьте к самым значимым источникам подсказки для предварительного подключения, но не более четырех.\nОтсутствуют дополнительные источники и хорошие варианты для предварительного подключения"
+        },
+        {
+          "id": "cls-culprits-insight",
+          "text": "Причины смещения макета\nСмещение макета происходит, когда элементы передвигаются без взаимодействия с пользователем. Это может быть связано с добавлением и удалением элементов или изменением их шрифтов при загрузке страницы. Выясните причины сдвигов.CLSНе оценивается\nЭлемент\n\t\nПоказатель смещения макета\n\n\nВсего\n\t\n0,019\n\n\nЛАЗЕРНОЕ 3D-СКАНИРОВАНИЕ · TRIMBLE X7 Лазерное 3D-сканирование и обмеры в Нижне…\n<div style=\"position: relative; max-width: 1180px; margin: 0px auto; padding: 60px 40px 0px;\">\n\t\n0,019"
+        },
+        {
+          "id": "lcp-breakdown-insight",
+          "text": "Разбивка LCP\nДля каждого этапа есть стратегии улучшения. В идеале большая часть времени, требуемого на полную отрисовку элементов LCP, должна тратиться на загрузку ресурсов, а не на задержки.LCPНе оценивается\nЭтап\n\t\nДлительность\n\n\nTime to First Byte\n\t\n0 мс\n\n\nЗадержка при отрисовке элемента\n\t\n1 240 мс\nОбмеряем квартиры, помещения, фасады и промышленные объекты. Подготавливаем обл…\n<p style=\"font-size: 17px; line-height: 1.6; color: rgb(170, 180, 194); margin: 22px 0px 0px;\">"
+        },
+        {
+          "id": "unused-javascript",
+          "text": "Удалите неиспользуемый код JavaScript Ожидаемая экономия – 42 КиБ\nЧтобы сократить расход трафика, удалите неиспользуемый код JavaScript и отложите загрузку скриптов до тех пор, пока они не понадобятся. Подробнее о том, как удалить неиспользуемый код JavaScript…LCPFCPНе оценивается\nURL\n\t\nОбъем переданных данных\n\t\nОжидаемая экономия\n\n\nYandex Metrica Analytics \n87,5 KiB\t42,5 KiB\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\n87,5 KiB\n\t\n42,5 KiB"
+        },
+        {
+          "id": "unsized-images",
+          "text": "Для изображений не заданы явным образом атрибуты width и height.\nЧтобы уменьшить совокупное смещение макета и избежать проблем, связанных со смещением элементов, рекомендуем всегда явным образом задавать ширину и высоту для изображений. Подробнее о том, как задавать размеры изображений…CLSНе оценивается\n\t\nURL\n\n\n3d-scan-nn.ru Собственные\n\n\nЛазерный 3D-сканер Trimble X7\n<img class=\"hero-photo\" loading=\"eager\" decoding=\"async\" src=\"assets/img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp\" alt=\"Лазерный 3D-сканер Trimble X7\" style=\"display:block; width:100%; height:auto;\">\n\t\n…img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp(3d-scan-nn.ru)"
+        },
+        {
+          "id": "document-latency-insight",
+          "text": "Задержка при запросе документа\nПервый сетевой запрос – самый важный. Уменьшите задержку при его отправке: не используйте переадресацию, применяйте сжатие текста и следите за тем, чтобы ответ с сервера приходил быстро.LCPFCPНе оценивается\nНе используются переадресации\nСервер отвечает быстро. Фактическая скорость – 4 ms.\nПрименяется сжатие текста"
+        },
+        {
+          "id": "image-delivery-insight",
+          "text": "Улучшите загрузку изображений\nЕсли изображения будут быстрее скачиваться, то время загрузки страницы и значение LCP могут стать меньше. Узнайте, как оптимизировать размер изображений.LCPFCPНе оценивается"
+        },
+        {
+          "id": "total-byte-weight",
+          "text": "Предотвращение чрезмерной нагрузки на сеть Общий размер достиг 416 КиБ\nЧрезмерная полезная нагрузка на сеть приводит к финансовым затратам пользователей и может замедлять время загрузки контента. Подробнее о том, как сократить объем полезной нагрузки…Не оценивается\n Показывать сторонние ресурсы (1)\nURL\n\t\nОбъем переданных данных\n\n\n3d-scan-nn.ru Собственные\n250,5 KiB\n\n…img/e9ffe9a6-a0b4-4562-8a34-3df7facb4e64.webp(3d-scan-nn.ru)\n\t\n51,7 KiB\n\n\n…img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp(3d-scan-nn.ru)\n\t\n39,8 KiB\n\n\n…img/207ae4aa-6005-4f84-b37f-a9c74b1ded26.webp(3d-scan-nn.ru)\n\t\n38,8 KiB\n\n\n…fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2(3d-scan-nn.ru)\n\t\n24,9 KiB\n\n\n/index.html(3d-scan-nn.ru)\n\t\n22,5 KiB\n\n\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru)\n\t\n22,4 KiB\n\n\n…fonts/2db06161-42df-438b-b56a-73444d83b1ca.woff2(3d-scan-nn.ru)\n\t\n19,1 KiB\n\n\n…fonts/a6a1c43e-9114-418e-8e59-de0676c23112.woff2(3d-scan-nn.ru)\n\t\n15,9 KiB\n\n\n…fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2(3d-scan-nn.ru)\n\t\n15,4 KiB\n\n\nYandex Metrica Analytics \n88,5 KiB\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\n88,5 KiB"
+        },
+        {
+          "id": "errors-in-console",
+          "text": "Ошибки браузера занесены в журнал консоли\nОшибки, которые появляются в консоли, указывают на нерешенные проблемы. Это могут быть невыполненные сетевые запросы и другие сбои в работе браузера. Подробнее об этих ошибках в результатах диагностики консоли…\nИсточник\n\t\nОписание\n\n\nYandex Metrica Analytics \n\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\nWebSocket connection to 'wss://mc.yandex.com/solid.ws' failed: Error in connection establishment: net::ERR_NAME_NOT_RESOLVED\n\n\n/metrika/match.html:19:108(mc.yandex.com)\n\t\nWebSocket connection to 'wss://mc.yandex.com/solid.ws' failed: Error in connection establishment: net::ERR_NAME_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "key": "direct-home-desktop-1",
+      "url": "https://3d-scan-nn.ru/index.html",
+      "profile": "desktop",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-3d-scan-nn-ru-index-html/ho0af48cth?form_factor=desktop",
+      "reportTime": "26 сент. 2026 г., 16:09:39",
+      "fieldDataAvailable": false,
+      "performance": 94,
+      "fcpSeconds": 0.4,
+      "lcpSeconds": 0.7,
+      "tbtMs": 20,
+      "cls": 0.148,
+      "speedIndexSeconds": 0.4,
+      "captureLabel": "Captured at 26 сент. 2026 г., 16:09 GMT+3",
+      "audits": [
+        {
+          "id": "image-delivery-insight",
+          "text": "Улучшите загрузку изображений Ожидаемая экономия – 270 КиБ\nЕсли изображения будут быстрее скачиваться, то время загрузки страницы и значение LCP могут стать меньше. Узнайте, как оптимизировать размер изображений.LCPFCPНе оценивается\n\t\nURL\n\t\nРазмер файла\n\t\nОжидаемая экономия\n\n\n3d-scan-nn.ru Собственные\n\t330,4 KiB\t269,7 KiB\n\nЧертёж DWG / PDF\n<img loading=\"lazy\" decoding=\"async\" src=\"assets/img/05dd5c34-e18d-4272-8f44-108dc970bd7a.webp\" alt=\"Чертёж DWG / PDF\" style=\"width:100%; height:100%; object-fit:cover; display:block;\">\n\t\n…img/05dd5c34-e18d-4272-8f44-108dc970bd7a.webp(3d-scan-nn.ru)\n\t\n98,5 KiB\n\t\n87,4 KiB\n\n\nРазмер изображения (1280x611) превышает размер контейнера (353x249). Используйте адаптивный стиль, чтобы размер графического файла был меньше.\n\t\t\n87,4 KiB\n\n\nОблако точек объекта\n<img loading=\"eager\" decoding=\"async\" src=\"assets/img/e9ffe9a6-a0b4-4562-8a34-3df7facb4e64.webp\" alt=\"Облако точек объекта\" style=\"display:block; width:100%; height:134px; object-fit:cover; background:#fff;\">\n\t\n…img/e9ffe9a6-a0b4-4562-8a34-3df7facb4e64.webp(3d-scan-nn.ru)\n\t\n51,0 KiB\n\t\n48,8 KiB\n\n\nРазмер изображения (1131x647) превышает размер контейнера (238x134). Используйте адаптивный стиль, чтобы размер графического файла был меньше.\n\t\t\n48,8 KiB\n\n\nОблако точек\n<img loading=\"lazy\" decoding=\"async\" src=\"assets/img/2c50c825-3873-48c6-ae75-a6d6d01730ee.webp\" alt=\"Облако точек\" style=\"width:100%; height:100%; object-fit:cover; display:block;\">\n\t\n…img/2c50c825-3873-48c6-ae75-a6d6d01730ee.webp(3d-scan-nn.ru)\n\t\n56,8 KiB\n\t\n47,6 KiB\n\n\nРазмер изображения (877x418) превышает размер контейнера (353x168). Используйте адаптивный стиль, чтобы размер графического файла был меньше.\n\t\t\n47,6 KiB\n\n\nПланы, фасады, разрезы\n<img loading=\"lazy\" decoding=\"async\" src=\"assets/img/6f004f32-34b1-4a87-96c7-43c50f0f7ec5.webp\" alt=\"Планы, фасады, разрезы\" style=\"width:100%; height:100%; object-fit:cover; display:block;\">\n\t\n…img/6f004f32-34b1-4a87-96c7-43c50f0f7ec5.webp(3d-scan-nn.ru)\n\t\n46,7 KiB\n\t\n35,7 KiB\n\n\nЕсли увеличить коэффициент сжатия изображения, размер файла будет меньше.\n\t\t\n21,3 KiB\n\n\nРазмер изображения (572x273) превышает размер контейнера (400x168). Используйте адаптивный стиль, чтобы размер графического файла был меньше.\n\t\t\n26,6 KiB\n\n\nСканирование на объекте Trimble X7\n<img loading=\"lazy\" decoding=\"async\" src=\"assets/img/207ae4aa-6005-4f84-b37f-a9c74b1ded26.webp\" alt=\"Сканирование на объекте Trimble X7\" style=\"position:absolute; inset:0; width:100%; height:100%; object-fit:cover;\">\n\t\n…img/207ae4aa-6005-4f84-b37f-a9c74b1ded26.webp(3d-scan-nn.ru)\n\t\n38,2 KiB\n\t\n25,5 KiB\n\n\nРазмер изображения (1032x700) превышает размер контейнера (614x391). Используйте адаптивный стиль, чтобы размер графического файла был меньше.\n\t\t\n25,5 KiB\n\n\nЛазерный 3D-сканер Trimble X7\n<img class=\"hero-photo\" loading=\"eager\" decoding=\"async\" src=\"assets/img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp\" alt=\"Лазерный 3D-сканер Trimble X7\" style=\"display:block; width:100%; height:auto;\">\n\t\n…img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp(3d-scan-nn.ru)\n\t\n39,2 KiB\n\t\n24,7 KiB\n\n\nРазмер изображения (720x720) превышает размер контейнера (438x438). Используйте адаптивный стиль, чтобы размер графического файла был меньше.\n\t\t\n24,7 KiB"
+        },
+        {
+          "id": "cls-culprits-insight",
+          "text": "Причины смещения макета\nСмещение макета происходит, когда элементы передвигаются без взаимодействия с пользователем. Это может быть связано с добавлением и удалением элементов или изменением их шрифтов при загрузке страницы. Выясните причины сдвигов.CLSНе оценивается\nЭлемент\n\t\nПоказатель смещения макета\n\n\nВсего\n\t\n0,148\n\n\nЛАЗЕРНОЕ 3D-СКАНИРОВАНИЕ · TRIMBLE X7 Лазерное 3D-сканирование и обмеры в Нижне…\n<div style=\"position: relative; max-width: 1180px; margin: 0px auto; padding: 60px 40px 0px;\">\n\t\n0,148\n\n\n…fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/7bd36ca5-da13-4add-bcb9-5f84f7443dcf.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/a6a1c43e-9114-418e-8e59-de0676c23112.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/04169149-9833-42bc-bd3e-707d957d42d3.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/dcbd8b9a-925e-4d14-879c-f9a58ebb33ca.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/8887462a-64cf-4df9-a0cc-a7287481df98.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/2db06161-42df-438b-b56a-73444d83b1ca.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт"
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "text": "Дерево зависимостей в сети\nСтарайтесь избегать цепочек критических запросов. Чтобы ускорить загрузку страницы, сократите количество запросов, уменьшите размер скачиваемых ресурсов или отложите скачивание ненужных ресурсов.LCPНе оценивается\nМаксимальная задержка критического пути: 388 мс\nНачальная навигация\n/index.html(3d-scan-nn.ru) - 301 мс, 22,44 KiB\n…fonts/dcbd8b9a-925e-4d14-879c-f9a58ebb33ca.woff2(3d-scan-nn.ru) - 293 мс, 8,80 KiB\n…fonts/04169149-9833-42bc-bd3e-707d957d42d3.woff2(3d-scan-nn.ru) - 291 мс, 15,01 KiB\n…fonts/6df0e662-773d-42fe-b201-f37a36764d86.woff2(3d-scan-nn.ru) - 388 мс, 9,75 KiB\n…fonts/8887462a-64cf-4df9-a0cc-a7287481df98.woff2(3d-scan-nn.ru) - 293 мс, 14,64 KiB\n…fonts/a6a1c43e-9114-418e-8e59-de0676c23112.woff2(3d-scan-nn.ru) - 294 мс, 15,88 KiB\n…fonts/7bd36ca5-da13-4add-bcb9-5f84f7443dcf.woff2(3d-scan-nn.ru) - 299 мс, 14,80 KiB\n…fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2(3d-scan-nn.ru) - 292 мс, 15,41 KiB\n…fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2(3d-scan-nn.ru) - 291 мс, 24,88 KiB\n…fonts/2db06161-42df-438b-b56a-73444d83b1ca.woff2(3d-scan-nn.ru) - 294 мс, 19,14 KiB\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru) - 292 мс, 22,38 KiB\nПредварительно подключенные источники\nПодсказки preconnect помогают браузеру установить соединение на более ранних этапах загрузки страницы, что экономит время при первом запросе к источнику. Далее перечислены источники, к которым предварительно подключилась страница.\nИсточник\n\t\nИсточник\n\n\nhttps://fonts.googleapis.com/\n\t\nbody > link\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n\n\nНеиспользуемое предварительное подключение. Применяйте preconnect только для источников, которые будут запрашиваться с наибольшей вероятностью.\n\t\n\nhttps://fonts.gstatic.com/\n\t\nbody > link\n<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin=\"\">\n\n\nНеиспользуемое предварительное подключение. Применяйте preconnect только для источников, которые будут запрашиваться с наибольшей вероятностью.\n\t\nВарианты предварительного подключения\nДобавьте к самым значимым источникам подсказки для предварительного подключения, но не более четырех.\nОтсутствуют дополнительные источники и хорошие варианты для предварительного подключения"
+        },
+        {
+          "id": "lcp-breakdown-insight",
+          "text": "Разбивка LCP\nДля каждого этапа есть стратегии улучшения. В идеале большая часть времени, требуемого на полную отрисовку элементов LCP, должна тратиться на загрузку ресурсов, а не на задержки.LCPНе оценивается\nЭтап\n\t\nДлительность\n\n\nTime to First Byte\n\t\n0 мс\n\n\nЗадержка загрузки ресурса\n\t\n80 мс\n\n\nПродолжительность загрузки ресурса\n\t\n150 мс\n\n\nЗадержка при отрисовке элемента\n\t\n270 мс\nЛазерный 3D-сканер Trimble X7\n<img class=\"hero-photo\" loading=\"eager\" decoding=\"async\" src=\"assets/img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp\" alt=\"Лазерный 3D-сканер Trimble X7\" style=\"display:block; width:100%; height:auto;\">"
+        },
+        {
+          "id": "unsized-images",
+          "text": "Для изображений не заданы явным образом атрибуты width и height.\nЧтобы уменьшить совокупное смещение макета и избежать проблем, связанных со смещением элементов, рекомендуем всегда явным образом задавать ширину и высоту для изображений. Подробнее о том, как задавать размеры изображений…CLSНе оценивается\n\t\nURL\n\n\n3d-scan-nn.ru Собственные\n\n\nЛазерный 3D-сканер Trimble X7\n<img class=\"hero-photo\" loading=\"eager\" decoding=\"async\" src=\"assets/img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp\" alt=\"Лазерный 3D-сканер Trimble X7\" style=\"display:block; width:100%; height:auto;\">\n\t\n…img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp(3d-scan-nn.ru)"
+        },
+        {
+          "id": "unused-javascript",
+          "text": "Удалите неиспользуемый код JavaScript Ожидаемая экономия – 43 КиБ\nЧтобы сократить расход трафика, удалите неиспользуемый код JavaScript и отложите загрузку скриптов до тех пор, пока они не понадобятся. Подробнее о том, как удалить неиспользуемый код JavaScript…LCPFCPНе оценивается\nURL\n\t\nОбъем переданных данных\n\t\nОжидаемая экономия\n\n\nYandex Metrica Analytics \n87,5 KiB\t42,5 KiB\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\n87,5 KiB\n\t\n42,5 KiB"
+        },
+        {
+          "id": "document-latency-insight",
+          "text": "Задержка при запросе документа\nПервый сетевой запрос – самый важный. Уменьшите задержку при его отправке: не используйте переадресацию, применяйте сжатие текста и следите за тем, чтобы ответ с сервера приходил быстро.LCPFCPНе оценивается\nНе используются переадресации\nСервер отвечает быстро. Фактическая скорость – 4 ms.\nПрименяется сжатие текста"
+        },
+        {
+          "id": "total-byte-weight",
+          "text": "Предотвращение чрезмерной нагрузки на сеть Общий размер достиг 620 КиБ\nЧрезмерная полезная нагрузка на сеть приводит к финансовым затратам пользователей и может замедлять время загрузки контента. Подробнее о том, как сократить объем полезной нагрузки…Не оценивается\n Показывать сторонние ресурсы (1)\nURL\n\t\nОбъем переданных данных\n\n\n3d-scan-nn.ru Собственные\n403,9 KiB\n\n…img/05dd5c34-e18d-4272-8f44-108dc970bd7a.webp(3d-scan-nn.ru)\n\t\n99,1 KiB\n\n\n…img/2c50c825-3873-48c6-ae75-a6d6d01730ee.webp(3d-scan-nn.ru)\n\t\n57,4 KiB\n\n\n…img/e9ffe9a6-a0b4-4562-8a34-3df7facb4e64.webp(3d-scan-nn.ru)\n\t\n51,7 KiB\n\n\n…img/6f004f32-34b1-4a87-96c7-43c50f0f7ec5.webp(3d-scan-nn.ru)\n\t\n47,3 KiB\n\n\n…img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp(3d-scan-nn.ru)\n\t\n39,9 KiB\n\n\n…img/207ae4aa-6005-4f84-b37f-a9c74b1ded26.webp(3d-scan-nn.ru)\n\t\n38,8 KiB\n\n\n…fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2(3d-scan-nn.ru)\n\t\n24,9 KiB\n\n\n/index.html(3d-scan-nn.ru)\n\t\n22,4 KiB\n\n\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru)\n\t\n22,4 KiB\n\n\nYandex Metrica Analytics \n88,5 KiB\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\n88,5 KiB"
+        },
+        {
+          "id": "errors-in-console",
+          "text": "Ошибки браузера занесены в журнал консоли\nОшибки, которые появляются в консоли, указывают на нерешенные проблемы. Это могут быть невыполненные сетевые запросы и другие сбои в работе браузера. Подробнее об этих ошибках в результатах диагностики консоли…\nИсточник\n\t\nОписание\n\n\nYandex Metrica Analytics \n\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\nWebSocket connection to 'wss://mc.yandex.com/solid.ws' failed: Error in connection establishment: net::ERR_NAME_NOT_RESOLVED\n\n\n/metrika/match.html:19:108(mc.yandex.com)\n\t\nWebSocket connection to 'wss://mc.yandex.com/solid.ws' failed: Error in connection establishment: net::ERR_NAME_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "key": "direct-home-mobile-2",
+      "url": "https://3d-scan-nn.ru/index.html",
+      "profile": "mobile",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-3d-scan-nn-ru-index-html/try2hbmdz0?form_factor=mobile",
+      "reportTime": "26 сент. 2026 г., 16:11:03",
+      "fieldDataAvailable": false,
+      "performance": 99,
+      "fcpSeconds": 1.5,
+      "lcpSeconds": 1.8,
+      "tbtMs": 20,
+      "cls": 0.02,
+      "speedIndexSeconds": 1.5,
+      "captureLabel": "Captured at 26 сент. 2026 г., 16:11 GMT+3",
+      "audits": [
+        {
+          "id": "network-dependency-tree-insight",
+          "text": "Дерево зависимостей в сети\nСтарайтесь избегать цепочек критических запросов. Чтобы ускорить загрузку страницы, сократите количество запросов, уменьшите размер скачиваемых ресурсов или отложите скачивание ненужных ресурсов.LCPНе оценивается\nМаксимальная задержка критического пути: 391 мс\nНачальная навигация\n/index.html(3d-scan-nn.ru) - 203 мс, 22,43 KiB\n…fonts/dcbd8b9a-925e-4d14-879c-f9a58ebb33ca.woff2(3d-scan-nn.ru) - 317 мс, 8,80 KiB\n…fonts/04169149-9833-42bc-bd3e-707d957d42d3.woff2(3d-scan-nn.ru) - 201 мс, 15,01 KiB\n…fonts/6df0e662-773d-42fe-b201-f37a36764d86.woff2(3d-scan-nn.ru) - 201 мс, 9,75 KiB\n…fonts/8887462a-64cf-4df9-a0cc-a7287481df98.woff2(3d-scan-nn.ru) - 202 мс, 14,64 KiB\n…fonts/a6a1c43e-9114-418e-8e59-de0676c23112.woff2(3d-scan-nn.ru) - 201 мс, 15,88 KiB\n…fonts/7bd36ca5-da13-4add-bcb9-5f84f7443dcf.woff2(3d-scan-nn.ru) - 284 мс, 14,80 KiB\n…fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2(3d-scan-nn.ru) - 201 мс, 15,41 KiB\n…fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2(3d-scan-nn.ru) - 200 мс, 24,88 KiB\n…fonts/2db06161-42df-438b-b56a-73444d83b1ca.woff2(3d-scan-nn.ru) - 391 мс, 19,14 KiB\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru) - 281 мс, 22,38 KiB\nПредварительно подключенные источники\nПодсказки preconnect помогают браузеру установить соединение на более ранних этапах загрузки страницы, что экономит время при первом запросе к источнику. Далее перечислены источники, к которым предварительно подключилась страница.\nИсточник\n\t\nИсточник\n\n\nhttps://fonts.googleapis.com/\n\t\nbody > link\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n\n\nНеиспользуемое предварительное подключение. Применяйте preconnect только для источников, которые будут запрашиваться с наибольшей вероятностью.\n\t\n\nhttps://fonts.gstatic.com/\n\t\nbody > link\n<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin=\"\">\n\n\nНеиспользуемое предварительное подключение. Применяйте preconnect только для источников, которые будут запрашиваться с наибольшей вероятностью.\n\t\nВарианты предварительного подключения\nДобавьте к самым значимым источникам подсказки для предварительного подключения, но не более четырех.\nОтсутствуют дополнительные источники и хорошие варианты для предварительного подключения"
+        },
+        {
+          "id": "cls-culprits-insight",
+          "text": "Причины смещения макета\nСмещение макета происходит, когда элементы передвигаются без взаимодействия с пользователем. Это может быть связано с добавлением и удалением элементов или изменением их шрифтов при загрузке страницы. Выясните причины сдвигов.CLSНе оценивается\nЭлемент\n\t\nПоказатель смещения макета\n\n\nВсего\n\t\n0,020\n\n\nЛАЗЕРНОЕ 3D-СКАНИРОВАНИЕ · TRIMBLE X7 Лазерное 3D-сканирование и обмеры в Нижне…\n<div style=\"position: relative; max-width: 1180px; margin: 0px auto; padding: 60px 40px 0px;\">\n\t\n0,019\n\n\n…fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/a6a1c43e-9114-418e-8e59-de0676c23112.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/04169149-9833-42bc-bd3e-707d957d42d3.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/6df0e662-773d-42fe-b201-f37a36764d86.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/8887462a-64cf-4df9-a0cc-a7287481df98.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\nЛазерное 3D-сканирование и обмеры в Нижнем Новгороде\n<h1 style=\"font-family: &quot;Space Grotesk&quot;, sans-serif; font-weight: 700; font-size: 54px;\">\n\t\n0,001\n\n\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт\n\n\n…fonts/7bd36ca5-da13-4add-bcb9-5f84f7443dcf.woff2(3d-scan-nn.ru)\n\t\nВеб-шрифт"
+        },
+        {
+          "id": "lcp-breakdown-insight",
+          "text": "Разбивка LCP\nДля каждого этапа есть стратегии улучшения. В идеале большая часть времени, требуемого на полную отрисовку элементов LCP, должна тратиться на загрузку ресурсов, а не на задержки.LCPНе оценивается\nЭтап\n\t\nДлительность\n\n\nTime to First Byte\n\t\n0 мс\n\n\nЗадержка при отрисовке элемента\n\t\n250 мс\nОбмеряем квартиры, помещения, фасады и промышленные объекты. Подготавливаем обл…\n<p style=\"font-size: 17px; line-height: 1.6; color: rgb(170, 180, 194); margin: 22px 0px 0px;\">"
+        },
+        {
+          "id": "unsized-images",
+          "text": "Для изображений не заданы явным образом атрибуты width и height.\nЧтобы уменьшить совокупное смещение макета и избежать проблем, связанных со смещением элементов, рекомендуем всегда явным образом задавать ширину и высоту для изображений. Подробнее о том, как задавать размеры изображений…CLSНе оценивается\n\t\nURL\n\n\n3d-scan-nn.ru Собственные\n\n\nЛазерный 3D-сканер Trimble X7\n<img class=\"hero-photo\" loading=\"eager\" decoding=\"async\" src=\"assets/img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp\" alt=\"Лазерный 3D-сканер Trimble X7\" style=\"display:block; width:100%; height:auto;\">\n\t\n…img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp(3d-scan-nn.ru)"
+        },
+        {
+          "id": "unused-javascript",
+          "text": "Удалите неиспользуемый код JavaScript Ожидаемая экономия – 42 КиБ\nЧтобы сократить расход трафика, удалите неиспользуемый код JavaScript и отложите загрузку скриптов до тех пор, пока они не понадобятся. Подробнее о том, как удалить неиспользуемый код JavaScript…LCPFCPНе оценивается\nURL\n\t\nОбъем переданных данных\n\t\nОжидаемая экономия\n\n\nYandex Metrica Analytics \n87,5 KiB\t42,5 KiB\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\n87,5 KiB\n\t\n42,5 KiB"
+        },
+        {
+          "id": "document-latency-insight",
+          "text": "Задержка при запросе документа\nПервый сетевой запрос – самый важный. Уменьшите задержку при его отправке: не используйте переадресацию, применяйте сжатие текста и следите за тем, чтобы ответ с сервера приходил быстро.LCPFCPНе оценивается\nНе используются переадресации\nСервер отвечает быстро. Фактическая скорость – 3 ms.\nПрименяется сжатие текста"
+        },
+        {
+          "id": "image-delivery-insight",
+          "text": "Улучшите загрузку изображений\nЕсли изображения будут быстрее скачиваться, то время загрузки страницы и значение LCP могут стать меньше. Узнайте, как оптимизировать размер изображений.LCPFCPНе оценивается"
+        },
+        {
+          "id": "total-byte-weight",
+          "text": "Предотвращение чрезмерной нагрузки на сеть Общий размер достиг 416 КиБ\nЧрезмерная полезная нагрузка на сеть приводит к финансовым затратам пользователей и может замедлять время загрузки контента. Подробнее о том, как сократить объем полезной нагрузки…Не оценивается\n Показывать сторонние ресурсы (1)\nURL\n\t\nОбъем переданных данных\n\n\n3d-scan-nn.ru Собственные\n250,5 KiB\n\n…img/e9ffe9a6-a0b4-4562-8a34-3df7facb4e64.webp(3d-scan-nn.ru)\n\t\n51,7 KiB\n\n\n…img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp(3d-scan-nn.ru)\n\t\n39,9 KiB\n\n\n…img/207ae4aa-6005-4f84-b37f-a9c74b1ded26.webp(3d-scan-nn.ru)\n\t\n38,8 KiB\n\n\n…fonts/454139a2-b1b1-4579-b38f-4ed1963ab950.woff2(3d-scan-nn.ru)\n\t\n24,9 KiB\n\n\n/index.html(3d-scan-nn.ru)\n\t\n22,4 KiB\n\n\n…fonts/ef6a82e5-3953-488b-929f-3a704b4f8510.woff2(3d-scan-nn.ru)\n\t\n22,4 KiB\n\n\n…fonts/2db06161-42df-438b-b56a-73444d83b1ca.woff2(3d-scan-nn.ru)\n\t\n19,1 KiB\n\n\n…fonts/a6a1c43e-9114-418e-8e59-de0676c23112.woff2(3d-scan-nn.ru)\n\t\n15,9 KiB\n\n\n…fonts/59252fd5-4fad-430d-bd81-2bc1b7907b31.woff2(3d-scan-nn.ru)\n\t\n15,4 KiB\n\n\nYandex Metrica Analytics \n88,5 KiB\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\n88,5 KiB"
+        },
+        {
+          "id": "errors-in-console",
+          "text": "Ошибки браузера занесены в журнал консоли\nОшибки, которые появляются в консоли, указывают на нерешенные проблемы. Это могут быть невыполненные сетевые запросы и другие сбои в работе браузера. Подробнее об этих ошибках в результатах диагностики консоли…\nИсточник\n\t\nОписание\n\n\nYandex Metrica Analytics \n\n\n/metrika/tag.js?[parameters omitted](mc.yandex.ru)\n\t\nWebSocket connection to 'wss://mc.yandex.com/solid.ws' failed: Error in connection establishment: net::ERR_NAME_NOT_RESOLVED\n\n\n/metrika/match.html:19:108(mc.yandex.com)\n\t\nWebSocket connection to 'wss://mc.yandex.com/solid.ws' failed: Error in connection establishment: net::ERR_NAME_NOT_RESOLVED"
+        }
+      ]
+    }
+  ],
+  "excludedRepeat": {
+    "reportUrl": "https://pagespeed.web.dev/analysis/https-3d-scan-nn-ru/kckq6w60m1?form_factor=mobile",
+    "reportTime": "26 сент. 2026 г., 16:13:15",
+    "fieldDataAvailable": false,
+    "performance": 97,
+    "fcpSeconds": 1.8,
+    "lcpSeconds": 2.3,
+    "tbtMs": 20,
+    "cls": 0.019,
+    "speedIndexSeconds": 1.8,
+    "captureLabel": "Captured at 26 сент. 2026 г., 16:12 GMT+3",
+    "reason": "Metrics and displayed capture time match second canonical report; not counted as independent measurement. Backend reuse inferred, not proven."
+  },
+  "savedAt": "2026-09-26T13:16:44.603Z"
+}

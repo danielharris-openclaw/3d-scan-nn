@@ -50,7 +50,6 @@
     [style*="padding:48px 40px"]{padding:30px 18px !important;}
     [style*="padding:20px 40px"]{padding:18px 18px !important;}
     [style*="padding:22px 40px"]{padding:16px 18px !important; flex-wrap:wrap; gap:12px;}
-    .nav-links{display:none !important;}
     .proc-line{display:none !important;}
     .lf-row{grid-template-columns:1fr;}
     #calc{padding:22px 16px !important;}
@@ -61,6 +60,69 @@
     [style*="grid-template-columns:repeat(4,1fr)"]{grid-template-columns:1fr !important;}
     [style*="grid-template-columns:repeat(7,1fr)"]{grid-template-columns:1fr !important;}
     h1{font-size:29px !important;}
+  }
+</style>
+<style>
+  .site-header{position:relative; z-index:2; max-width:1180px; margin:0 auto; padding:22px 40px; display:flex; align-items:center; justify-content:space-between; gap:20px;}
+  .nav-links{display:flex; align-items:center; gap:22px; font-size:14px; font-weight:500;}
+  .nav-links a,.mobile-menu a{color:#C5CDD8; text-decoration:none;}
+  .header-contact{display:flex; align-items:center; gap:14px;}
+  .mobile-menu{display:none; position:relative; color:#fff; font-size:14px;}
+  .mobile-menu summary{cursor:pointer; padding:12px; border:1px solid #586678; border-radius:4px; min-height:44px;}
+  .mobile-menu nav{position:absolute; top:calc(100% + 8px); right:0; min-width:210px; padding:8px; background:#14181F; border:1px solid #586678; border-radius:6px; box-shadow:0 16px 36px #0006;}
+  .mobile-menu a{display:block; padding:13px 16px; border-radius:3px;}
+  .mobile-menu a:hover{background:#253248; color:#fff;}
+  a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #5E9BFF; outline-offset:4px;}
+  section[tabindex="-1"]:focus-visible{outline:3px solid #5E9BFF; outline-offset:-3px;}
+  .hero-actions{display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:24px;}
+  .hero-primary{display:inline-flex; align-items:center; justify-content:center; min-height:48px; padding:16px 28px; border-radius:3px; color:#fff; background:#FF5A1F; font-weight:700; font-size:15.5px; text-decoration:none; box-shadow:0 10px 28px rgba(255,90,31,.25);}
+  .hero-self-calc{color:#C5CDD8; font-size:14px; text-underline-offset:4px; padding:12px 0;}
+  .service-section{background:#0E1219; color:#fff; border-top:1px solid #293344;}
+  .home-section-inner{max-width:1180px; margin:0 auto; padding:72px 40px;}
+  .home-eyebrow{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.1em; color:#9CC0FF;}
+  .home-heading{font-family:'Space Grotesk',sans-serif; font-size:38px; line-height:1.15; letter-spacing:-.02em; margin:16px 0;}
+  .home-intro{max-width:720px; font-size:16px; line-height:1.65; margin:0 0 28px; color:#AAB4C2;}
+  .service-grid{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px;}
+  .service-card{padding:24px; border:1px solid #344155; border-radius:6px; background:#161C26; display:flex; flex-direction:column; align-items:flex-start;}
+  .service-card h3,.example-card h3{font-family:'Space Grotesk',sans-serif; font-size:20px; line-height:1.25; margin:0 0 12px;}
+  .service-card p{font-size:14px; line-height:1.6; color:#AAB4C2; margin:0 0 18px;}
+  .service-card a{margin-top:auto; color:#9CC0FF; font-size:14px; line-height:1.5; text-underline-offset:4px; padding:6px 0;}
+  .service-other{font-size:14px; line-height:1.7; margin:24px 0 0; color:#AAB4C2;}
+  .service-other a{color:#9CC0FF; text-underline-offset:4px;}
+  .example-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px;}
+  .example-card{padding:28px; border:1px solid #D6DCE6; border-radius:6px; background:#fff;}
+  .example-card dl{margin:0; font-size:14px; line-height:1.65;}
+  .example-card dt{font-family:'IBM Plex Mono',monospace; font-size:11px; color:#0B5FFF; margin:16px 0 4px; text-transform:uppercase; letter-spacing:.04em;}
+  .example-card dd{margin:0; color:#5A6573;}
+  .example-card a{display:inline-block; margin-top:18px; color:#0B5FFF; text-underline-offset:4px; font-size:14px; line-height:1.6;}
+  .calc-selected{display:none;}
+  #calc .calc-tab{min-height:44px;}
+  #calc .calc-field{min-width:0;}
+  @media (max-width:1099px){
+    .nav-links{display:none;}
+    .mobile-menu{display:block; margin-left:auto;}
+    .site-header{flex-wrap:wrap;}
+  }
+  @media (max-width:880px){
+    .site-header{padding:16px 18px; gap:12px;}
+    .home-section-inner{padding:48px 18px;}
+    .service-grid,.example-grid{grid-template-columns:1fr;}
+    .service-card,.example-card{padding:22px;}
+    .hero-media{min-height:0 !important; padding:20px 0 !important; max-height:260px;}
+    .hero-media .hero-photo{height:220px !important; object-fit:cover;}
+    .hero-inset{display:none;}
+  }
+  @media (max-width:560px){
+    .header-contact{width:100%; justify-content:space-between; gap:10px;}
+    .header-contact .header-quote{font-size:12px !important; padding:12px !important;}
+    .hero-actions .hero-primary{width:100%;}
+    .hero-actions [data-goal]{padding:12px !important; font-size:13px !important;}
+    .hero-self-calc{width:100%;}
+    #calc .calc-fields{grid-template-columns:minmax(0,1fr) !important;}
+    .calc-selected{display:block; margin:7px 0 0; color:#C5CDD8; font-size:12px; line-height:1.6; overflow-wrap:anywhere;}
+    .calc-field input,.calc-field select{font-size:16px !important;}
+    .lf-consent{display:block;}
+    .lf-consent input{vertical-align:middle; margin:0 8px 2px 0;}
   }
 </style>
 <!-- Yandex.Metrika counter -->
@@ -612,21 +674,29 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
   <div style="position:absolute; bottom:-200px; left:-140px; width:520px; height:520px; background:radial-gradient(circle, rgba(11,95,255,.14), transparent 65%);"></div>
 
   <!-- nav -->
-  <div style="position:relative; max-width:1180px; margin:0 auto; padding:22px 40px; display:flex; align-items:center; justify-content:space-between;">
+  <div class="site-header">
     <div style="display:flex; align-items:center; gap:11px;">
       <div style="width:30px; height:30px; border:2px solid #fff; border-radius:50%; position:relative;"><div style="position:absolute; inset:7px; border:1.5px solid #FF5A1F; border-radius:50%;"></div></div>
       <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:19px; color:#fff; letter-spacing:-.01em;">3D-SCAN<span style="color:#FF5A1F;">·</span>NN</div>
     </div>
-    <div class="nav-links" style="display:flex; align-items:center; gap:28px; font-size:14px; color:#AAB4C2; font-weight:500;">
-      <a href="#advantages" style="color:#C5CDD8; text-decoration:none;">Услуги</a>
-      <a href="#cases" style="color:#C5CDD8; text-decoration:none;">Кейсы</a>
-      <a href="#process" style="color:#C5CDD8; text-decoration:none;">Как работаем</a>
-      <a href="#price" style="color:#C5CDD8; text-decoration:none;">Стоимость</a>
-      <a href="#faq" style="color:#C5CDD8; text-decoration:none;">FAQ</a>
-    </div>
-    <div style="display:flex; align-items:center; gap:14px;">
+    <nav class="nav-links" aria-label="Основная навигация">
+      <a href="#services">Услуги</a>
+      <a href="#deliverables">Результат</a>
+      <a href="#price">Стоимость</a>
+      <a href="#leadform">Контакты</a>
+    </nav>
+    <details class="mobile-menu" id="mobileMenu">
+      <summary>Меню</summary>
+      <nav aria-label="Мобильная навигация">
+        <a href="#services">Услуги</a>
+        <a href="#deliverables">Результат</a>
+        <a href="#price">Стоимость</a>
+        <a href="#leadform">Контакты</a>
+      </nav>
+    </details>
+    <div class="header-contact">
       <a href="tel:+79036060054" data-goal="call" style="font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:14px; color:#fff; text-decoration:none;">+7 903 606-00-54</a>
-      <a href="#leadform" style="font-family:'Manrope',sans-serif; font-weight:700; font-size:13.5px; color:#fff; background:#FF5A1F; padding:11px 18px; border-radius:3px; text-decoration:none;">Заявка</a>
+      <a class="header-quote" href="#leadform" style="font-family:'Manrope',sans-serif; font-weight:700; font-size:13.5px; color:#fff; background:#FF5A1F; padding:11px 18px; border-radius:3px; text-decoration:none;">Получить расчёт</a>
     </div>
   </div>
 
@@ -636,10 +706,12 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
       <div style="display:inline-flex; align-items:center; gap:9px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600; letter-spacing:.1em; color:#9CC0FF; border:1px solid rgba(120,170,255,.3); padding:8px 13px; border-radius:99px;">
         <span style="width:7px; height:7px; background:#48E0A0; border-radius:50%;"></span>ЛАЗЕРНОЕ 3D-СКАНИРОВАНИЕ · TRIMBLE X7
       </div>
-      <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:54px; line-height:1.04; letter-spacing:-.025em; color:#fff; margin:24px 0 0 0; text-wrap:balance;">Точные обмеры и 3D-сканирование <span style="color:#5E9BFF;">без ошибок</span> и переделок</h1>
-      <p style="font-size:17px; line-height:1.6; color:#AAB4C2; margin:22px 0 0 0; max-width:480px;">Облако точек, точные чертежи DWG / PDF, планы, фасады, разрезы и BIM-модели для дизайнеров, проектировщиков, строителей и промышленных предприятий. Нижний Новгород, область и выезд до 500 км.</p>
-      <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:32px;">
-        <a href="#price" style="display:inline-flex; align-items:center; gap:9px; font-weight:700; font-size:15.5px; color:#fff; background:#FF5A1F; padding:16px 28px; border-radius:3px; text-decoration:none; box-shadow:0 10px 28px rgba(255,90,31,.34);">Рассчитать стоимость <span style="font-family:'IBM Plex Mono',monospace;">→</span></a>
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:54px; line-height:1.04; letter-spacing:-.025em; color:#fff; margin:24px 0 0 0; text-wrap:balance;">Лазерное 3D-сканирование и обмеры <span style="color:#5E9BFF;">в Нижнем Новгороде</span></h1>
+      <p style="font-size:17px; line-height:1.6; color:#AAB4C2; margin:22px 0 0 0; max-width:480px;">Обмеряем квартиры, помещения, фасады и промышленные объекты. Подготавливаем облако точек, чертежи DWG / PDF и 3D-модели под задачу вашего проекта. Работаем по Нижегородской области, выезжаем до 500 км.</p>
+      <p style="font-size:14px; line-height:1.6; color:#C5CDD8; margin:20px 0 0;"><strong style="color:#FF9A72;">Минимальный заказ — от 20 000 ₽.</strong> Стоимость зависит от объекта и состава материалов.</p>
+      <div class="hero-actions">
+        <a href="#leadform" class="hero-primary">Получить расчёт <span aria-hidden="true" style="margin-left:8px;">→</span></a>
+        <a href="#price" class="hero-self-calc">Рассчитать самостоятельно</a>
         <a href="https://t.me/frolovr9" data-goal="telegram" style="display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:15.5px; color:#fff; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); padding:15px 22px; border-radius:3px; text-decoration:none;">Написать в Telegram</a>
         <a href="https://max.ru/u/f9LHodD0cOKQJvAxbQRGybXhznQk8_Y7LqODhTtC9LwLBpcAMsGiYcZlj8o" data-goal="max" style="display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:15.5px; color:#fff; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); padding:15px 22px; border-radius:3px; text-decoration:none;">Написать в МАХ</a>
         <a href="tel:+79036060054" data-goal="call" style="display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:15.5px; color:#fff; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); padding:15px 22px; border-radius:3px; text-decoration:none;">Позвонить</a>
@@ -647,18 +719,18 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
     </div>
 
     <!-- hero visual: scanner photo + point cloud inset -->
-    <div style="position:relative; align-self:stretch; min-height:460px; display:flex; align-items:center; justify-content:center; padding:40px 0 56px;">
+    <div class="hero-media" style="position:relative; align-self:stretch; min-height:460px; display:flex; align-items:center; justify-content:center; padding:40px 0 56px;">
       <div style="position:absolute; width:300px; height:300px; border:1px solid rgba(120,170,255,.28); border-radius:50%; animation:ringpulse 6s ease-in-out infinite; top:30px; right:30px;"></div>
       <div style="position:relative; width:440px; max-width:100%;">
         <div style="position:relative; border-radius:12px; overflow:hidden; border:1px solid rgba(120,170,255,.25); box-shadow:0 34px 70px rgba(0,0,0,.5);">
-          <img loading="eager" decoding="async" src="assets/img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp" alt="Лазерный 3D-сканер Trimble X7" style="display:block; width:100%; height:auto;">
+          <img class="hero-photo" loading="eager" decoding="async" src="assets/img/9e511b4c-218a-4e96-ba11-deed2821b28b.webp" alt="Лазерный 3D-сканер Trimble X7" style="display:block; width:100%; height:auto;">
           <div style="position:absolute; top:14px; left:14px; width:20px; height:20px; border-left:2px solid #5E9BFF; border-top:2px solid #5E9BFF;"></div>
           <div style="position:absolute; top:14px; right:14px; width:20px; height:20px; border-right:2px solid #5E9BFF; border-top:2px solid #5E9BFF;"></div>
           <div style="position:absolute; bottom:14px; left:14px; width:20px; height:20px; border-left:2px solid #5E9BFF; border-bottom:2px solid #5E9BFF;"></div>
           <div style="position:absolute; bottom:14px; right:14px; width:20px; height:20px; border-right:2px solid #5E9BFF; border-bottom:2px solid #5E9BFF;"></div>
           <div style="position:absolute; top:16px; right:42px; font-family:'IBM Plex Mono',monospace; font-size:10px; color:#fff; background:rgba(14,18,25,.72); border:1px solid rgba(120,170,255,.4); padding:5px 9px; backdrop-filter:blur(2px);">TRIMBLE X7 · ±2 мм</div>
         </div>
-        <div style="position:absolute; bottom:-30px; left:-44px; width:236px; border-radius:9px; overflow:hidden; border:1px solid rgba(120,170,255,.4); box-shadow:0 18px 38px rgba(0,0,0,.55); background:#0E1219;">
+        <div class="hero-inset" style="position:absolute; bottom:-30px; left:-44px; width:236px; border-radius:9px; overflow:hidden; border:1px solid rgba(120,170,255,.4); box-shadow:0 18px 38px rgba(0,0,0,.55); background:#0E1219;">
           <img loading="eager" decoding="async" src="assets/img/e9ffe9a6-a0b4-4562-8a34-3df7facb4e64.webp" alt="Облако точек объекта" style="display:block; width:100%; height:134px; object-fit:cover; background:#fff;">
           <div style="font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:#9CC0FF; padding:7px 10px; border-top:1px solid rgba(120,170,255,.2);">ОБЛАКО ТОЧЕК · 2 480 000 pts</div>
         </div>
@@ -676,6 +748,24 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
     </div>
   </div>
 </div>
+
+<!-- ============ ВЫБОР УСЛУГИ ============ -->
+<section id="services" class="service-section" tabindex="-1" aria-labelledby="services-title">
+  <div class="home-section-inner">
+    <span class="home-eyebrow">ОБЪЕКТ И ЗАДАЧА</span>
+    <h2 class="home-heading" id="services-title">Выберите задачу</h2>
+    <p class="home-intro">Посмотрите состав обмеров помещений или опишите другой объект — подберём подходящий результат.</p>
+    <div class="service-grid">
+      <article class="service-card"><h3>Квартиры</h3><p>Обмеры для дизайн-проекта, ремонта и перепланировки.</p><a href="/uslugi/obmery-pomeshcheniy/">Подробнее об обмерах</a></article>
+      <article class="service-card"><h3>Коммерческие помещения</h3><p>Обмеры офисов, магазинов и других помещений под проектирование и ремонт.</p><a href="/uslugi/obmery-pomeshcheniy/">Состав работ и стоимость</a></article>
+      <article class="service-card"><h3>Фасады</h3><p>Геометрия фасада и обмерные материалы под задачу проекта.</p><a href="#leadform">Обсудить обмер фасада</a></article>
+      <article class="service-card"><h3>Промышленные объекты</h3><p>Геометрия цехов, оборудования и коммуникаций для реконструкции и монтажа.</p><a href="#leadform">Обсудить промышленный объект</a></article>
+      <article class="service-card"><h3>Объекты культурного наследия</h3><p>Фиксация геометрии и декора для подготовки обмерных материалов.</p><a href="#leadform">Обсудить объект</a></article>
+      <article class="service-card"><h3>Резервуары и конструкции</h3><p>Обмеры технических объектов и подготовка геометрических данных.</p><a href="#leadform">Обсудить обмер</a></article>
+    </div>
+    <p class="service-other">Нужна топография, ВЛС или реверс-инжиниринг? <a href="#leadform">Опишите задачу</a>.</p>
+  </div>
+</section>
 
 <!-- ============ ПРЕИМУЩЕСТВА / ДОВЕРИЕ ============ -->
 <section id="advantages" style="max-width:1180px; margin:0 auto; padding:96px 40px;">
@@ -748,7 +838,7 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
 </section>
 
 <!-- ============ ЧТО ВЫ ПОЛУЧИТЕ ============ -->
-<section style="max-width:1180px; margin:0 auto; padding:96px 40px;">
+<section id="deliverables" tabindex="-1" style="max-width:1180px; margin:0 auto; padding:96px 40px;">
   <div style="display:flex; align-items:center; gap:9px; font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600; letter-spacing:.1em; color:#0B5FFF;"><span style="width:7px; height:7px; background:#0B5FFF; border-radius:50%;"></span>ЧТО ВЫ ПОЛУЧИТЕ</div>
   <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:38px; line-height:1.1; letter-spacing:-.02em; color:#14181F; margin:16px 0 0 0; max-width:640px;">Готовые материалы под вашу задачу</h2>
 
@@ -759,25 +849,6 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
     <div style="border:1px solid #E6EAF1; border-radius:8px; background:#fff; overflow:hidden;"><div style="height:168px; background:#0E1219;"><img loading="lazy" decoding="async" src="assets/img/2bf2b836-2934-45d1-9e53-91709fa4cb70.webp" alt="3D-модель объекта" style="width:100%; height:100%; object-fit:cover; display:block;"></div><div style="padding:22px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#14181F;">3D-модель</div><p style="font-size:14px; line-height:1.5; color:#5A6573; margin:7px 0 0 0;">Трёхмерная модель объекта для визуализации и проектирования.</p></div></div>
     <div style="border:1px solid #E6EAF1; border-radius:8px; background:#fff; overflow:hidden;"><div style="height:168px; background:#fff;"><img loading="lazy" decoding="async" src="assets/img/cdfa3155-5d6d-478a-bc59-ae8d4688ca87.webp" alt="BIM / Revit модель" style="width:100%; height:100%; object-fit:cover; display:block;"></div><div style="padding:22px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#14181F;">BIM / Revit</div><p style="font-size:14px; line-height:1.5; color:#5A6573; margin:7px 0 0 0;">Информационная модель по вашему техническому заданию.</p></div></div>
     <div style="border:1px solid #E6EAF1; border-radius:8px; background:#fff; overflow:hidden;"><div style="height:168px; background:#0E1219;"><img loading="lazy" decoding="async" src="assets/img/59051e1c-5e2c-4fa6-83e4-e8fc02e23767.webp" alt="Точная геометрия объекта" style="width:100%; height:100%; object-fit:cover; display:block;"></div><div style="padding:22px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#14181F;">Точные размеры и геометрия</div><p style="font-size:14px; line-height:1.5; color:#5A6573; margin:7px 0 0 0;">Фактические габариты, отметки и привязки без погрешностей замера.</p></div></div>
-  </div>
-</section>
-
-<!-- ============ КАКИЕ ЗАДАЧИ РЕШАЕМ ============ -->
-<section style="background:#0E1219; position:relative; overflow:hidden;">
-  <div style="position:absolute; inset:0; background-image:radial-gradient(rgba(120,170,255,.5) 1px, transparent 1.3px); background-size:20px 20px; opacity:.16;"></div>
-  <div style="position:relative; max-width:1180px; margin:0 auto; padding:96px 40px;">
-    <div style="display:flex; align-items:center; gap:9px; font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600; letter-spacing:.1em; color:#9CC0FF;"><span style="width:7px; height:7px; background:#5E9BFF; border-radius:50%;"></span>КАКИЕ ЗАДАЧИ МЫ РЕШАЕМ</div>
-    <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:38px; line-height:1.1; letter-spacing:-.02em; color:#fff; margin:16px 0 0 0; max-width:640px;">Типовые объекты, которые мы сканируем</h2>
-    <p style="margin:16px 0 28px;"><a href="/uslugi/obmery-pomeshcheniy/" style="font-family:'Manrope',sans-serif; font-weight:600; color:#9CC0FF; text-underline-offset:4px;">Обмеры квартир и помещений</a></p>
-
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:48px;">
-      <div style="background:#161C26; border:1px solid rgba(120,170,255,.16); border-radius:8px; overflow:hidden;"><div style="height:158px;"><img loading="lazy" decoding="async" src="assets/img/dcf663d0-5f6d-46d2-863a-a6135a62bf2f.webp" alt="Обмер квартиры" style="width:100%; height:100%; object-fit:cover; display:block;"></div><div style="padding:22px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#fff;">Обмер квартиры для дизайн-проекта</div><p style="font-size:14px; line-height:1.55; color:#AAB4C2; margin:9px 0 0 0;">Точная подоснова со всеми нишами, выступами и коммуникациями.</p></div></div>
-      <div style="background:#161C26; border:1px solid rgba(120,170,255,.16); border-radius:8px; overflow:hidden;"><div style="height:158px;"><img loading="lazy" decoding="async" src="assets/img/becd4128-1e50-4944-96b4-2f428b7d9b69.webp" alt="Сканирование фасада" style="width:100%; height:100%; object-fit:cover; display:block;"></div><div style="padding:22px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#fff;">Сканирование фасада</div><p style="font-size:14px; line-height:1.55; color:#AAB4C2; margin:9px 0 0 0;">Геометрия и декор фасада для реставрации, обследования и расчёта работ.</p></div></div>
-      <div style="background:#161C26; border:1px solid rgba(120,170,255,.16); border-radius:8px; overflow:hidden;"><div style="height:158px;"><img loading="lazy" decoding="async" src="assets/img/73a29c27-3d0b-4375-9e33-a27b37444bbe.webp" alt="Коммерческое помещение" style="width:100%; height:100%; object-fit:cover; display:block;"></div><div style="padding:22px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#fff;">Обмер коммерческого помещения</div><p style="font-size:14px; line-height:1.55; color:#AAB4C2; margin:9px 0 0 0;">Магазины, офисы, ТЦ — под аренду, ремонт и перепланировку.</p></div></div>
-      <div style="background:#161C26; border:1px solid rgba(120,170,255,.16); border-radius:8px; overflow:hidden;"><div style="height:158px;"><img loading="lazy" decoding="async" src="assets/img/287c6ff6-b274-465e-b8a6-3372f8d4c546.webp" alt="Сканирование цеха" style="width:100%; height:100%; object-fit:cover; display:block;"></div><div style="padding:22px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#fff;">Сканирование цеха или промобъекта</div><p style="font-size:14px; line-height:1.55; color:#AAB4C2; margin:9px 0 0 0;">Оборудование и коммуникации под реконструкцию и монтаж.</p></div></div>
-      <div style="background:#161C26; border:1px solid rgba(120,170,255,.16); border-radius:8px; overflow:hidden;"><div style="height:158px; background:#000;"><img loading="lazy" decoding="async" src="assets/img/0f23f624-b9e9-4692-8401-3b12e44f9102.webp" alt="Объект культурного наследия" style="width:100%; height:100%; object-fit:cover; display:block;"></div><div style="padding:22px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#fff;">Работы по объекту культурного наследия</div><p style="font-size:14px; line-height:1.55; color:#AAB4C2; margin:9px 0 0 0;">Бесконтактная фиксация сложной геометрии для реставрации.</p></div></div>
-      <div style="background:#161C26; border:1px solid rgba(120,170,255,.16); border-radius:8px; overflow:hidden;"><div style="height:158px;"><img loading="lazy" decoding="async" src="assets/img/6ee44861-66f6-44bf-bec7-17b33c96fa15.webp" alt="Обмер резервуара" style="width:100%; height:100%; object-fit:cover; display:block;"></div><div style="padding:22px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:#fff;">Обмер резервуара или техконструкции</div><p style="font-size:14px; line-height:1.55; color:#AAB4C2; margin:9px 0 0 0;">Сложные технические объекты с криволинейной геометрией.</p></div></div>
-    </div>
   </div>
 </section>
 
@@ -798,35 +869,24 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
   </div>
 </section>
 
-<!-- ============ КЕЙСЫ ============ -->
-<section id="cases" style="background:#F7F9FC; border-top:1px solid #EDF0F5; border-bottom:1px solid #EDF0F5;">
-  <div style="max-width:1180px; margin:0 auto; padding:96px 40px;">
-    <div style="display:flex; align-items:center; gap:9px; font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600; letter-spacing:.1em; color:#0B5FFF;"><span style="width:7px; height:7px; background:#0B5FFF; border-radius:50%;"></span>ПРИМЕРЫ РАБОТ</div>
-    <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:38px; line-height:1.1; letter-spacing:-.02em; color:#14181F; margin:16px 0 0 0; max-width:640px;">Кейсы по разным типам объектов</h2>
-
-    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:20px; margin-top:48px;">
-      <div style="background:#fff; border:1px solid #E6EAF1; border-radius:8px; overflow:hidden;">
-        <div style="position:relative; height:200px; background:#0E1219; border-bottom:1px solid #E6EAF1; overflow:hidden;"><img loading="lazy" decoding="async" src="assets/img/dcf663d0-5f6d-46d2-863a-a6135a62bf2f.webp" alt="Облако точек квартиры" style="width:100%; height:100%; object-fit:cover; display:block;"><div style="position:absolute; top:14px; left:14px; font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:#0B5FFF; background:#fff; border:1px solid #C9D6EE; padding:3px 8px;">КВАРТИРА · 96 м²</div></div>
-        <div style="padding:24px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:#14181F;">Обмер квартиры под дизайн-проект</div><div style="margin-top:14px; display:grid; gap:8px; font-size:13.5px;"><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Задача</span><span style="color:#5A6573;">Точная подоснова для перепланировки</span></div><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Передано</span><span style="color:#5A6573;">Облако точек, план и разрезы в DWG</span></div><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Результат</span><span style="color:#5A6573;">Дизайнер работал по фактическим размерам — без переделок</span></div></div></div>
-      </div>
-      <div style="background:#fff; border:1px solid #E6EAF1; border-radius:8px; overflow:hidden;">
-        <div style="position:relative; height:200px; background:#0E1219; border-bottom:1px solid #E6EAF1; overflow:hidden;"><img loading="lazy" decoding="async" src="assets/img/f1a8d4c0-eb1a-4407-970c-c91203c62061.webp" alt="Скан фасада ОКН: фото, облако, 3D" style="width:100%; height:100%; object-fit:cover; display:block;"><div style="position:absolute; top:14px; left:14px; font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:#0B5FFF; background:#fff; border:1px solid #C9D6EE; padding:3px 8px;">ФАСАД · 1 240 м²</div></div>
-        <div style="padding:24px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:#14181F;">Сканирование исторического фасада</div><div style="margin-top:14px; display:grid; gap:8px; font-size:13.5px;"><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Задача</span><span style="color:#5A6573;">Фиксация декора для реставрации ОКН</span></div><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Передано</span><span style="color:#5A6573;">Облако точек, развёртка фасада, обмерные чертежи</span></div><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Результат</span><span style="color:#5A6573;">Реставраторы получили точную геометрию без лесов</span></div></div></div>
-      </div>
-      <div style="background:#fff; border:1px solid #E6EAF1; border-radius:8px; overflow:hidden;">
-        <div style="position:relative; height:200px; background:#0E1219; border-bottom:1px solid #E6EAF1; overflow:hidden;"><img loading="lazy" decoding="async" src="assets/img/287c6ff6-b274-465e-b8a6-3372f8d4c546.webp" alt="Облако точек цеха" style="width:100%; height:100%; object-fit:cover; display:block;"><div style="position:absolute; top:14px; left:14px; font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:#0B5FFF; background:#fff; border:1px solid #C9D6EE; padding:3px 8px;">ЦЕХ · 3 800 м²</div></div>
-        <div style="padding:24px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:#14181F;">Сканирование производственного цеха</div><div style="margin-top:14px; display:grid; gap:8px; font-size:13.5px;"><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Задача</span><span style="color:#5A6573;">Обмер под реконструкцию и монтаж линии</span></div><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Передано</span><span style="color:#5A6573;">Облако точек, 3D-модель, привязки оборудования</span></div><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Результат</span><span style="color:#5A6573;">Монтаж без коллизий — экономия недель на доработках</span></div></div></div>
-      </div>
-      <div style="background:#fff; border:1px solid #E6EAF1; border-radius:8px; overflow:hidden;">
-        <div style="position:relative; height:200px; background:#0E1219; border-bottom:1px solid #E6EAF1; overflow:hidden;"><img loading="lazy" decoding="async" src="assets/img/6ee44861-66f6-44bf-bec7-17b33c96fa15.webp" alt="Сканирование резервуара" style="width:100%; height:100%; object-fit:cover; display:block;"><div style="position:absolute; top:14px; left:14px; font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:#0B5FFF; background:#fff; border:1px solid #C9D6EE; padding:3px 8px;">РЕЗЕРВУАР · Ø24 м</div></div>
-        <div style="padding:24px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:#14181F;">Обмер резервуара РВС</div><div style="margin-top:14px; display:grid; gap:8px; font-size:13.5px;"><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Задача</span><span style="color:#5A6573;">Контроль геометрии и отклонений конструкции</span></div><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Передано</span><span style="color:#5A6573;">Облако точек, ведомость отклонений, разрезы</span></div><div style="display:flex; gap:10px;"><span style="font-family:'IBM Plex Mono',monospace; color:#0B5FFF; min-width:78px;">Результат</span><span style="color:#5A6573;">Объективная оценка состояния для заключения</span></div></div></div>
-      </div>
+<!-- ============ ТИПОВЫЕ ПРИМЕРЫ ============ -->
+<section id="cases" style="background:#F7F9FC; border-top:1px solid #EDF0F5; border-bottom:1px solid #EDF0F5;" aria-labelledby="examples-title">
+  <div class="home-section-inner">
+    <span class="home-eyebrow" style="color:#0B5FFF;">ТИПОВЫЕ ПРИМЕРЫ</span>
+    <h2 class="home-heading" id="examples-title">Примеры задач и состава результата</h2>
+    <p class="home-intro" style="color:#5A6573;">Ниже — типовые задачи и возможный состав материалов. Это иллюстрации услуги, а не отчёты о выполненных заказах. Состав результата согласуем под ваш объект.</p>
+    <div class="example-grid">
+      <article class="example-card"><h3>Квартира перед дизайн-проектом</h3><dl><dt>Задача</dt><dd>Получить исходную геометрию для планировки и проектирования.</dd><dt>Возможный результат</dt><dd>Облако точек, обмерный план, необходимые разрезы.</dd></dl><a href="/uslugi/obmery-pomeshcheniy/#scenario-title">Посмотреть пример результата обмеров</a></article>
+      <article class="example-card"><h3>Фасад перед проектированием</h3><dl><dt>Задача</dt><dd>Зафиксировать геометрию фасада и необходимые элементы.</dd><dt>Возможный результат</dt><dd>Облако точек, развёртки и обмерные чертежи по согласованному заданию.</dd></dl></article>
+      <article class="example-card"><h3>Цех перед реконструкцией</h3><dl><dt>Задача</dt><dd>Получить данные о расположении конструкций, оборудования и коммуникаций.</dd><dt>Возможный результат</dt><dd>Облако точек; чертежи или 3D-модель в согласованном составе.</dd></dl></article>
+      <article class="example-card"><h3>Резервуар или техническая конструкция</h3><dl><dt>Задача</dt><dd>Зафиксировать форму и размеры объекта.</dd><dt>Возможный результат</dt><dd>Облако точек, разрезы и необходимые геометрические данные по заданию.</dd></dl></article>
     </div>
+    <a class="hero-primary" href="#leadform" style="margin-top:28px;">Обсудить состав материалов</a>
   </div>
 </section>
 
 <!-- ============ СТОИМОСТЬ + КАЛЬКУЛЯТОР ============ -->
-<section id="price" style="max-width:1180px; margin:0 auto; padding:96px 40px;">
+<section id="price" tabindex="-1" style="max-width:1180px; margin:0 auto; padding:96px 40px;">
   <div style="display:flex; align-items:center; gap:9px; font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600; letter-spacing:.1em; color:#0B5FFF;"><span style="width:7px; height:7px; background:#0B5FFF; border-radius:50%;"></span>СТОИМОСТЬ</div>
   <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:38px; line-height:1.1; letter-spacing:-.02em; color:#14181F; margin:16px 0 0 0; max-width:640px;">Прозрачная цена под задачу</h2>
   <p style="font-size:16px; line-height:1.6; color:#5A6573; margin:14px 0 0 0; max-width:620px;">Минимальный заказ — <strong style="color:#14181F;">от 20 000 ₽</strong>. Итоговая стоимость зависит от площади, сложности, типа объекта и требуемого результата. Прикиньте порядок цены в калькуляторе ниже.</p>
@@ -869,9 +929,9 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
     <div class="calc-grid" style="display:grid; grid-template-columns:1.45fr 1fr; gap:26px; margin-top:26px; align-items:start;">
       <div>
         <div class="calc-pane is-active" data-pane="interior">
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
-            <div class="calc-field"><label>Площадь, м²</label><input id="area" type="number" min="1" value="350"></div>
-            <div class="calc-field"><label>Результат</label><select id="interiorService">
+          <div class="calc-fields" style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div class="calc-field"><label for="area">Площадь, м²</label><input id="area" type="number" min="1" value="350"></div>
+            <div class="calc-field"><label for="interiorService">Результат</label><select id="interiorService">
               <option value="scanColor">Только сканирование, цвет</option>
               <option value="scanBw">Только сканирование, ч/б</option>
               <option value="plan">Скан + чертёж план</option>
@@ -880,10 +940,10 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
               <option value="modelEng">3D модель с видимыми инженерными сетями</option>
               <option value="archicad">3D модель с инж. сетями, Archicad</option>
             </select></div>
-            <div class="calc-field"><label>Детализация</label><select id="lod"><option value="1">LOD200</option><option value="1.5">LOD300 ×1.5</option></select></div>
-            <div class="calc-field"><label>НДС</label><select id="vat"><option value="0">Без НДС</option><option value="0.05">НДС 5%</option><option value="0.25">НДС 25%</option></select></div>
-            <div class="calc-field"><label>Км от Нижнего Новгорода</label><input id="distance" type="number" min="0" value="0"></div>
-            <div class="calc-field"><label>Скидка для 1000+ м²</label><select id="discount"><option value="0">Нет</option><option value="0.1">10%</option><option value="0.25">25%</option><option value="0.5">50%</option></select></div>
+            <div class="calc-field"><label for="lod">Детализация</label><select id="lod"><option value="1">LOD200</option><option value="1.5">LOD300 ×1.5</option></select></div>
+            <div class="calc-field"><label for="vat">НДС</label><select id="vat"><option value="0">Без НДС</option><option value="0.05">НДС 5%</option><option value="0.25">НДС 25%</option></select></div>
+            <div class="calc-field"><label for="distance">Км от Нижнего Новгорода</label><input id="distance" type="number" min="0" value="0"></div>
+            <div class="calc-field"><label for="discount">Скидка для 1000+ м²</label><select id="discount"><option value="0">Нет</option><option value="0.1">10%</option><option value="0.25">25%</option><option value="0.5">50%</option></select></div>
           </div>
           <div style="display:flex; flex-wrap:wrap; gap:18px; margin-top:16px;">
             <label class="calc-check"><input id="heritage" type="checkbox"> Культурное наследие ×1.35</label>
@@ -893,16 +953,16 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
         </div>
 
         <div class="calc-pane" data-pane="facade">
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
-            <div class="calc-field"><label>Площадь фасада, м²</label><input id="facadeArea" type="number" min="1" value="1200"></div>
-            <div class="calc-field"><label>Сканирование</label><select id="facadeScan">
+          <div class="calc-fields" style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div class="calc-field"><label for="facadeArea">Площадь фасада, м²</label><input id="facadeArea" type="number" min="1" value="1200"></div>
+            <div class="calc-field"><label for="facadeScan">Сканирование</label><select id="facadeScan">
               <option value="20">До 50 м, ч/б · 20 ₽/м²</option>
               <option value="25">До 50 м, цвет · 25 ₽/м²</option>
               <option value="30">50-200 м, ч/б · 30 ₽/м²</option>
               <option value="35">50-200 м, цвет · 35 ₽/м²</option>
               <option value="35">Лепнина, цвет · 35 ₽/м²</option>
             </select></div>
-            <div class="calc-field"><label>Чертежи</label><select id="facadeDrawing">
+            <div class="calc-field"><label for="facadeDrawing">Чертежи</label><select id="facadeDrawing">
               <option value="0">Не нужны</option>
               <option value="15">Простой фасад · 15 ₽/м²</option>
               <option value="25">Сложная геометрия · 25 ₽/м²</option>
@@ -910,7 +970,7 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
               <option value="100">Детальная лепнина · 100 ₽/м²</option>
               <option value="150">Лепнина + повреждения · 150 ₽/м²</option>
             </select></div>
-            <div class="calc-field"><label>3D модель</label><select id="facadeModel">
+            <div class="calc-field"><label for="facadeModel">3D модель</label><select id="facadeModel">
               <option value="0">Не нужна</option>
               <option value="15">Простой LOD200 · 15 ₽/м²</option>
               <option value="25">Простой LOD300 · 25 ₽/м²</option>
@@ -927,18 +987,18 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
         </div>
 
         <div class="calc-pane" data-pane="topo">
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
-            <div class="calc-field"><label>Площадь, га</label><input id="hectares" type="number" min="1" value="5"></div>
-            <div class="calc-field"><label>Метод</label><select id="topoMethod">
+          <div class="calc-fields" style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div class="calc-field"><label for="hectares">Площадь, га</label><input id="hectares" type="number" min="1" value="5"></div>
+            <div class="calc-field"><label for="topoMethod">Метод</label><select id="topoMethod">
               <option value="slam">Наземно / SLAM / RTK</option>
               <option value="vls">ВЛС, воздушное сканирование</option>
             </select></div>
-            <div class="calc-field"><label>Результат</label><select id="topoResult">
+            <div class="calc-field"><label for="topoResult">Результат</label><select id="topoResult">
               <option value="20000">ЦММ + облако · от 20 000 ₽/га</option>
               <option value="25000">Топо без сетей · от 25 000 ₽/га</option>
               <option value="35000">Топо с сетями и согласованиями · от 35 000 ₽/га</option>
             </select></div>
-            <div class="calc-field"><label>Локация</label><select id="topoLocation">
+            <div class="calc-field"><label for="topoLocation">Локация</label><select id="topoLocation">
               <option value="0">Нижний Новгород / область</option>
               <option value="1">Соседний регион, командировочные отдельно</option>
             </select></div>
@@ -947,32 +1007,32 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
         </div>
 
         <div class="calc-pane" data-pane="tanks">
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
-            <div class="calc-field"><label>Количество резервуаров</label><input id="tankCount" type="number" min="1" value="2"></div>
-            <div class="calc-field"><label>Объём одного резервуара</label><select id="tankVolume">
+          <div class="calc-fields" style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div class="calc-field"><label for="tankCount">Количество резервуаров</label><input id="tankCount" type="number" min="1" value="2"></div>
+            <div class="calc-field"><label for="tankVolume">Объём одного резервуара</label><select id="tankVolume">
               <option value="50000">До 50 м³ · 50 000 ₽/шт</option>
               <option value="60000">Более 50 м³ · 60 000 ₽/шт</option>
               <option value="30000">400-1000 м³ · 30 000 ₽/шт</option>
               <option value="35000">5000 м³ · 35 000 ₽/шт</option>
               <option value="40000">10000 м³ · 40 000 ₽/шт</option>
             </select></div>
-            <div class="calc-field"><label>Тип</label><select id="tankType"><option>Наземный</option><option>Подземный</option><option>С секциями / конусное дно</option></select></div>
-            <div class="calc-field"><label>Документы</label><select id="tankDocs"><option value="0">Только таблица</option><option value="10000">Документы/сертификаты +10 000 ₽/шт</option><option value="20000">Поверка/калибровка +20 000 ₽/шт</option></select></div>
+            <div class="calc-field"><label for="tankType">Тип</label><select id="tankType"><option>Наземный</option><option>Подземный</option><option>С секциями / конусное дно</option></select></div>
+            <div class="calc-field"><label for="tankDocs">Документы</label><select id="tankDocs"><option value="0">Только таблица</option><option value="10000">Документы/сертификаты +10 000 ₽/шт</option><option value="20000">Поверка/калибровка +20 000 ₽/шт</option></select></div>
           </div>
         </div>
 
         <div class="calc-pane" data-pane="reverse">
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
-            <div class="calc-field"><label>Количество деталей</label><input id="partCount" type="number" min="1" value="1"></div>
-            <div class="calc-field"><label>Точность</label><select id="accuracy">
+          <div class="calc-fields" style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div class="calc-field"><label for="partCount">Количество деталей</label><input id="partCount" type="number" min="1" value="1"></div>
+            <div class="calc-field"><label for="accuracy">Точность</label><select id="accuracy">
               <option value="1">Более 1 мм</option>
               <option value="1.4">0.5-1 мм</option>
               <option value="2">0.1-0.5 мм</option>
               <option value="3">0.05-0.1 мм</option>
               <option value="4">Менее 0.05 мм</option>
             </select></div>
-            <div class="calc-field"><label>CAD-модель</label><select id="cad"><option value="0">Не нужна</option><option value="25000">STP / CAD-модель +25 000 ₽</option></select></div>
-            <div class="calc-field"><label>Базовая оценка, ₽</label><input id="reverseBase" type="number" min="10000" value="30000"></div>
+            <div class="calc-field"><label for="cad">CAD-модель</label><select id="cad"><option value="0">Не нужна</option><option value="25000">STP / CAD-модель +25 000 ₽</option></select></div>
+            <div class="calc-field"><label for="reverseBase">Базовая оценка, ₽</label><input id="reverseBase" type="number" min="10000" value="30000"></div>
           </div>
           <div class="calc-note">Для реверс-инжиниринга нет жёсткого прайса — блок даёт вилку для первичной оценки.</div>
         </div>
@@ -1062,7 +1122,7 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
 </section>
 
 <!-- ============ ФИНАЛЬНЫЙ CTA ============ -->
-<section id="leadform" style="position:relative; background:#0E1219; overflow:hidden;">
+<section id="leadform" tabindex="-1" style="position:relative; background:#0E1219; overflow:hidden;">
   <div style="position:absolute; inset:0; background-image:radial-gradient(rgba(120,170,255,.55) 1px, transparent 1.4px); background-size:18px 18px; opacity:.2;"></div>
   <div style="position:absolute; top:-120px; left:50%; transform:translateX(-50%); width:560px; height:560px; background:radial-gradient(circle, rgba(11,95,255,.28), transparent 62%);"></div>
   <div style="position:relative; max-width:840px; margin:0 auto; padding:104px 40px; text-align:center;">
@@ -1075,6 +1135,7 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
       <a href="tel:+79036060054" data-goal="call" style="display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:15.5px; color:#fff; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); padding:15px 24px; border-radius:3px; text-decoration:none;">Позвонить</a>
     </div>
 
+    <p style="font-size:14px; line-height:1.7; color:#C5CDD8; max-width:580px; margin:28px auto 0;">Для первого обращения достаточно имени и телефона. Если знаете площадь и нужный результат, укажите их ниже — это поможет подготовить расчёт.</p>
     <form id="leadForm" action="https://formspree.io/f/mlgybbgv" method="POST" style="max-width:640px; margin:38px auto 0; background:#fff; border-radius:12px; padding:32px; text-align:left; box-shadow:0 24px 60px rgba(0,0,0,.4);">
       <div class="lf-row">
         <div class="lf-field"><label>Имя *</label><input type="text" name="Имя" required></div>
@@ -1310,6 +1371,34 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
       document.getElementById('cookieOk').addEventListener('click',function(){localStorage.setItem('cookieOk','1');c.style.display='none';});
     }
   }catch(e){}
+})();
+</script>
+<script id="home-navigation">
+(function(){
+  var menu=document.getElementById('mobileMenu');
+  menu.querySelectorAll('a[href^="#"]').forEach(function(link){
+    link.addEventListener('click',function(){
+      menu.open=false;
+      document.getElementById(link.hash.slice(1)).focus({preventScroll:true});
+    });
+  });
+  menu.addEventListener('keydown',function(event){
+    if(event.key==='Escape' && menu.open){
+      menu.open=false;
+      menu.querySelector('summary').focus();
+    }
+  });
+  document.querySelectorAll('#calc select').forEach(function(select){
+    var hint=document.createElement('p');
+    hint.className='calc-selected';
+    hint.id=select.id+'-selected';
+    select.insertAdjacentElement('afterend',hint);
+    var description=select.getAttribute('aria-describedby');
+    select.setAttribute('aria-describedby',(description ? description+' ' : '')+hint.id);
+    function update(){hint.textContent='Выбрано: '+select.options[select.selectedIndex].text;}
+    update();
+    select.addEventListener('change',update);
+  });
 })();
 </script>
 </body></html>

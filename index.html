@@ -84,17 +84,26 @@
   .home-intro{max-width:720px; font-size:16px; line-height:1.65; margin:0 0 28px; color:#AAB4C2;}
   .service-grid{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px;}
   .service-card{padding:24px; border:1px solid #344155; border-radius:6px; background:#161C26; display:flex; flex-direction:column; align-items:flex-start;}
-  .service-card h3,.example-card h3{font-family:'Space Grotesk',sans-serif; font-size:20px; line-height:1.25; margin:0 0 12px;}
+  .service-card h3,.project-card h3{font-family:'Space Grotesk',sans-serif; font-size:20px; line-height:1.25; margin:0 0 12px;}
   .service-card p{font-size:14px; line-height:1.6; color:#AAB4C2; margin:0 0 18px;}
   .service-card a{margin-top:auto; color:#9CC0FF; font-size:14px; line-height:1.5; text-underline-offset:4px; padding:6px 0;}
   .service-other{font-size:14px; line-height:1.7; margin:24px 0 0; color:#AAB4C2;}
   .service-other a{color:#9CC0FF; text-underline-offset:4px;}
-  .example-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px;}
-  .example-card{padding:28px; border:1px solid #D6DCE6; border-radius:6px; background:#fff;}
-  .example-card dl{margin:0; font-size:14px; line-height:1.65;}
-  .example-card dt{font-family:'IBM Plex Mono',monospace; font-size:11px; color:#0B5FFF; margin:16px 0 4px; text-transform:uppercase; letter-spacing:.04em;}
-  .example-card dd{margin:0; color:#5A6573;}
-  .example-card a{display:inline-block; margin-top:18px; color:#0B5FFF; text-underline-offset:4px; font-size:14px; line-height:1.6;}
+  .project-grid{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px;}
+  .project-card{min-width:0; border:1px solid #D6DCE6; border-radius:6px; background:#fff; display:flex; flex-direction:column;}
+  .project-figure{margin:0; border-bottom:1px solid #E2E7EF;}
+  .project-image{display:flex; align-items:center; justify-content:center; aspect-ratio:8/5; padding:14px; background:#EDF1F5; border-radius:5px 5px 0 0;}
+  .project-image img{display:block; width:100%; height:100%; object-fit:contain;}
+  .project-figure figcaption{padding:10px 22px; font-size:12px; line-height:1.5; color:#5A6573;}
+  .project-body{display:flex; flex-direction:column; align-items:flex-start; flex:1; padding:24px 22px;}
+  .project-category{margin:0 0 12px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#0B5FFF; letter-spacing:.04em; text-transform:uppercase;}
+  .project-meta{margin:0 0 18px; font-size:12px; line-height:1.7; color:#5A6573;}
+  .project-card dl{margin:0 0 22px; font-size:14px; line-height:1.65;}
+  .project-card dt{font-size:12px; color:#14181F; font-weight:700; margin:14px 0 5px;}
+  .project-card dt:first-child{margin-top:0;}
+  .project-card dd{margin:0; color:#5A6573;}
+  .project-link{display:inline-flex; align-items:center; min-height:44px; margin-top:auto; color:#0B5FFF; text-underline-offset:4px; font-size:14px; line-height:1.5; font-weight:600;}
+  .project-note{max-width:760px; margin:24px 0 0; font-size:13px; line-height:1.7; color:#5A6573;}
   .calc-selected{display:none;}
   #calc .calc-tab{min-height:44px;}
   #calc .calc-field{min-width:0;}
@@ -106,8 +115,9 @@
   @media (max-width:880px){
     .site-header{padding:16px 18px; gap:12px;}
     .home-section-inner{padding:48px 18px;}
-    .service-grid,.example-grid{grid-template-columns:1fr;}
-    .service-card,.example-card{padding:22px;}
+    .service-grid,.project-grid{grid-template-columns:1fr;}
+    .service-card{padding:22px;}
+    .project-image{aspect-ratio:auto; height:260px;}
     .hero-media{min-height:0 !important; padding:20px 0 !important; max-height:260px;}
     .hero-media .hero-photo{height:220px !important; object-fit:cover;}
     .hero-inset{display:none;}
@@ -867,19 +877,28 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
   </div>
 </section>
 
-<!-- ============ ТИПОВЫЕ ПРИМЕРЫ ============ -->
+<!-- ============ ВЫПОЛНЕННЫЕ ПРОЕКТЫ ============ -->
 <section id="cases" style="background:#F7F9FC; border-top:1px solid #EDF0F5; border-bottom:1px solid #EDF0F5;" aria-labelledby="examples-title">
   <div class="home-section-inner">
-    <span class="home-eyebrow" style="color:#0B5FFF;">ТИПОВЫЕ ПРИМЕРЫ</span>
-    <h2 class="home-heading" id="examples-title">Примеры задач и состава результата</h2>
-    <p class="home-intro" style="color:#5A6573;">Ниже — типовые задачи и возможный состав материалов. Это иллюстрации услуги, а не отчёты о выполненных заказах. Состав результата согласуем под ваш объект.</p>
-    <div class="example-grid">
-      <article class="example-card"><h3>Квартира перед дизайн-проектом</h3><dl><dt>Задача</dt><dd>Получить исходную геометрию для планировки и проектирования.</dd><dt>Возможный результат</dt><dd>Облако точек, обмерный план, необходимые разрезы.</dd></dl><a href="/uslugi/obmery-pomeshcheniy/#scenario-title">Посмотреть пример результата обмеров</a></article>
-      <article class="example-card"><h3>Фасад перед проектированием</h3><dl><dt>Задача</dt><dd>Зафиксировать геометрию фасада и необходимые элементы.</dd><dt>Возможный результат</dt><dd>Облако точек, развёртки и обмерные чертежи по согласованному заданию.</dd></dl></article>
-      <article class="example-card"><h3>Цех перед реконструкцией</h3><dl><dt>Задача</dt><dd>Получить данные о расположении конструкций, оборудования и коммуникаций.</dd><dt>Возможный результат</dt><dd>Облако точек; чертежи или 3D-модель в согласованном составе.</dd></dl></article>
-      <article class="example-card"><h3>Резервуар или техническая конструкция</h3><dl><dt>Задача</dt><dd>Зафиксировать форму и размеры объекта.</dd><dt>Возможный результат</dt><dd>Облако точек, разрезы и необходимые геометрические данные по заданию.</dd></dl></article>
+    <span class="home-eyebrow" style="color:#0B5FFF;">РАБОТЫ НАШЕЙ КОМАНДЫ</span>
+    <h2 class="home-heading" id="examples-title">Реальные проекты и результаты</h2>
+    <p class="home-intro" style="color:#5A6573;">Помещения, сложные фасады и производственные здания. Показываем задачи заказчиков и материалы, которые подготовили для проектирования.</p>
+    <div class="project-grid">
+      <article class="project-card">
+        <figure class="project-figure"><a class="project-image" href="/assets/img/cases/cafe-overview.webp" target="_blank" rel="noopener" aria-label="Открыть модель кафе в новой вкладке"><img src="/assets/img/cases/cafe-overview.webp" width="1016" height="852" loading="lazy" decoding="async" alt="Трёхмерная модель кафе с перегородками и инженерными коммуникациями"></a><figcaption>Модель существующего помещения</figcaption></figure>
+        <div class="project-body"><p class="project-category">01 / Помещения</p><h3>Кафе для нового интерьера</h3><p class="project-meta">Москва · 14 дней · Revit (RVT)</p><dl><dt>Задача</dt><dd>Получить фактическую геометрию для нового интерьера и инженерных сетей.</dd><dt>Результат</dt><dd>Лазерное сканирование и модель помещения с инженерными коммуникациями.</dd></dl><a class="project-link" href="/uslugi/obmery-pomeshcheniy/#scenario-title">Посмотреть кейс кафе →</a></div>
+      </article>
+      <article class="project-card">
+        <figure class="project-figure"><a class="project-image" href="/assets/img/cases/ilyinka-photo.jpg" target="_blank" rel="noopener" aria-label="Открыть фотографию фасада на Ильинке в новой вкладке"><img src="/assets/img/cases/ilyinka-photo.jpg" width="708" height="590" loading="lazy" decoding="async" alt="Фасад исторического здания на улице Ильинка в Москве"></a><figcaption>Фотография фасада на Ильинке</figcaption></figure>
+        <div class="project-body"><p class="project-category">02 / Фасады</p><h3>Ильинка: обмеры для реставрации</h3><p class="project-meta">Москва · Здание 4 500 м² · 7 дней</p><dl><dt>Задача</dt><dd>Подготовить исполнительные чертежи фасада с элементами лепнины.</dd><dt>Результат</dt><dd>Цветное облако точек и подробные чертежи фасадов с архитектурными деталями.</dd></dl><a class="project-link" href="#leadform">Обсудить обмеры фасада →</a></div>
+      </article>
+      <article class="project-card">
+        <figure class="project-figure"><a class="project-image" href="/assets/img/cases/plant-model.webp" target="_blank" rel="noopener" aria-label="Открыть модель завода в новой вкладке"><img src="/assets/img/cases/plant-model.webp" width="1235" height="454" loading="lazy" decoding="async" alt="BIM-модель производственного здания Щербинского лифтостроительного завода"></a><figcaption>BIM-модель производственного здания</figcaption></figure>
+        <div class="project-body"><p class="project-category">03 / Промышленные объекты</p><h3>Завод перед реконструкцией</h3><p class="project-meta">Москва · Здание 78 000 м² · 4 месяца</p><dl><dt>Объект и задача</dt><dd>Щербинский лифтостроительный завод: фактическая геометрия для проектирования реконструкции.</dd><dt>Результат</dt><dd>BIM-модель с классификацией и атрибутами элементов.</dd></dl><a class="project-link" href="#leadform">Обсудить промышленный объект →</a></div>
+      </article>
     </div>
-    <a class="hero-primary" href="#leadform" style="margin-top:28px;">Обсудить состав материалов</a>
+    <p class="project-note">Указаны сроки этих проектов. Состав материалов, стоимость и срок работ по вашему объекту согласуем отдельно.</p>
+    <a class="hero-primary" href="#leadform" style="margin-top:24px;">Обсудить похожую задачу</a>
   </div>
 </section>
 

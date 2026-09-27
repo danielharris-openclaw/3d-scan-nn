@@ -99,12 +99,20 @@ section[id]{scroll-margin-top:24px;}
 .price-action{margin-top:28px;}
 .scenario{background:#142338;color:#fff;}
 .scenario .eyebrow{color:#9CC0FF;}
-.scenario-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:76px;}
+.scenario-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:56px;align-items:start;}
 .scenario p{color:#C5CDD8;margin-top:18px;}
-.scenario dl{margin:0;}
+.scenario dl{margin:26px 0 0;}
 .scenario dt{font-size:13px;color:#9CC0FF;font-weight:600;margin-bottom:8px;}
 .scenario dd{margin:0 0 24px;font-size:15px;}
-.scenario .note{font-size:14px;}
+.scenario-meta{display:flex;flex-wrap:wrap;gap:8px 22px;padding:0;list-style:none;font:500 12px/1.6 'IBM Plex Mono',monospace;color:#9CC0FF;margin:22px 0;}
+.scenario-figure{margin:0;min-width:0;}
+.scenario-image{display:flex;align-items:center;justify-content:center;background:#F3F5F8;border:1px solid #D6DCE6;padding:12px;border-radius:4px;text-decoration:none;}
+.scenario-image img{display:block;width:100%;height:auto;object-fit:contain;}
+.scenario-figure figcaption{color:#C5CDD8;font-size:13px;line-height:1.65;margin-top:12px;}
+.scenario-gallery{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:36px;}
+.scenario-gallery .scenario-image{height:280px;}
+.scenario-gallery img{height:100%;}
+.scenario .scenario-footnote{max-width:780px;margin-top:28px;font-size:13px;}
 .steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;list-style:none;padding:0;margin:0;counter-reset:steps;}
 .steps li{counter-increment:steps;border-top:1px solid var(--line);padding-top:24px;}
 .steps li::before{content:'0' counter(steps);display:block;font:500 13px/1.5 'IBM Plex Mono',monospace;color:var(--blue);margin-bottom:22px;}
@@ -163,6 +171,7 @@ details p{font-size:15px;color:var(--muted);margin-top:16px;padding-right:30px;}
   .result-row{grid-template-columns:32px 1fr;gap:12px 16px;padding:24px 0;}
   .result-row p{grid-column:2;}
   .scenario dd:last-child{margin-bottom:0;}
+  .scenario-gallery{gap:20px;}
   .contact-aside{max-width:480px;}
 }
 @media(max-width:520px){
@@ -180,6 +189,9 @@ details p{font-size:15px;color:var(--muted);margin-top:16px;padding-right:30px;}
   .prices-table td:first-child{grid-column:1/-1;width:auto;font-size:16px;}
   .mobile-label{display:block;white-space:normal;font-size:11px;line-height:1.5;color:var(--muted);margin-bottom:4px;}
   .examples{grid-template-columns:1fr;gap:14px;}
+  .scenario-gallery{grid-template-columns:1fr;gap:24px;}
+  .scenario-gallery .scenario-image{height:250px;}
+  .scenario .button{width:100%;}
   .steps{grid-template-columns:1fr;gap:24px;}
   .steps li{display:grid;grid-template-columns:32px 1fr;column-gap:16px;padding-top:20px;}
   .steps li::before{grid-row:1/3;margin:1px 0 0;}
@@ -275,11 +287,16 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
   </section>
 
   <section class="section scenario" aria-labelledby="scenario-title">
-    <div class="container scenario-grid">
-      <div><span class="eyebrow">04 / Типовой пример</span><h2 id="scenario-title">Как выглядит результат обмеров квартиры</h2><p class="note">Типовой пример состава материалов для дизайн-проекта.</p><p><a class="button" href="/#leadform">Получить расчёт обмеров</a></p></div>
-      <div>
-        <dl><dt>Задача дизайнера</dt><dd>Дизайнеру нужна фактическая геометрия квартиры: расположение стен и перегородок, проёмов, ниш и других элементов, которые важно учесть в проекте.</dd><dt>Состав материалов</dt><dd>По согласованному заданию можно заказать обмерный план DWG/PDF для дальнейшей работы или облако точек для самостоятельной обработки специалистом. Видимые инженерные коммуникации включаются в отдельный согласованный вариант выдачи. Если нужна 3D-модель, заранее определяем её формат, детализацию и состав.</dd><dt>Перед выездом</dt><dd>Перед выездом уточняем перечень элементов, доступ в помещения и требования дизайнера. Стоимость, дату съёмки и срок подготовки материалов согласуем до начала работ.</dd></dl>
+    <div class="container">
+      <div class="scenario-grid">
+        <div><span class="eyebrow">04 / Выполненный проект</span><h2 id="scenario-title">Кафе: модель для нового интерьера</h2><ul class="scenario-meta" aria-label="Факты о проекте"><li>Москва</li><li>14 дней</li><li>Revit · RVT</li></ul><p>Для нового дизайн-проекта и проектирования инженерных сетей заказчику требовалась фактическая геометрия действующего кафе.</p><dl><dt>Что сделали</dt><dd>Выполнили лазерное сканирование и подготовили модель существующего помещения с планировкой, конструкциями и инженерными коммуникациями.</dd><dt>Что получил заказчик</dt><dd>Трёхмерную модель в формате RVT для дальнейшей разработки проектных решений.</dd></dl><p><a class="button" href="/#leadform">Обсудить похожую задачу</a></p></div>
+        <figure class="scenario-figure"><a class="scenario-image" href="/assets/img/cases/cafe-overview.webp" target="_blank" rel="noopener" aria-label="Открыть общий вид модели кафе в новой вкладке"><img src="/assets/img/cases/cafe-overview.webp" width="1016" height="852" loading="lazy" decoding="async" alt="Общий вид модели кафе с перегородками и инженерными коммуникациями"></a><figcaption>Фактическая модель помещения. Вид сверху показывает планировку и взаимное расположение элементов.</figcaption></figure>
       </div>
+      <div class="scenario-gallery">
+        <figure class="scenario-figure"><a class="scenario-image" href="/assets/img/cases/cafe-engineering.webp" target="_blank" rel="noopener" aria-label="Открыть инженерные сети в модели кафе в новой вкладке"><img src="/assets/img/cases/cafe-engineering.webp" width="555" height="573" loading="lazy" decoding="async" alt="Инженерные сети кафе в трёхмерной модели"></a><figcaption>Инженерные сети в модели существующего помещения.</figcaption></figure>
+        <figure class="scenario-figure"><a class="scenario-image" href="/assets/img/cases/cafe-interior.webp" target="_blank" rel="noopener" aria-label="Открыть внутренний вид модели кафе в новой вкладке"><img src="/assets/img/cases/cafe-interior.webp" width="848" height="501" loading="lazy" decoding="async" alt="Внутренний вид модели кафе с барной стойкой и коммуникациями под потолком"></a><figcaption>Вид изнутри модели кафе. Это изображение модели, не фотография помещения.</figcaption></figure>
+      </div>
+      <p class="scenario-footnote">14 дней — срок выполнения этого проекта. Состав обмеров, необходимость моделирования и отображения инженерных сетей согласуем под вашу задачу.</p>
     </div>
   </section>
 

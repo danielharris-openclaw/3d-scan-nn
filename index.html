@@ -766,7 +766,7 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
     <div class="service-grid">
       <article class="service-card"><h3>Квартиры</h3><p>Обмеры для дизайн-проекта, ремонта и перепланировки.</p><a href="/uslugi/obmery-pomeshcheniy/">Подробнее об обмерах</a></article>
       <article class="service-card"><h3>Коммерческие помещения</h3><p>Обмеры офисов, магазинов и других помещений под проектирование и ремонт.</p><a href="/uslugi/obmery-pomeshcheniy/">Состав работ и стоимость</a></article>
-      <article class="service-card"><h3>Фасады</h3><p>Геометрия фасада и обмерные материалы под задачу проекта.</p><a href="#leadform">Обсудить обмер фасада</a></article>
+      <article class="service-card"><h3>Фасады</h3><p>Геометрия фасада и обмерные материалы под задачу проекта.</p><a href="/uslugi/skanirovanie-fasadov/">Состав работ и стоимость</a></article>
       <article class="service-card"><h3>Промышленные объекты</h3><p>Геометрия цехов, оборудования и коммуникаций для реконструкции и монтажа.</p><a href="#leadform">Обсудить промышленный объект</a></article>
       <article class="service-card"><h3>Объекты культурного наследия</h3><p>Фиксация геометрии и декора для подготовки обмерных материалов.</p><a href="#leadform">Обсудить объект</a></article>
       <article class="service-card"><h3>Резервуары и конструкции</h3><p>Обмеры технических объектов и подготовка геометрических данных.</p><a href="#leadform">Обсудить обмер</a></article>
@@ -890,7 +890,7 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
       </article>
       <article class="project-card">
         <figure class="project-figure"><a class="project-image" href="/assets/img/cases/ilyinka-photo.jpg" target="_blank" rel="noopener" aria-label="Открыть фотографию фасада на Ильинке в новой вкладке"><img src="/assets/img/cases/ilyinka-photo.jpg" width="708" height="590" loading="lazy" decoding="async" alt="Фасад исторического здания на улице Ильинка в Москве"></a><figcaption>Фотография фасада на Ильинке</figcaption></figure>
-        <div class="project-body"><p class="project-category">02 / Фасады</p><h3>Ильинка: обмеры для реставрации</h3><p class="project-meta">Москва · Здание 4 500 м² · 7 дней</p><dl><dt>Задача</dt><dd>Подготовить исполнительные чертежи фасада с элементами лепнины.</dd><dt>Результат</dt><dd>Цветное облако точек и подробные чертежи фасадов с архитектурными деталями.</dd></dl><a class="project-link" href="#leadform">Обсудить обмеры фасада →</a></div>
+        <div class="project-body"><p class="project-category">02 / Фасады</p><h3>Ильинка: обмеры для реставрации</h3><p class="project-meta">Москва · Здание 4 500 м² · 7 дней</p><dl><dt>Задача</dt><dd>Подготовить исполнительные чертежи фасада с элементами лепнины.</dd><dt>Результат</dt><dd>Цветное облако точек и подробные чертежи фасадов с архитектурными деталями.</dd></dl><a class="project-link" href="/uslugi/skanirovanie-fasadov/#ilyinka">Посмотреть кейс Ильинки →</a></div>
       </article>
       <article class="project-card">
         <figure class="project-figure"><a class="project-image" href="/assets/img/cases/plant-model.webp" target="_blank" rel="noopener" aria-label="Открыть модель завода в новой вкладке"><img src="/assets/img/cases/plant-model.webp" width="1235" height="454" loading="lazy" decoding="async" alt="BIM-модель производственного здания Щербинского лифтостроительного завода"></a><figcaption>BIM-модель производственного здания</figcaption></figure>
@@ -1272,8 +1272,8 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
     var area=num('facadeArea');
     var rate=num('facadeScan')+num('facadeDrawing')+num('facadeModel');
     if(checked('ortho'))rate+=30;
-    var total=Math.max(area*rate,50000);
-    var lines=[['Площадь фасада',area+' м²'],['Ставка',rate+' ₽/м²'],['Минимальный выезд','50 000 ₽']];
+    var total=Math.max(area*rate,25000);
+    var lines=[['Площадь фасада',area+' м²'],['Ставка',rate+' ₽/м²'],['Минимальный выезд','25 000 ₽']];
     if(checked('lift')){total+=30000;lines.push(['Автовышка/мачта',rub(30000)]);}
     if(checked('facadeHeritage')){total*=1.35;lines.push(['Культурное наследие','×1.35']);}
     return {total:total,lines:lines,subtitle:'Фасады, чертежи, модели и ортофото'};

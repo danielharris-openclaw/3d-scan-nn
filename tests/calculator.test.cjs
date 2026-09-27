@@ -85,11 +85,31 @@ test('shared order minimum applies to a valid low reverse-engineering estimate',
 });
 
 test('higher category minimums and normal rate-based estimates are preserved', () => {
-  assert.equal(calculator('facade').quote.total, 50000);
+  assert.equal(calculator('facade').quote.total, 25000);
   assert.equal(calculator('topo', { topoMethod: 'vls' }).quote.total, 300000);
   assert.equal(calculator('tanks').quote.total, 30000);
   assert.equal(calculator('interior', { area: 350 }).quote.total, 28000);
   assert.equal(calculator('reverse', { reverseBase: 30000, cad: 25000 }).quote.total, 55000);
+});
+
+test('facade minimum is consistent at the rate boundary and in the visible quote', () => {
+  for (const [facadeArea, expected] of [[1, 25000], [1249, 25000], [1250, 25000], [1251, 25020]]) {
+    const { quote, element } = calculator('facade', { facadeArea });
+    assert.equal(quote.total, expected);
+    assert.match(element('calcLines').innerHTML, /25\s000/);
+    assert.ok(!/50\s000/.test(element('calcLines').innerHTML));
+  }
+  const { element } = calculator('facade');
+  element('sendQuoteBtn').listeners.click();
+  assert.match(element('lfQuote').value, /Итого: 25\s000 ₽/);
+  assert.match(element('comment').value, /Итого: 25\s000 ₽/);
+});
+
+test('facade lift and heritage extras apply after the new minimum', () => {
+  assert.equal(calculator('facade', { lift: true }).quote.total, 55000);
+  assert.equal(calculator('facade', { facadeHeritage: true }).quote.total, 33750);
+  assert.equal(calculator('facade', { lift: true, facadeHeritage: true }).quote.total, 74250);
+  assert.equal(calculator('facade', { facadeArea: 3000 }).quote.total, 60000);
 });
 
 test('existing volume-discount threshold and rates are preserved', () => {

@@ -5,132 +5,122 @@ const { test } = require('node:test');
 const vm = require('node:vm');
 
 const html = readFileSync(join(__dirname, '..', 'index.html'), 'utf8');
-const scripts = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)]
-  .map(match => match[1])
-  .filter(script => script.includes('// ---- Calculator') || script.includes('function ymGoal'));
-assert.equal(scripts.length, 2, 'Load the real calculator and quote-to-form scripts');
+const text = value => value.replace(/<[^>]*>/g, '').trim();
 
-function calculator(mode = 'interior', values = {}) {
-  // DOM fixture only: all pricing and form-transfer logic comes from index.html.
+function request() {
+  const script = html.match(/<script id="quote-request">([\s\S]*?)<\/script>/);
+  assert.ok(script, 'The request replaces automatic pricing');
   const elements = new Map();
-  const element = id => {
-    if (!elements.has(id)) elements.set(id, {
-      value: '', checked: false, textContent: '', innerHTML: '', listeners: {},
-      classList: { toggle() {} }, style: {},
-      addEventListener(type, listener) { this.listeners[type] = listener; }
-    });
-    return elements.get(id);
-  };
-  const defaults = {
-    area: 100, interiorService: 'scanColor', lod: 1, vat: 0, distance: 0, discount: 0,
-    facadeArea: 1, facadeScan: 20, facadeDrawing: 0, facadeModel: 0,
-    hectares: 1, topoMethod: 'slam', topoResult: 20000, topoLocation: 0,
-    tankCount: 1, tankVolume: 30000, tankDocs: 0, tankType: 'Наземный',
-    partCount: 1, accuracy: 1, reverseBase: 10000, cad: 0
-  };
-  for (const [id, value] of Object.entries({ ...defaults, ...values })) {
-    if (typeof value === 'boolean') element(id).checked = value;
-    else element(id).value = String(value);
-  }
-  const tabs = ['interior', 'facade', 'topo', 'tanks', 'reverse'].map(tab => {
-    const node = element(`tab-${tab}`);
-    node.dataset = { tab };
+  const element = (id, extra = {}) => {
+    const node = Object.assign({ id, value: '', textContent: '', hidden: false, listeners: {},
+      classList: { toggle() {} }, addEventListener(type, fn) { this.listeners[type] = fn; }
+    }, extra);
+    elements.set(id, node);
     return node;
-  });
-  element('calc').querySelectorAll = selector => selector === '.calc-tab' ? tabs
-    : selector === 'input,select' ? [...elements.values()] : [];
-  const context = {
-    document: {
-      getElementById: element,
-      querySelectorAll: () => [],
-      querySelector: selector => selector === '#leadForm textarea[name="Комментарий"]'
-        ? element('comment') : null
-    },
-    window: {}, navigator: {}, localStorage: { getItem: () => '1' },
-    fetch() { throw new Error('External requests are disabled in this test'); }
   };
-  vm.createContext(context);
-  for (const script of scripts) vm.runInContext(script, context);
-  element(`tab-${mode}`).listeners.click();
-  return { quote: context.window.currentQuote, element };
+  const tabs = [...html.matchAll(/<button class="calc-tab[^>]*data-tab="([^"]+)"[^>]*>(.*?)<\/button>/g)]
+    .map(([, name, label]) => element(name, { dataset: { tab: name }, textContent: label }));
+  const panes = [...html.matchAll(/<div class="calc-pane[^>]*data-pane="([^"]+)">([\s\S]*?)(?=<div class="calc-pane|<!-- Request summary -->)/g)]
+    .map(([, name, body]) => {
+      const fields = [...body.matchAll(/<(select)\b([^>]*)>([\s\S]*?)<\/select>|<(input)\b([^>]*)>/g)]
+        .map(([, select, selectAttrs, optionsHtml, input, inputAttrs]) => {
+          const tag = select || input, attrs = selectAttrs || inputAttrs;
+          const attrsMap = Object.fromEntries([...attrs.matchAll(/([\w-]+)="([^"]*)"/g)].map(m => [m[1], m[2]]));
+          const id = attrsMap.id;
+          const label = tag === 'input' && attrsMap.type === 'checkbox'
+            ? body.match(new RegExp(`<label class="calc-check"><input id="${id}"[^>]*>(.*?)</label>`))[1]
+            : body.match(new RegExp(`<label for="${id}">(.*?)</label>`))[1];
+          const options = [...(optionsHtml || '').matchAll(/<option[^>]*>(.*?)<\/option>/g)].map(m => ({ text: text(m[1]) }));
+          return element(id, { tagName: tag.toUpperCase(), type: attrsMap.type, value: attrsMap.value || '',
+            checked: false, labels: [{ textContent: text(label) }], options, selectedIndex: 0,
+            reportValidity() { return this.value === '' || (Number(this.value) >= Number(attrsMap.min || 0)); }
+          });
+        });
+      return { dataset: { pane: name }, classList: { toggle() {} }, querySelectorAll: () => fields };
+    });
+  for (const id of ['requestSummary', 'lfQuote', 'lfQuotePreview', 'sendQuoteBtn']) element(id);
+  element('calc', { querySelectorAll: selector => selector === '.calc-tab' ? tabs : selector === '.calc-pane' ? panes : panes.flatMap(p => p.querySelectorAll()) });
+  const goals = [];
+  const context = { document: { getElementById: id => elements.get(id) }, METRIKA_ID: '110175409', ym: (...args) => goals.push(args) };
+  context.window = context;
+  vm.runInNewContext(script[1], context);
+  const click = () => {
+    const event = { prevented: false, preventDefault() { this.prevented = true; } };
+    elements.get('sendQuoteBtn').listeners.click(event);
+    return event;
+  };
+  return { elements, tabs, goals, click };
 }
 
-test('all interior services retain their minimum on both sides of 100 m²', () => {
-  const minimums = { scanColor: 20000, scanBw: 20000, plan: 20000, planEng: 20000,
-    model: 20000, modelEng: 30000, archicad: 35000 };
-  for (const [interiorService, minimum] of Object.entries(minimums)) {
-    for (const area of [1, 99, 100, 101]) {
-      assert.equal(calculator('interior', { area, interiorService }).quote.total,
-        minimum, `${interiorService}, ${area} m²`);
-    }
+test('public pages retain minimum orders without rates, price examples or automatic totals', () => {
+  for (const path of ['index.html', 'uslugi/obmery-pomeshcheniy/index.html', 'uslugi/skanirovanie-fasadov/index.html']) {
+    const page = readFileSync(join(__dirname, '..', path), 'utf8');
+    assert.doesNotMatch(page, /₽\/(?:м²|га|шт)|id="calcPrice"|id="discount"|id="reverseBase"|function calcInterior|Рассчитать самостоятельно|Примеры базового расчёта/);
+    assert.match(page, /(?:20|25) 000 ₽/);
   }
 });
 
-test('interior price does not fall as area increases without a volume discount', () => {
-  for (const interiorService of ['scanColor', 'scanBw', 'plan', 'planEng', 'model', 'modelEng', 'archicad']) {
-    let previous = 0;
-    for (const area of [1, 99, 100, 101, 150, 200, 250, 251, 350, 999, 1000, 1001]) {
-      const total = calculator('interior', { area, interiorService }).quote.total;
-      assert.ok(total >= previous, `${interiorService}, ${area} m²: ${total} < ${previous}`);
-      previous = total;
-    }
+test('parameters transfer without price or an initial analytics event', () => {
+  const { elements, goals, click } = request();
+  assert.equal(goals.length, 0);
+  elements.get('area').value = '350';
+  elements.get('interiorService').selectedIndex = 3;
+  elements.get('heritage').checked = true;
+  assert.equal(click().prevented, false);
+  const value = elements.get('lfQuote').value;
+  assert.match(value, /Площадь, м²: 350/);
+  assert.match(value, /видимые инженерные сети/);
+  assert.match(value, /Культурное наследие: Да/);
+  assert.doesNotMatch(value, /₽|Итого|Ставка|Скидка|НДС/);
+  assert.equal(elements.get('lfQuotePreview').textContent, value);
+  assert.equal(elements.get('lfQuotePreview').hidden, false);
+  assert.deepEqual(goals, [['110175409', 'reachGoal', 'calc']]);
+});
+
+test('all five directions transfer only active parameters and retain the selected options', () => {
+  const { elements, tabs, click } = request();
+  for (const tab of tabs) {
+    tab.listeners.click();
+    click();
+    assert.ok(elements.get('lfQuote').value.startsWith(tab.textContent));
+    assert.doesNotMatch(elements.get('lfQuote').value, /₽|Итого|×/);
   }
+  tabs.find(t => t.dataset.tab === 'tanks').listeners.click();
+  elements.get('tankVolume').selectedIndex = 4;
+  click();
+  assert.match(elements.get('lfQuote').value, /10000 м³/);
+  assert.doesNotMatch(elements.get('lfQuote').value, /Площадь|CAD/);
 });
 
-test('shared order minimum applies to a valid low reverse-engineering estimate', () => {
-  const result = calculator('reverse', { reverseBase: 10000 });
-  assert.equal(result.quote.total, 20000);
-  assert.match(result.element('calcPrice').textContent, /20\s000/);
-  assert.match(result.element('calcLines').innerHTML, /Минимальный заказ/);
+test('invalid numbers block transfer; unknown dimensions remain optional', () => {
+  const { elements, goals, click } = request();
+  elements.get('area').value = '-10';
+  assert.equal(click().prevented, true);
+  assert.equal(elements.get('lfQuote').value, '');
+  assert.equal(goals.length, 0);
+  elements.get('area').value = '';
+  assert.equal(click().prevented, false);
+  assert.match(elements.get('lfQuote').value, /Площадь, м²: Не указано/);
 });
 
-test('higher category minimums and normal rate-based estimates are preserved', () => {
-  assert.equal(calculator('facade').quote.total, 25000);
-  assert.equal(calculator('topo', { topoMethod: 'vls' }).quote.total, 300000);
-  assert.equal(calculator('tanks').quote.total, 30000);
-  assert.equal(calculator('interior', { area: 350 }).quote.total, 28000);
-  assert.equal(calculator('reverse', { reverseBase: 30000, cad: 25000 }).quote.total, 55000);
+test('editing transferred parameters refreshes the form without another analytics event', () => {
+  const { elements, tabs, goals, click } = request();
+  click();
+  elements.get('area').value = '500';
+  elements.get('area').listeners.input();
+  assert.match(elements.get('lfQuote').value, /Площадь, м²: 500/);
+  tabs.find(t => t.dataset.tab === 'facade').listeners.click();
+  assert.ok(elements.get('lfQuote').value.startsWith('Фасады'));
+  assert.equal(goals.length, 1);
 });
 
-test('facade minimum is consistent at the rate boundary and in the visible quote', () => {
-  for (const [facadeArea, expected] of [[1, 25000], [1249, 25000], [1250, 25000], [1251, 25020]]) {
-    const { quote, element } = calculator('facade', { facadeArea });
-    assert.equal(quote.total, expected);
-    assert.match(element('calcLines').innerHTML, /25\s000/);
-    assert.ok(!/50\s000/.test(element('calcLines').innerHTML));
+test('fractional dimensions are accepted while counts remain whole numbers', () => {
+  for (const id of ['area', 'facadeArea', 'hectares', 'distance']) {
+    assert.match(html.match(new RegExp(`<input id="${id}"[^>]*>`))[0], /step="any"/);
   }
-  const { element } = calculator('facade');
-  element('sendQuoteBtn').listeners.click();
-  assert.match(element('lfQuote').value, /Итого: 25\s000 ₽/);
-  assert.match(element('comment').value, /Итого: 25\s000 ₽/);
-});
-
-test('facade lift and heritage extras apply after the new minimum', () => {
-  assert.equal(calculator('facade', { lift: true }).quote.total, 55000);
-  assert.equal(calculator('facade', { facadeHeritage: true }).quote.total, 33750);
-  assert.equal(calculator('facade', { lift: true, facadeHeritage: true }).quote.total, 74250);
-  assert.equal(calculator('facade', { facadeArea: 3000 }).quote.total, 60000);
-});
-
-test('existing volume-discount threshold and rates are preserved', () => {
-  assert.equal(calculator('interior', { area: 1000, interiorService: 'scanBw', discount: 0.5 }).quote.total, 60000);
-  for (const [discount, expected] of [[0, 60060], [0.1, 54054], [0.25, 45045], [0.5, 30030]]) {
-    assert.equal(calculator('interior', { area: 1001, interiorService: 'scanBw', discount }).quote.total, expected);
-  }
-  assert.equal(calculator('tanks', { tankCount: 10 }).quote.total, 270000);
-});
-
-test('existing extras and multipliers are applied after the interior minimum', () => {
-  const { quote } = calculator('interior', {
-    area: 100, deviations: true, distance: 10, heritage: true, lod: 1.5, urgent: true, vat: 0.05
-  });
-  assert.ok(Math.abs(quote.total - 68890.5) < 0.000001);
-});
-
-test('the displayed minimum also reaches the hidden quote and visible form comment', () => {
-  const { element } = calculator('reverse', { reverseBase: 10000 });
-  element('sendQuoteBtn').listeners.click();
-  assert.match(element('lfQuote').value, /Итого: 20\s000 ₽/);
-  assert.match(element('comment').value, /Итого: 20\s000 ₽/);
-  assert.match(element('lfQuote').value, /Минимальный заказ/);
+  const { elements, tabs, click } = request();
+  tabs.find(t => t.dataset.tab === 'topo').listeners.click();
+  elements.get('hectares').value = '0.5';
+  assert.equal(click().prevented, false);
+  assert.match(elements.get('lfQuote').value, /Площадь, га: 0.5/);
 });

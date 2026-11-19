@@ -83,19 +83,6 @@ section[id]{scroll-margin-top:24px;}
 .result-row p{color:var(--muted);font-size:15px;}
 .price-lead{padding-left:20px;border-left:3px solid var(--orange);}
 .price-lead strong{display:block;font-size:19px;color:var(--ink);margin-bottom:8px;}
-.prices-table{width:100%;border-collapse:collapse;margin:36px 0 24px;text-align:left;}
-.prices-table caption{text-align:left;font-size:14px;color:var(--muted);margin-bottom:12px;}
-.prices-table th{font-size:12px;font-weight:600;color:var(--muted);padding:14px 20px;border-bottom:1px solid var(--line);}
-.prices-table td{padding:23px 20px;border-bottom:1px solid var(--line);font-size:15px;}
-.prices-table td:first-child{font-weight:600;width:56%;}
-.prices-table td:nth-child(2),.prices-table td:nth-child(3){white-space:nowrap;}
-.prices-table tbody tr:nth-child(odd){background:var(--pale);}
-.mobile-label{display:none;}
-.examples-title{font-size:18px;margin-top:36px;}
-.examples{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:22px 0 18px;}
-.example{padding:24px;border:1px solid var(--line);border-left:3px solid var(--blue);}
-.example p{font-size:14px;color:var(--muted);}
-.example strong{display:block;margin-top:12px;font:600 30px/1.2 'Space Grotesk','Manrope',sans-serif;color:var(--ink);}
 .price-action{margin-top:28px;}
 .scenario{background:#142338;color:#fff;}
 .scenario .eyebrow{color:#9CC0FF;}
@@ -182,13 +169,6 @@ details p{font-size:15px;color:var(--muted);margin-top:16px;padding-right:30px;}
   h3{font-size:20px;}
   .hero-actions{gap:20px;}
   .hero-actions .button,.price-action .button,.contact .button{width:100%;}
-  .prices-table thead{position:absolute;width:1px;height:1px;clip-path:inset(50%);overflow:hidden;white-space:nowrap;}
-  .prices-table,.prices-table tbody{display:block;}
-  .prices-table tr{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);padding:18px 16px;gap:16px;}
-  .prices-table td{display:block;padding:0;border:0;font-size:15px;}
-  .prices-table td:first-child{grid-column:1/-1;width:auto;font-size:16px;}
-  .mobile-label{display:block;white-space:normal;font-size:11px;line-height:1.5;color:var(--muted);margin-bottom:4px;}
-  .examples{grid-template-columns:1fr;gap:14px;}
   .scenario-gallery{grid-template-columns:1fr;gap:24px;}
   .scenario-gallery .scenario-image{height:250px;}
   .scenario .button{width:100%;}
@@ -267,22 +247,9 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
   <section class="section" id="prices" aria-labelledby="prices-title">
     <div class="container">
       <div class="section-heading"><span class="eyebrow">03 / Стоимость</span><h2 id="prices-title">Стоимость обмеров</h2></div>
-      <div class="price-lead intro"><strong>Минимальная стоимость заказа — 20 000 ₽.</strong><p>Для небольшого помещения итог определяется минимальным заказом, даже если произведение площади на ставку меньше этой суммы.</p></div>
-      <table class="prices-table">
-        <caption>Базовые ставки на обмеры помещений</caption>
-        <thead><tr><th scope="col">Вариант</th><th scope="col">Базовая ставка</th><th scope="col">Минимальный заказ</th></tr></thead>
-        <tbody>
-          <tr><td>Сканирование, чёрно-белое облако точек</td><td><span class="mobile-label" aria-hidden="true">Базовая ставка</span>от 60 ₽/м²</td><td><span class="mobile-label" aria-hidden="true">Минимальный заказ</span>20 000 ₽</td></tr>
-          <tr><td>Сканирование, цветное облако точек</td><td><span class="mobile-label" aria-hidden="true">Базовая ставка</span>от 80 ₽/м²</td><td><span class="mobile-label" aria-hidden="true">Минимальный заказ</span>20 000 ₽</td></tr>
-          <tr><td>Сканирование и обмерный план</td><td><span class="mobile-label" aria-hidden="true">Базовая ставка</span>от 80 ₽/м²</td><td><span class="mobile-label" aria-hidden="true">Минимальный заказ</span>20 000 ₽</td></tr>
-          <tr><td>Сканирование, план и видимые инженерные сети</td><td><span class="mobile-label" aria-hidden="true">Базовая ставка</span>от 120 ₽/м²</td><td><span class="mobile-label" aria-hidden="true">Минимальный заказ</span>20 000 ₽</td></tr>
-        </tbody>
-      </table>
-      <p class="note">Это базовые ориентиры без НДС и дополнительных опций. Итог зависит от площади, состава материалов, удалённости, детализации и сложности объекта. До начала работ подтвердим точную сумму и состав результата.</p>
-      <h3 class="examples-title">Примеры базового расчёта для сканирования и плана</h3>
-      <div class="examples"><div class="example"><p>100 м² × 80 ₽ = 8 000 ₽.<br>С учётом минимального заказа:</p><strong>20 000 ₽</strong></div><div class="example"><p>350 м² × 80 ₽ =</p><strong>28 000 ₽</strong></div></div>
-      <p class="note">Это расчётные примеры, а не выполненные заказы. В них не включены НДС, удалённость и дополнительные опции.</p>
-      <div class="price-action"><a class="button" href="/#leadform">Получить расчёт для своего помещения</a></div>
+      <div class="price-lead intro"><strong>Минимальная стоимость заказа — 20 000 ₽.</strong><p>Стоимость рассчитываем индивидуально: учитываем объект, состав материалов, сроки и текущую загрузку.</p></div>
+      <p class="note">Пришлите площадь, адрес и пожелания к результату — облако точек, планы, чертежи или 3D-модель. Уточним задачу и предложим стоимость. Сумму и состав материалов согласуем до начала работ.</p>
+      <div class="price-action"><a class="button" href="/#leadform">Запросить расчёт для своего помещения</a></div>
     </div>
   </section>
 

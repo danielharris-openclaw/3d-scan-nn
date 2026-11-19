@@ -33,6 +33,8 @@ function form(values = {}) {
   elements.lfPhone = f.elements['Телефон'];
   elements.lfConsent = Object.assign(element(), { checked: true });
   elements.lfMsg = element();
+  elements.lfQuote = f.elements['Параметры для расчёта'];
+  elements.lfQuotePreview = Object.assign(element(), { hidden: false });
   const context = {
     document: { getElementById: id => elements[id] || null, querySelectorAll: () => [] },
     localStorage: { getItem: () => '1' }, METRIKA_ID: '110175409',
@@ -59,7 +61,10 @@ test('the form offers text fields and material links without a file-upload contr
 });
 
 test('a successful text-only submission sends one request and one lead goal', async () => {
-  const fixture = form({ 'Комментарий': 'Тестовый текст', 'Расчёт калькулятора': 'Тестовый расчёт' });
+  const fixture = form({ 'Комментарий': 'Тестовый текст', 'Параметры для расчёта': 'Помещения\nПлощадь, м²: 350' });
+  // Native hidden inputs retain a programmatically assigned value on form.reset().
+  const reset = fixture.f.reset;
+  fixture.f.reset = () => { const quote = fixture.elements.lfQuote.value; reset(); fixture.elements.lfQuote.value = quote; };
   fixture.click();
   fixture.click();
   assert.equal(fixture.requests.length, 1, 'The disabled submit button prevents a second click');
@@ -71,10 +76,12 @@ test('a successful text-only submission sends one request and one lead goal', as
   assert.equal(request.options.headers.Accept, 'application/json');
   assert.equal(request.options.body.fields['Файлы'], undefined);
   assert.equal(request.options.body.fields['Комментарий'], 'Тестовый текст');
-  assert.equal(request.options.body.fields['Расчёт калькулятора'], 'Тестовый расчёт');
+  assert.equal(request.options.body.fields['Параметры для расчёта'], 'Помещения\nПлощадь, м²: 350');
   request.resolve({ ok: true });
   await flush();
   assert.equal(fixture.f.resets, 1);
+  assert.equal(fixture.elements.lfQuote.value, '');
+  assert.equal(fixture.elements.lfQuotePreview.hidden, true);
   assert.match(fixture.elements.lfMsg.textContent, /Заявка отправлена/);
   assert.equal(fixture.button.disabled, false);
   assert.deepEqual(fixture.goals, [['110175409', 'reachGoal', 'lead']]);

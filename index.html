@@ -1276,7 +1276,18 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
 <script>
 (function(){
   function ymGoal(g){try{if(window.ym&&window.METRIKA_ID&&window.METRIKA_ID!=="XXXXXXXX")ym(window.METRIKA_ID,"reachGoal",g);}catch(e){}}
+  var metrikaClientId='';
+  try{
+    if(window.ym&&window.METRIKA_ID&&window.METRIKA_ID!=="XXXXXXXX"){
+      ym(window.METRIKA_ID,'getClientID',function(id){
+        if(typeof id==='string'&&/^[0-9]+$/.test(id))metrikaClientId=id;
+      });
+    }
+  }catch(e){}
   document.querySelectorAll('[data-goal]').forEach(function(a){a.addEventListener('click',function(){ymGoal(a.dataset.goal);});});
+  document.querySelectorAll('a[href="#leadform"], a[href="/#leadform"]').forEach(function(a){
+    a.addEventListener('click',function(event){if(!event.defaultPrevented)ymGoal('form_open');});
+  });
 
   // phone mask
   var ph=document.getElementById('lfPhone');
@@ -1313,7 +1324,9 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
       msg.className='lf-msg err';return;
     }
     var btn=f.querySelector('.lf-submit'); btn.disabled=true; btn.textContent='Отправляем…';
-    fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}})
+    var data=new FormData(f);
+    if(metrikaClientId)data.set('ClientID',metrikaClientId);
+    fetch(f.action,{method:'POST',body:data,headers:{'Accept':'application/json'}})
       .then(function(r){
         if(r.ok){
           f.reset();

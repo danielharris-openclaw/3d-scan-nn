@@ -34,6 +34,9 @@ function page(service, metrika = 'available') {
     METRIKA_ID: counterId,
     document: {
       querySelectorAll(selector) {
+        if (selector === 'a[href="#leadform"], a[href="/#leadform"]') {
+          return links.filter(link => link.href === '#leadform' || link.href === '/#leadform');
+        }
         assert.equal(selector, '[data-goal]');
         return links.filter(link => link.dataset.goal);
       },
@@ -70,19 +73,20 @@ for (const service of ['obmery-pomeshcheniy', 'skanirovanie-fasadov']) {
     }
   });
 
-  test(`${service}: reaching the form is navigation, not a lead`, () => {
-    const { links, calls } = page(service);
+  test(`${service}: every form link reports one transition, while other navigation reports none`, () => {
+    const { links, calls, counterId } = page(service);
     assert.ok(links.some(link => link.href === '/#leadform'));
     for (const link of links.filter(link => link.href.startsWith('/') || link.href.startsWith('#'))) {
+      calls.length = 0;
       link.click();
+      assert.deepEqual(calls, link.href === '/#leadform' ? [[counterId, 'reachGoal', 'form_open']] : [], link.href);
     }
-    assert.deepEqual(calls, []);
   });
 
   for (const metrika of ['missing', 'throws']) {
     test(`${service}: ${metrika} analytics preserves contact navigation`, () => {
       const { links, calls } = page(service, metrika);
-      links.filter(link => link.dataset.goal).forEach(link => link.click());
+      links.filter(link => link.dataset.goal || link.href === '/#leadform').forEach(link => link.click());
       assert.deepEqual(calls, []);
     });
   }

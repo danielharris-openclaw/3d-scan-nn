@@ -9,7 +9,7 @@ const formHtml = html.match(/<form id="leadForm"[\s\S]*?<\/form>/)[0];
 const script = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)]
   .map(match => match[1]).find(source => source.includes('function ymGoal'));
 
-function form(values = {}) {
+function form(values = {}, clientId) {
   const requests = [], goals = [], elements = {};
   const element = (value = '') => ({
     value, checked: false, textContent: '', className: '', disabled: false,
@@ -38,9 +38,14 @@ function form(values = {}) {
   const context = {
     document: { getElementById: id => elements[id] || null, querySelectorAll: () => [] },
     localStorage: { getItem: () => '1' }, METRIKA_ID: '110175409',
-    ym: (...args) => goals.push(args),
+    ym: (...args) => {
+      if (args[1] !== 'getClientID') return goals.push(args);
+      if (clientId instanceof Error) throw clientId;
+      if (clientId !== undefined) args[2](clientId);
+    },
     FormData: class {
       constructor(node) { this.fields = Object.fromEntries(Object.entries(node.elements).map(([key, field]) => [key, field.value])); }
+      set(name, value) { this.fields[name] = value; }
     },
     // This local promise is the only submission destination; no network API is exposed.
     fetch(url, options) { return new Promise((resolve, reject) => requests.push({ url, options, resolve, reject })); }
@@ -85,6 +90,25 @@ test('a successful text-only submission sends one request and one lead goal', as
   assert.match(fixture.elements.lfMsg.textContent, /Заявка отправлена/);
   assert.equal(fixture.button.disabled, false);
   assert.deepEqual(fixture.goals, [['110175409', 'reachGoal', 'lead']]);
+});
+
+test('the exact ClientID is included for Formspree and never sent alongside an analytics goal', async () => {
+  const clientId = '12345678901234567890';
+  const fixture = form({ 'Комментарий': 'ТЕСТ локальной передачи' }, clientId);
+  fixture.click();
+  assert.equal(fixture.requests[0].options.body.fields.ClientID, clientId);
+  fixture.requests[0].resolve({ ok: true });
+  await flush();
+  assert.deepEqual(fixture.goals, [['110175409', 'reachGoal', 'lead']]);
+});
+
+test('missing, unavailable or invalid ClientID does not delay or pollute a submission', () => {
+  for (const clientId of [undefined, new Error('Counter unavailable'), '', 'not an ID', 12345]) {
+    const fixture = form({}, clientId);
+    fixture.click();
+    assert.equal(fixture.requests.length, 1);
+    assert.equal(fixture.requests[0].options.body.fields.ClientID, undefined);
+  }
 });
 
 for (const failure of ['http', 'network']) {

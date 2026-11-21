@@ -318,6 +318,9 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
 (function(){
   function ymGoal(g){try{if(window.ym&&window.METRIKA_ID&&window.METRIKA_ID!=="XXXXXXXX")ym(window.METRIKA_ID,"reachGoal",g);}catch(e){}}
   document.querySelectorAll('[data-goal]').forEach(function(a){a.addEventListener('click',function(){ymGoal(a.dataset.goal);});});
+  document.querySelectorAll('a[href="#leadform"], a[href="/#leadform"]').forEach(function(a){
+    a.addEventListener('click',function(event){if(!event.defaultPrevented)ymGoal('form_open');});
+  });
   try{
     if(!localStorage.getItem('cookieOk')){
       var c=document.getElementById('cookie'); c.style.display='flex';

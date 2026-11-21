@@ -23,10 +23,10 @@ function page(metrika = 'available') {
       dataset: attrs['data-goal'] ? { goal: attrs['data-goal'] } : {},
       position: match.index,
       addEventListener(type, listener) { if (type === 'click') listeners.push(listener); },
-      click() {
-        const event = { defaultPrevented: false, preventDefault() { this.defaultPrevented = true; } };
+      click(defaultPrevented = false) {
+        const event = { defaultPrevented, preventDefault() { this.defaultPrevented = true; } };
         for (const listener of listeners) listener(event);
-        assert.equal(event.defaultPrevented, false, 'Analytics must not cancel the contact link');
+        assert.equal(event.defaultPrevented, defaultPrevented, 'Analytics must not change navigation');
       }
     };
   });
@@ -34,6 +34,9 @@ function page(metrika = 'available') {
   const context = {
     document: {
       querySelectorAll(selector) {
+        if (selector === 'a[href="#leadform"], a[href="/#leadform"]') {
+          return links.filter(link => link.href === '#leadform' || link.href === '/#leadform');
+        }
         assert.equal(selector, '[data-goal]');
         return links.filter(link => link.dataset.goal);
       },
@@ -46,7 +49,7 @@ function page(metrika = 'available') {
   context.window = context;
   if (metrika !== 'missing') context.ym = (...args) => {
     if (metrika === 'throws') throw new Error('Simulated unavailable counter');
-    calls.push(args);
+    if (args[1] === 'reachGoal') calls.push(args);
   };
   vm.runInNewContext(scripts[0], context);
   return { links, calls };
@@ -89,18 +92,28 @@ test('all MAX links use the owner-provided profile URL instead of a phone link',
   }
 });
 
-test('navigation links do not masquerade as contact or successful-lead events', () => {
+test('every form link reports one transition, while other navigation reports none', () => {
   const { links, calls } = page();
+  assert.ok(links.filter(link => link.href === '#leadform').length > 2);
   for (const link of links.filter(link => link.href.startsWith('#') || link.href === 'privacy.html')) {
+    calls.length = 0;
     link.click();
+    assert.deepEqual(calls, link.href === '#leadform' ? [[counterId, 'reachGoal', 'form_open']] : [], link.text);
   }
+});
+
+test('invalid request parameters can prevent the form transition without recording it', () => {
+  const { links, calls } = page();
+  const request = links.find(link => link.text === 'Перейти к заявке на расчёт');
+  assert.ok(request);
+  request.click(true);
   assert.deepEqual(calls, []);
 });
 
 test('missing or failing analytics does not prevent contact navigation', () => {
   for (const state of ['missing', 'throws']) {
     const { links, calls } = page(state);
-    for (const link of links.filter(link => link.dataset.goal)) assert.doesNotThrow(() => link.click());
+    for (const link of links.filter(link => link.dataset.goal || link.href === '#leadform')) assert.doesNotThrow(() => link.click());
     assert.deepEqual(calls, []);
   }
 });

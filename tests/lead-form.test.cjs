@@ -9,7 +9,7 @@ const formHtml = html.match(/<form id="leadForm"[\s\S]*?<\/form>/)[0];
 const script = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)]
   .map(match => match[1]).find(source => source.includes('function ymGoal'));
 
-function form(values = {}, clientId) {
+function form(values = {}, clientId, captcha) {
   const requests = [], goals = [], elements = {};
   const element = (value = '') => ({
     value, checked: false, textContent: '', className: '', disabled: false,
@@ -35,6 +35,7 @@ function form(values = {}, clientId) {
   elements.lfMsg = element();
   elements.lfQuote = f.elements['Параметры для расчёта'];
   elements.lfQuotePreview = Object.assign(element(), { hidden: false });
+  if (captcha) elements.lfCaptcha = { dataset: { sitekey: 'local-widget' }, hidden: true };
   const context = {
     document: { getElementById: id => elements[id] || null, querySelectorAll: () => [] },
     localStorage: { getItem: () => '1' }, METRIKA_ID: '110175409',
@@ -50,6 +51,15 @@ function form(values = {}, clientId) {
     // This local promise is the only submission destination; no network API is exposed.
     fetch(url, options) { return new Promise((resolve, reject) => requests.push({ url, options, resolve, reject })); }
   };
+  if (captcha) {
+    context.document.createElement = () => ({ remove() {} });
+    context.document.head = { appendChild() { context.onLeadCaptchaReady(); } };
+    context.grecaptcha = {
+      render(node, options) { captcha.options = options; return 0; },
+      getResponse() { return captcha.token; },
+      reset() { captcha.token = ''; captcha.resets++; }
+    };
+  }
   context.window = context;
   vm.runInNewContext(script, context);
   const submit = () => f.listeners.submit({ preventDefault() {} });
@@ -58,6 +68,7 @@ function form(values = {}, clientId) {
 }
 
 const flush = () => new Promise(resolve => setImmediate(resolve));
+const accepted = () => ({ ok: true, json: async () => ({ ok: true, next: '/thanks' }) });
 
 test('the form offers text fields and material links without a file-upload control', () => {
   assert.doesNotMatch(formHtml, /type="file"|name="Файлы"|enctype="multipart\/form-data"/);
@@ -71,6 +82,7 @@ test('a successful text-only submission sends one request and one lead goal', as
   const reset = fixture.f.reset;
   fixture.f.reset = () => { const quote = fixture.elements.lfQuote.value; reset(); fixture.elements.lfQuote.value = quote; };
   fixture.click();
+  fixture.submit();
   fixture.click();
   assert.equal(fixture.requests.length, 1, 'The disabled submit button prevents a second click');
   assert.equal(fixture.button.disabled, true);
@@ -82,7 +94,7 @@ test('a successful text-only submission sends one request and one lead goal', as
   assert.equal(request.options.body.fields['Файлы'], undefined);
   assert.equal(request.options.body.fields['Комментарий'], 'Тестовый текст');
   assert.equal(request.options.body.fields['Параметры для расчёта'], 'Помещения\nПлощадь, м²: 350');
-  request.resolve({ ok: true });
+  request.resolve(accepted());
   await flush();
   assert.equal(fixture.f.resets, 1);
   assert.equal(fixture.elements.lfQuote.value, '');
@@ -97,7 +109,7 @@ test('the exact ClientID is included for Formspree and never sent alongside an a
   const fixture = form({ 'Комментарий': 'ТЕСТ локальной передачи' }, clientId);
   fixture.click();
   assert.equal(fixture.requests[0].options.body.fields.ClientID, clientId);
-  fixture.requests[0].resolve({ ok: true });
+  fixture.requests[0].resolve(accepted());
   await flush();
   assert.deepEqual(fixture.goals, [['110175409', 'reachGoal', 'lead']]);
 });
@@ -125,7 +137,7 @@ for (const failure of ['http', 'network']) {
     assert.deepEqual(fixture.goals, []);
     fixture.click();
     assert.equal(fixture.requests.length, 2);
-    fixture.requests[1].resolve({ ok: true });
+    fixture.requests[1].resolve(accepted());
     await flush();
     assert.equal(fixture.goals.length, 1);
   });
@@ -143,4 +155,53 @@ test('missing name, short phone, missing consent and honeypot prevent submission
   fixture.submit();
   assert.equal(fixture.requests.length, 0);
   assert.deepEqual(fixture.goals, []);
+});
+
+test('ambiguous responses preserve a question and never record a successful lead', async () => {
+  for (const response of [
+    { ok: true, json: async () => { throw new Error('HTML'); } },
+    { ok: true, json: async () => ({}) },
+    { ok: true, json: async () => ({ ok: false }) },
+    { ok: true, json: async () => ({ ok: true, next: '/captcha' }) },
+    { ok: true, json: async () => ({ ok: true, errors: [{ code: 'REQUIRED_FIELD_EMPTY' }] }) },
+    { ...accepted(), redirected: true }
+  ]) {
+    const fixture = form({ 'Имя': 'Анна-Мария', 'Комментарий': 'Сделаете обмер?' });
+    fixture.click();
+    fixture.requests[0].resolve(response);
+    await flush();
+    assert.equal(fixture.f.resets, 0);
+    assert.equal(fixture.f.elements['Комментарий'].value, 'Сделаете обмер?');
+    assert.equal(fixture.button.disabled, false);
+    assert.deepEqual(fixture.goals, []);
+    assert.match(fixture.elements.lfMsg.className, /err/);
+  }
+});
+
+test('configured widget requires a response and refreshes it after a rejected request', async () => {
+  const captcha = { token: '', resets: 0 };
+  const fixture = form({ 'Имя': 'Anne-Marie', 'Комментарий': 'Обмер завтра?' }, undefined, captcha);
+  fixture.submit();
+  assert.equal(fixture.requests.length, 0);
+  assert.match(fixture.elements.lfMsg.textContent, /проверку от спама/);
+  captcha.token = 'local-widget-test';
+  fixture.submit();
+  const fields = fixture.requests[0].options.body.fields;
+  assert.equal(fields['g-recaptcha-response'], captcha.token);
+  assert.equal(fields._gotcha, '');
+  assert.equal(fields['Имя'], 'Anne-Marie');
+  fixture.requests[0].resolve({ ok: false, json: async () => ({ errors: [{ code: 'CAPTCHA_FAILED' }] }) });
+  await flush();
+  assert.equal(captcha.resets, 1);
+  assert.equal(fixture.button.disabled, false);
+  assert.equal(fixture.f.elements['Комментарий'].value, 'Обмер завтра?');
+  assert.equal(fixture.goals.length, 0);
+  fixture.submit();
+  assert.equal(fixture.requests.length, 1);
+  captcha.token = 'second-local-widget-test';
+  fixture.submit();
+  fixture.requests[1].resolve(accepted());
+  await flush();
+  assert.equal(fixture.f.resets, 1);
+  assert.deepEqual(fixture.goals, [['110175409', 'reachGoal', 'lead']]);
 });

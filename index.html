@@ -1148,10 +1148,10 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
     </div>
 
     <p style="font-size:14px; line-height:1.7; color:#C5CDD8; max-width:580px; margin:28px auto 0;">Для первого обращения достаточно имени и телефона. Если знаете площадь и нужный результат, укажите их ниже — это поможет подготовить расчёт.</p>
-    <form id="leadForm" action="https://formspree.io/f/mlgybbgv" method="POST" style="max-width:640px; margin:38px auto 0; background:#fff; border-radius:12px; padding:32px; text-align:left; box-shadow:0 24px 60px rgba(0,0,0,.4);">
+    <form id="leadForm" action="https://formspree.io/f/mlgybbgv" method="POST" accept-charset="UTF-8" style="max-width:640px; margin:38px auto 0; background:#fff; border-radius:12px; padding:32px; text-align:left; box-shadow:0 24px 60px rgba(0,0,0,.4);">
       <div class="lf-row">
-        <div class="lf-field"><label>Имя *</label><input type="text" name="Имя" required></div>
-        <div class="lf-field"><label>Телефон *</label><input type="tel" id="lfPhone" name="Телефон" required placeholder="+7 (___) ___-__-__"></div>
+        <div class="lf-field"><label for="lfName">Имя *</label><input type="text" id="lfName" name="Имя" autocomplete="name" required></div>
+        <div class="lf-field"><label for="lfPhone">Телефон *</label><input type="tel" id="lfPhone" name="Телефон" autocomplete="tel" required placeholder="+7 (___) ___-__-__"></div>
       </div>
       <div class="lf-row">
         <div class="lf-field"><label>Адрес или площадь объекта</label><input type="text" name="Адрес/площадь"></div>
@@ -1175,10 +1175,11 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
       <p style="font-size:13.5px; line-height:1.6; color:#5A6573; margin:0 0 16px;">Фото и планы объекта можно отправить в <a href="https://max.ru/u/f9LHodD0cOKQJvAxbQRGybXhznQk8_Y7LqODhTtC9LwLBpcAMsGiYcZlj8o" data-goal="max" style="color:#0B5FFF;">MAX</a>, <a href="https://t.me/frolovr9" data-goal="telegram" style="color:#0B5FFF;">Telegram</a> или <a href="mailto:frolovr9@gmail.com" data-goal="email" style="color:#0B5FFF;">на почту</a>.</p>
       <input type="hidden" name="Параметры для расчёта" id="lfQuote">
       <p id="lfQuotePreview" hidden style="font-size:13px; line-height:1.7; color:#5A6573; white-space:pre-line; overflow-wrap:anywhere;"></p>
-      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px;">
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
       <label class="lf-consent"><input type="checkbox" id="lfConsent" required> Я согласен на <a href="privacy.html" target="_blank" style="color:#0B5FFF;">обработку персональных данных</a></label>
+      <div id="lfCaptcha" data-sitekey="" hidden style="margin-top:16px"></div>
       <button type="submit" class="lf-submit">Отправить заявку</button>
-      <div id="lfMsg" class="lf-msg"></div>
+      <div id="lfMsg" class="lf-msg" role="status" aria-live="polite"></div>
     </form>
   </div>
 </section>
@@ -1306,8 +1307,45 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
 
   // form submit
   var f=document.getElementById('leadForm');
-  if(f){f.addEventListener('submit',function(ev){
+  var captcha=document.getElementById('lfCaptcha');
+  var siteKey=captcha?.dataset.sitekey;
+  var widgetId=null;
+  var captchaScript=null;
+  var widgetNeedsReset=false;
+
+  function loadCaptcha(){
+    if(!siteKey || captchaScript)return;
+    captcha.hidden=false;
+    var notice=document.getElementById('lfMsg');
+    function widgetError(){
+      widgetNeedsReset=true;
+      notice.textContent='Не удалось загрузить проверку от спама. Проверьте соединение и повторите попытку.';
+      notice.className='lf-msg err';
+    }
+    window.onLeadCaptchaReady=function(){
+      widgetId=window.grecaptcha.render(captcha,{
+        sitekey:siteKey,
+        size:'compact',
+        callback:function(){widgetNeedsReset=false;},
+        'expired-callback':function(){widgetNeedsReset=true;},
+        'error-callback':widgetError
+      });
+    };
+    captchaScript=document.createElement('script');
+    captchaScript.src='https://www.google.com/recaptcha/api.js?onload=onLeadCaptchaReady&render=explicit&hl=ru';
+    captchaScript.async=true;
+    captchaScript.onerror=function(){
+      captchaScript.remove();
+      captchaScript=null;
+      widgetError();
+    };
+    document.head.appendChild(captchaScript);
+  }
+  if(siteKey)loadCaptcha();
+  if(f){f.addEventListener('submit',async function(ev){
     ev.preventDefault();
+    var btn=f.querySelector('.lf-submit');
+    if(btn.disabled)return;
     var msg=document.getElementById('lfMsg'); msg.className='lf-msg';
     if(f._gotcha.value)return;
     if(window.validateQuoteRequest && document.getElementById('lfQuote').value && !window.validateQuoteRequest()){
@@ -1323,22 +1361,53 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
       msg.textContent='Форма в режиме настройки. Напишите в Telegram или позвоните — ответим в день обращения.';
       msg.className='lf-msg err';return;
     }
-    var btn=f.querySelector('.lf-submit'); btn.disabled=true; btn.textContent='Отправляем…';
-    var data=new FormData(f);
-    if(metrikaClientId)data.set('ClientID',metrikaClientId);
-    fetch(f.action,{method:'POST',body:data,headers:{'Accept':'application/json'}})
-      .then(function(r){
-        if(r.ok){
-          f.reset();
-          document.getElementById('lfQuote').value='';
-          var preview=document.getElementById('lfQuotePreview');
-          preview.hidden=true;preview.textContent='';
-          msg.textContent='Заявка отправлена! Свяжемся с вами в день обращения.';msg.className='lf-msg ok';ymGoal('lead');
+    btn.disabled=true;
+    btn.textContent='Отправляем…';
+    try{
+      var data=new FormData(f);
+      if(siteKey){
+        loadCaptcha();
+        if(widgetNeedsReset && widgetId!==null){
+          window.grecaptcha.reset(widgetId);
+          widgetNeedsReset=false;
         }
-        else{msg.textContent='Не удалось отправить. Напишите в Telegram или позвоните.';msg.className='lf-msg err';}
-      })
-      .catch(function(){msg.textContent='Ошибка сети. Напишите в Telegram или позвоните.';msg.className='lf-msg err';})
-      .finally(function(){btn.disabled=false;btn.textContent='Отправить заявку';});
+        var token=widgetId===null?'':window.grecaptcha.getResponse(widgetId);
+        if(!token){
+          msg.textContent='Пройдите проверку от спама и нажмите «Отправить заявку».';
+          msg.className='lf-msg err';
+          return;
+        }
+        data.set('g-recaptcha-response',token);
+      }
+      if(metrikaClientId)data.set('ClientID',metrikaClientId);
+      var response=await fetch(f.action,{method:'POST',body:data,headers:{'Accept':'application/json'}});
+      var reply=await response.json().catch(function(){return null;});
+      var errors=Array.isArray(reply?.errors)?reply.errors:[];
+      var challenge=reply?.challenge || /captcha|challenge/i.test(reply?.next || '');
+      if(!response.ok || response.redirected || reply?.ok!==true || reply.error || errors.length || challenge){
+        msg.className='lf-msg err';
+        if(response.status===429)msg.textContent='Слишком много отправок. Подождите немного и попробуйте снова.';
+        else if(errors.some(function(error){return error.field==='Имя';}))msg.textContent='Проверьте имя и повторите отправку.';
+        else if(challenge || errors.some(function(error){return /captcha/i.test([error.field,error.code,error.message].join(' '));}))msg.textContent='Пройдите проверку от спама ещё раз и повторите отправку.';
+        else msg.textContent='Сервис не подтвердил отправку. Данные сохранены в форме. Можно повторить попытку или связаться с нами напрямую.';
+        return;
+      }
+      f.reset();
+      document.getElementById('lfQuote').value='';
+      var preview=document.getElementById('lfQuotePreview');
+      preview.hidden=true;
+      preview.textContent='';
+      msg.textContent='Заявка отправлена! Свяжемся с вами в день обращения.';
+      msg.className='lf-msg ok';
+      ymGoal('lead');
+    }catch(error){
+      msg.textContent='Связь с сервисом прервалась. Данные сохранены в форме. Можно повторить попытку или связаться с нами напрямую.';
+      msg.className='lf-msg err';
+    }finally{
+      btn.disabled=false;
+      btn.textContent='Отправить заявку';
+      if(siteKey && widgetId!==null && token)window.grecaptcha.reset(widgetId);
+    }
   });}
 
   // cookie notice

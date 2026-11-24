@@ -1150,7 +1150,7 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
     <p style="font-size:14px; line-height:1.7; color:#C5CDD8; max-width:580px; margin:28px auto 0;">Для первого обращения достаточно имени и телефона. Если знаете площадь и нужный результат, укажите их ниже — это поможет подготовить расчёт.</p>
     <form id="leadForm" action="https://formspree.io/f/mlgybbgv" method="POST" accept-charset="UTF-8" style="max-width:640px; margin:38px auto 0; background:#fff; border-radius:12px; padding:32px; text-align:left; box-shadow:0 24px 60px rgba(0,0,0,.4);">
       <div class="lf-row">
-        <div class="lf-field"><label for="lfName">Имя *</label><input type="text" id="lfName" name="Имя" autocomplete="name" required></div>
+        <div class="lf-field"><label for="lfName">Имя *</label><input type="text" id="lfName" name="name" autocomplete="name" required></div>
         <div class="lf-field"><label for="lfPhone">Телефон *</label><input type="tel" id="lfPhone" name="Телефон" autocomplete="tel" required placeholder="+7 (___) ___-__-__"></div>
       </div>
       <div class="lf-row">
@@ -1351,7 +1351,7 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
     if(window.validateQuoteRequest && document.getElementById('lfQuote').value && !window.validateQuoteRequest()){
       msg.textContent='Проверьте параметры объекта выше.';msg.className='lf-msg err';return;
     }
-    var name=f.elements['Имя'], phone=f.elements['Телефон'], consent=document.getElementById('lfConsent');
+    var name=f.elements['name'], phone=f.elements['Телефон'], consent=document.getElementById('lfConsent');
     var ok=true;
     [name,phone].forEach(function(el){var bad=!el.value.trim(); el.classList.toggle('lf-invalid',bad); if(bad)ok=false;});
     if((phone.value.replace(/\D/g,'')).length<11){phone.classList.add('lf-invalid');ok=false;}
@@ -1387,7 +1387,7 @@ ym(110175409,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
       if(!response.ok || response.redirected || reply?.ok!==true || reply.error || errors.length || challenge){
         msg.className='lf-msg err';
         if(response.status===429)msg.textContent='Слишком много отправок. Подождите немного и попробуйте снова.';
-        else if(errors.some(function(error){return error.field==='Имя';}))msg.textContent='Проверьте имя и повторите отправку.';
+        else if(errors.some(function(error){return error.field==='name';}))msg.textContent='Проверьте имя и повторите отправку.';
         else if(challenge || errors.some(function(error){return /captcha/i.test([error.field,error.code,error.message].join(' '));}))msg.textContent='Пройдите проверку от спама ещё раз и повторите отправку.';
         else msg.textContent='Сервис не подтвердил отправку. Данные сохранены в форме. Можно повторить попытку или связаться с нами напрямую.';
         return;

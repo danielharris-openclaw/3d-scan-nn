@@ -21,7 +21,7 @@ function form(values = {}, clientId, captcha) {
   // Build the submitted fields from the real form, without storing personal data.
   f.elements = Object.fromEntries([...formHtml.matchAll(/<(?:input|select|textarea)\b[^>]*name="([^"]+)"/g)]
     .map(match => [match[1], element()]));
-  Object.assign(f.elements['Имя'], { value: 'Локальная проверка' });
+  Object.assign(f.elements['name'], { value: 'Локальная проверка' });
   Object.assign(f.elements['Телефон'], { value: '+7 (000) 000-00-00' });
   for (const [name, value] of Object.entries(values)) f.elements[name].value = value;
   f._gotcha = f.elements._gotcha;
@@ -144,7 +144,7 @@ for (const failure of ['http', 'network']) {
 }
 
 test('missing name, short phone, missing consent and honeypot prevent submission', () => {
-  for (const values of [{ 'Имя': '' }, { 'Телефон': '+7' }, { _gotcha: 'bot' }]) {
+  for (const values of [{ 'name': '' }, { 'Телефон': '+7' }, { _gotcha: 'bot' }]) {
     const fixture = form(values);
     fixture.submit();
     assert.equal(fixture.requests.length, 0);
@@ -166,7 +166,7 @@ test('ambiguous responses preserve a question and never record a successful lead
     { ok: true, json: async () => ({ ok: true, errors: [{ code: 'REQUIRED_FIELD_EMPTY' }] }) },
     { ...accepted(), redirected: true }
   ]) {
-    const fixture = form({ 'Имя': 'Анна-Мария', 'Комментарий': 'Сделаете обмер?' });
+    const fixture = form({ 'name': 'Анна-Мария', 'Комментарий': 'Сделаете обмер?' });
     fixture.click();
     fixture.requests[0].resolve(response);
     await flush();
@@ -180,7 +180,7 @@ test('ambiguous responses preserve a question and never record a successful lead
 
 test('configured widget requires a response and refreshes it after a rejected request', async () => {
   const captcha = { token: '', resets: 0 };
-  const fixture = form({ 'Имя': 'Anne-Marie', 'Комментарий': 'Обмер завтра?' }, undefined, captcha);
+  const fixture = form({ 'name': 'Anne-Marie', 'Комментарий': 'Обмер завтра?' }, undefined, captcha);
   fixture.submit();
   assert.equal(fixture.requests.length, 0);
   assert.match(fixture.elements.lfMsg.textContent, /проверку от спама/);
@@ -189,7 +189,7 @@ test('configured widget requires a response and refreshes it after a rejected re
   const fields = fixture.requests[0].options.body.fields;
   assert.equal(fields['g-recaptcha-response'], captcha.token);
   assert.equal(fields._gotcha, '');
-  assert.equal(fields['Имя'], 'Anne-Marie');
+  assert.equal(fields['name'], 'Anne-Marie');
   fixture.requests[0].resolve({ ok: false, json: async () => ({ errors: [{ code: 'CAPTCHA_FAILED' }] }) });
   await flush();
   assert.equal(captcha.resets, 1);
